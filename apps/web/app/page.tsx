@@ -1,7 +1,9 @@
-export default function Home() {
-	return (
-		<div>
-			<div className="flex justify-center items-center"></div>
-		</div>
-	)
+import { redirect } from 'next/navigation'
+
+const Page = () => {
+  redirect('/home')
+
+  return <></>
 }
+
+export default Page
