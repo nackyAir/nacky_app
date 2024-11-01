@@ -1,16 +1,18 @@
 import React, { Suspense } from 'react'
 
-import Header from '~/features/Layout/Header/components/Header'
+import Header from '~/features/Layout/Header'
+import { ScrollProgress } from '~/features/Layout/ScrollProgress'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-[100dvh] overflow-y-hidden">
+    <div className="min-w-screen flex flex-col">
+      <ScrollProgress />
+
       <Suspense fallback={null}>
         <Header />
       </Suspense>
-      <main className="h-full flex-1 overflow-x-hidden overflow-y-scroll">
-        {children}
-      </main>
+
+      <main className="flex-1">{children}</main>
     </div>
   )
 }
