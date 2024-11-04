@@ -3,7 +3,7 @@ import React, { Suspense } from 'react'
 import Header from '~/features/Layout/Header'
 import { ScrollProgress } from '~/features/Layout/ScrollProgress'
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-w-screen flex flex-col">
       <ScrollProgress />
@@ -16,5 +16,3 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     </div>
   )
 }
-
-export default Layout
