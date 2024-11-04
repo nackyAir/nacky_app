@@ -16,7 +16,7 @@ import {
 import { Linkedin, Twitter } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
 
-export default function Page() {
+export default function Home() {
   return (
     <div className="bg-background text-foreground min-h-screen">
       <div className="w-full">
