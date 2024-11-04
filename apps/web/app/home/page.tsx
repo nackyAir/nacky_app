@@ -1,13 +1,6 @@
 import { Badge } from '@repo/ui/components/badge'
 import { Button } from '@repo/ui/components/button'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@repo/ui/components/card'
-import {
   Tabs,
   TabsContent,
   TabsList,
@@ -15,6 +8,12 @@ import {
 } from '@repo/ui/components/tabs'
 import { Linkedin, Twitter } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
+
+import { TimelineSection } from '~/features/Home/TimeLine/TimeLineSection'
+import {
+  clientProjects,
+  personalProjects,
+} from '~/features/Home/config/timeItem'
 
 export default function Home() {
   return (
@@ -133,76 +132,10 @@ export default function Home() {
               <TabsTrigger value="client">受託開発</TabsTrigger>
             </TabsList>
             <TabsContent value="personal">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mt-6 grid gap-6"
-              >
-                {[
-                  {
-                    title: 'ポートフォリオサイト',
-                    description:
-                      'React と Tailwind CSS を使用して作成した個人ポートフォリオサイト',
-                  },
-                  {
-                    title: 'タスク管理アプリ',
-                    description:
-                      'Next.js と TypeScript で開発したシンプルなタスク管理アプリケーション',
-                  },
-                  {
-                    title: '天気予報 Widget',
-                    description:
-                      'OpenWeatherMap API を使用した、カスタマイズ可能な天気予報ウィジェット',
-                  },
-                ].map((project, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <CardTitle>{project.title}</CardTitle>
-                      <CardDescription>{project.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <Button variant="outline">詳細を見る</Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </motion.div>
+              <TimelineSection items={personalProjects ?? []} />
             </TabsContent>
             <TabsContent value="client">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mt-6 grid gap-6"
-              >
-                {[
-                  {
-                    title: 'Eコマースサイト',
-                    description:
-                      '大手小売業向けにReactとReduxを使用して開発したEコマースプラットフォーム',
-                  },
-                  {
-                    title: '社内管理システム',
-                    description:
-                      '中小企業向けにVue.jsとFirebaseを使用して開発した社内管理システム',
-                  },
-                  {
-                    title: 'ニュースアグリゲーターアプリ',
-                    description:
-                      'メディア企業向けにReact NativeとGraphQLを使用して開発したモバイルアプリ',
-                  },
-                ].map((project, index) => (
-                  <Card key={index}>
-                    <CardHeader>
-                      <CardTitle>{project.title}</CardTitle>
-                      <CardDescription>{project.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <Button variant="outline">詳細を見る</Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </motion.div>
+              <TimelineSection items={clientProjects ?? []} />
             </TabsContent>
           </Tabs>
         </div>
