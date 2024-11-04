@@ -1,3 +1,4 @@
+import { Avatar, AvatarImage } from '@repo/ui/components/avatar'
 import { Badge } from '@repo/ui/components/badge'
 import { Button } from '@repo/ui/components/button'
 import {
@@ -9,11 +10,8 @@ import {
 import { Linkedin, Twitter } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
 
-import { TimelineSection } from '~/features/Home/TimeLine/TimeLineSection'
-import {
-  clientProjects,
-  personalProjects,
-} from '~/features/Home/config/timeItem'
+import { TimelineSection } from '~/features/Home/TimeLine'
+import { clientProjects, personalProjects } from '~/features/Home/timeLineItem'
 
 export default function Home() {
   return (
@@ -24,9 +22,12 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center"
+            className="flex flex-col items-center justify-center text-center"
           >
-            <h1 className="mb-4 text-4xl font-bold">山田 太郎</h1>
+            <Avatar className="my-4 size-40 border-2 border-slate-400">
+              <AvatarImage src="./avatarImage.jpg" />
+            </Avatar>
+            <h1 className="mb-4 text-4xl font-bold">Naoki Hayashida</h1>
             <p className="mb-8 text-xl">フロントエンドエンジニア</p>
             <div className="flex justify-center space-x-4">
               {/* <Button variant="outline" size="icon" asChild>
@@ -102,9 +103,11 @@ export default function Home() {
               'Next.js',
               'Tailwind CSS',
               'Node.js',
-              'GraphQL',
-              'Jest',
-              'Webpack',
+              'Supabase',
+              'Firebase',
+              'React Native',
+              'hono',
+              'Nest',
             ].map((skill) => (
               <Badge
                 key={skill}
@@ -132,10 +135,10 @@ export default function Home() {
               <TabsTrigger value="client">受託開発</TabsTrigger>
             </TabsList>
             <TabsContent value="personal">
-              <TimelineSection items={personalProjects ?? []} />
+              <TimelineSection items={personalProjects} />
             </TabsContent>
             <TabsContent value="client">
-              <TimelineSection items={clientProjects ?? []} />
+              <TimelineSection items={clientProjects} />
             </TabsContent>
           </Tabs>
         </div>
