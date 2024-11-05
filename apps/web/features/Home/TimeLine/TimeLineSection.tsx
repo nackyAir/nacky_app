@@ -7,21 +7,15 @@ import { Card } from '@repo/ui/components/card'
 import { CircleDot } from '@repo/ui/icon/lucide'
 import { motion } from 'framer-motion'
 
-interface TimelineItem {
-  title: string
-  period: string
-  role: string
-  skills: string[]
-  description: string
-}
+import { TimelineItem } from '../type'
 
-export function TimelineSection({ items }: { items: TimelineItem[] }) {
+export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="mt-6 space-y-8"
+      className="mt-8 space-y-8"
     >
       {items.map((item, index) => (
         <motion.div
