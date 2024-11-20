@@ -11,7 +11,10 @@ import { Linkedin, Twitter } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
 
 import { TimelineSection } from '~/features/Home/TimeLine'
-import { clientProjects, personalProjects } from '~/features/Home/timeLineItem'
+import {
+  clientProjects,
+  personalProjects,
+} from '~/features/Home/TimeLine/ProjectTimeLIne/config'
 
 export default function Home() {
   return (
