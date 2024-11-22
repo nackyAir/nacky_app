@@ -1,18 +1,18 @@
-import React from 'react'
+import React from "react"
 
-import Link from 'next/link'
+import Link from "next/link"
 
-import { Button } from '@repo/ui/components/button'
-import { Sheet, SheetContent, SheetTrigger } from '@repo/ui/components/sheet'
-import { Menu } from '@repo/ui/icon/lucide'
+import { Button } from "@repo/ui/components/button"
+import { Sheet, SheetContent, SheetTrigger } from "@repo/ui/components/sheet"
+import { Menu } from "@repo/ui/icon/lucide"
 
 const Header = () => {
   const menuItems = [
-    { name: 'ホーム', href: '/home' },
-    { name: '製品', href: '/products' },
-    { name: 'サービス', href: '/services' },
-    { name: '会社概要', href: '/about' },
-    { name: 'お問い合わせ', href: '/contact' },
+    { name: "ホーム", href: "/home" },
+    { name: "製品", href: "/products" },
+    { name: "サービス", href: "/services" },
+    { name: "会社概要", href: "/about" },
+    { name: "お問い合わせ", href: "/contact" },
   ]
 
   return (

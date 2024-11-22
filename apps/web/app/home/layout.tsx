@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react'
+import React, { Suspense } from "react"
 
-import Header from '~/features/Layout/Header'
-import { ScrollProgress } from '~/features/Layout/ScrollProgress'
+import Header from "~/features/Layout/Header"
+import { ScrollProgress } from "~/features/Layout/ScrollProgress"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

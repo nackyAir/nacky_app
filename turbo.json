@@ -13,5 +13,8 @@
 			"cache": false,
 			"persistent": true
 		}
-	}
+	},
+	"globalEnv": [
+		"RESEND_API_KEY"
+	]
 }

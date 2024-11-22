@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
-import React from 'react'
+import React from "react"
 
-import { Badge } from '@repo/ui/components/badge'
-import { Card } from '@repo/ui/components/card'
-import { CircleDot } from '@repo/ui/icon/lucide'
-import { motion } from 'framer-motion'
+import { Badge } from "@repo/ui/components/badge"
+import { Card } from "@repo/ui/components/card"
+import { CircleDot } from "@repo/ui/icon/lucide"
+import { motion } from "framer-motion"
 
-import { TimelineItem } from './type'
+import { TimelineItem } from "./type"
 
 export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
   return (
@@ -25,7 +25,7 @@ export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
           transition={{
             duration: 0.5,
             delay: index * 0.1,
-            ease: 'easeOut',
+            ease: "easeOut",
           }}
           className="group relative flex gap-6"
         >
@@ -33,7 +33,7 @@ export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
             <motion.div
               className="border-foreground/20 bg-background flex h-10 w-10 items-center justify-center rounded-full border-2"
               whileHover={{ scale: 1.1 }}
-              transition={{ type: 'spring', stiffness: 300 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
               <CircleDot className="text-foreground/70 h-5 w-5" />
             </motion.div>
@@ -42,7 +42,7 @@ export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
 
           <motion.div
             whileHover={{ y: -5 }}
-            transition={{ type: 'spring', stiffness: 300 }}
+            transition={{ type: "spring", stiffness: 300 }}
             className="flex-1"
           >
             <Card className="border-border border p-5 transition-all duration-300 hover:shadow-lg">
@@ -68,7 +68,7 @@ export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
                     <motion.div
                       key={skillIndex}
                       whileHover={{ scale: 1.05 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
+                      transition={{ type: "spring", stiffness: 300 }}
                     >
                       <Badge
                         variant="secondary"

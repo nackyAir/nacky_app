@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 import {
   Body,
@@ -13,7 +13,7 @@ import {
   Section,
   Tailwind,
   Text,
-} from '@react-email/components'
+} from "@react-email/components"
 
 type Props = {
   userName: string
@@ -40,7 +40,7 @@ function AutoReplyEmail({
         </Section>
         <Section>
           <Row className="mt-[10px]">
-            <Column align="right" style={{ width: '50%', paddingRight: '8px' }}>
+            <Column align="right" style={{ width: "50%", paddingRight: "8px" }}>
               <Link href="#">
                 <Img
                   alt="X"
@@ -51,7 +51,7 @@ function AutoReplyEmail({
                 />
               </Link>
             </Column>
-            <Column align="left" style={{ width: '50%', paddingRight: '8px' }}>
+            <Column align="left" style={{ width: "50%", paddingRight: "8px" }}>
               <Link href="#">
                 <Img
                   alt="Instagram"
