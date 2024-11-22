@@ -18,16 +18,16 @@ import {
 
 export default function Home() {
   return (
-    <div className="bg-background text-foreground min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       <div className="w-full">
-        <div className="flex min-h-screen items-center justify-center">
+        <div className="flex items-center justify-center min-h-screen">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="flex flex-col items-center justify-center text-center"
           >
-            <Avatar className="my-4 size-40 border-2 border-slate-400">
+            <Avatar className="my-4 border-2 size-40 border-slate-400">
               <AvatarImage src="./avatarImage.jpg" />
             </Avatar>
             <h1 className="mb-4 text-4xl font-bold">Naoki Hayashida</h1>
@@ -39,7 +39,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Github className="h-5 w-5" />
+                  <Github className="w-5 h-5" />
                 </a>
               </Button> */}
               <Button variant="outline" size="icon" asChild>
@@ -48,7 +48,7 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Linkedin className="h-5 w-5" />
+                  <Linkedin className="w-5 h-5" />
                 </a>
               </Button>
               <Button variant="outline" size="icon" asChild>
@@ -57,19 +57,19 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Twitter className="h-5 w-5" />
+                  <Twitter className="w-5 h-5" />
                 </a>
               </Button>
             </div>
           </motion.div>
         </div>
 
-        <div className="container mx-auto px-4 py-20">
+        <div className="container px-4 py-20 mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8 text-center text-3xl font-bold"
+            className="mb-8 text-3xl font-bold text-center"
           >
             About Me
           </motion.h2>
@@ -77,7 +77,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mx-auto max-w-2xl text-center text-lg"
+            className="max-w-2xl mx-auto text-lg text-center"
           >
             私は3年間のフロントエンド開発経験を持つエンジニアです。
             モダンなWeb技術を駆使して、ユーザーフレンドリーなインターフェースの構築に情熱を注いでいます。
@@ -85,12 +85,12 @@ export default function Home() {
           </motion.p>
         </div>
 
-        <div className="bg-muted container mx-auto px-4 py-20">
+        <div className="container px-4 py-20 mx-auto bg-muted">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8 text-center text-3xl font-bold"
+            className="mb-8 text-3xl font-bold text-center"
           >
             Skills
           </motion.h2>
@@ -123,16 +123,16 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <div className="container mx-auto px-4 py-20">
+        <div className="container px-4 py-20 mx-auto">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-8 text-center text-3xl font-bold"
+            className="mb-8 text-3xl font-bold text-center"
           >
             Projects
           </motion.h2>
-          <Tabs defaultValue="personal" className="mx-auto max-w-3xl">
+          <Tabs defaultValue="personal" className="max-w-3xl mx-auto">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="personal">個人プロジェクト</TabsTrigger>
               <TabsTrigger value="client">受託開発</TabsTrigger>
