@@ -7,7 +7,7 @@ import { Card } from '@repo/ui/components/card'
 import { CircleDot } from '@repo/ui/icon/lucide'
 import { motion } from 'framer-motion'
 
-import { TimelineItem } from './type'
+import { TimelineItem } from '../type'
 
 export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
   return (

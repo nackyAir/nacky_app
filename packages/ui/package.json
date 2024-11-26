@@ -34,7 +34,7 @@
   },
   "exports": {
     "./icon/*": "./src/icons/*.tsx",
-    "./lib/*": "./src/lib/**",
+    "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/ui/*.tsx",
     "./globals.css": "./src/globals.css",
     "./postcss.config": "./postcss.config.js",
