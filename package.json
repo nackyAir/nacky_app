@@ -3,11 +3,12 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "pnpm with-env turbo dev",
     "lint": "turbo lint",
-    "clean": "pnpm dotenv -e .env.local -- turbo run clean",
+    "clean": "pnpm with-env turbo run clean",
     "fmt": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "with-env": "dotenv -e .env.local --"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
@@ -28,5 +29,8 @@
       "prettier --check",
       ""
     ]
+  },
+  "dependencies": {
+    "dotenv-cli": "^7.4.4"
   }
 }

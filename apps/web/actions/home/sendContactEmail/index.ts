@@ -7,13 +7,17 @@ import { createSafeAction } from '~/lib/create-safe-action'
 
 const contactEmailSchema = z.object({
   userName: z.string(),
+  email: z.string().email(),
+  phoneNumber: z.string(),
   inquiryContent: z.string(),
   inquiryType: z.string(),
-  email: z.string().email(),
+  privacyPolicy: z.boolean(),
 })
 
 export async function handler(data: z.infer<typeof contactEmailSchema>) {
-  const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY || '')
+  const resend = new Resend({
+    apiKey: process.env.NEXT_PUBLIC_RESEND_API_KEY as string,
+  })
 
   try {
     await resend.sendEmail(data)

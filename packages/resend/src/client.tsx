@@ -7,16 +7,18 @@ import AutoReplyEmail from '../emails/contactForm'
 
 type SendEmailProps = {
   userName: string
+  email: string
+  phoneNumber: string
   inquiryContent: string
   inquiryType: string
-  email: string
+  privacyPolicy: boolean
 }
 
 export class Resend {
-  private readonly client: Client
+  public readonly client: Client
 
-  constructor(apiKey: string) {
-    this.client = new Client(apiKey)
+  constructor(opts: { apiKey: string }) {
+    this.client = new Client(opts.apiKey)
   }
 
   public async sendEmail(props: SendEmailProps) {
@@ -24,9 +26,9 @@ export class Resend {
 
     try {
       const res = await this.client.emails.send({
-        from: 'onboarding@resend.dev',
-        to: 'delivered@resend.dev',
-        subject: 'Hello world',
+        from: '林田 直樹 <no-reply@nacky.me>',
+        to: props.email,
+        subject: 'お問い合わせありがとうございます',
         html,
       })
 

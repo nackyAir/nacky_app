@@ -4,17 +4,19 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": ["NEXT_PUBLIC_*", "!NEXT_PUBLIC_VERCEL_*"]
     },
     "lint": {
       "dependsOn": ["^lint"]
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "env": ["RESEND_API_KEY"]
     },
     "clean": {
       "cache": false
     }
-  }
+  },
+  "globalEnv": ["NEXT_PUBLIC_*", "!NEXT_PUBLIC_VERCEL_*", "RESEND_API_KEY"]
 }
