@@ -3,7 +3,7 @@
 import { Resend } from '@repo/resend'
 import { z } from 'zod'
 
-import { useSafeActions } from '~/lib/create-safe-action'
+import { createSafeAction } from '~/lib/create-safe-action'
 
 const contactEmailSchema = z.object({
   userName: z.string(),
@@ -23,13 +23,12 @@ export async function handler(data: z.infer<typeof contactEmailSchema>) {
     }
   } catch (e: unknown) {
     return {
-      data: 'error',
-      error: e instanceof Error ? e.message : '不明なエラーが発生しました',
+      error: '不明なエラーが発生しました',
     }
   }
 }
 
-export const sendContactEmail = useSafeActions(
+export const sendContactEmail = createSafeAction(
   'sendContactEmail',
   contactEmailSchema,
   handler

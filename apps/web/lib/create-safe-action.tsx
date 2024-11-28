@@ -28,7 +28,7 @@ class ActionError extends Error {
   }
 }
 
-export function useSafeActions<TInput, TOutput>(
+export function createSafeAction<TInput, TOutput>(
   actionName: string,
   schema: z.Schema<TInput>,
   handler: (input: TInput) => Promise<ActionsState<TInput, TOutput>>
