@@ -28,13 +28,13 @@ class ActionError extends Error {
   }
 }
 
-export function useSafeAction<TInput, TOutput>(
+export function useSafeActions<TInput, TOutput>(
   actionName: string,
   schema: z.Schema<TInput>,
   handler: (input: TInput) => Promise<ActionsState<TInput, TOutput>>
 ) {
   return createSafeActionClient({
-    handleServerError: (e) => {
+    handleServerError(e) {
       if (e instanceof ActionError) {
         return {
           message: e.message,
