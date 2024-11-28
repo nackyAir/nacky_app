@@ -13,8 +13,7 @@ import { Linkedin, Twitter } from '@repo/ui/icon/lucide'
 import { Loader2 } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
 
-import { sendContactEmail } from '~/actions/home/sendContactEmail'
-import { SendEmailButton } from '~/features/Home/Button/SendEmailButton'
+import { ContactForm } from '~/features/Home/Form/ContactForm/components/ContactForm'
 import { TimelineSection } from '~/features/Home/TimeLine'
 import {
   clientProjects,
@@ -153,7 +152,7 @@ export async function HomeWrapper() {
           </div>
 
           <div className="container mx-auto px-4 py-20">
-            <SendEmailButton />
+            <ContactForm />
           </div>
         </div>
       </div>
@@ -162,9 +161,6 @@ export async function HomeWrapper() {
 }
 
 export function LoadingScreen() {
-  // ローディングのアニメーションを作成する。
-  // 背景はぼかし、中央にローディングのアニメーションを設ける。
-
   return (
     <div className="bg-background/90 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
       <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-400 border-t-transparent">

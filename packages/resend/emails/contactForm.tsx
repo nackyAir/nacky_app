@@ -21,6 +21,8 @@ type Props = {
   inquiryContent: string
   inquiryType: string
   email: string
+  phoneNumber: string
+  privacyPolicy: boolean
 }
 
 export const AutoReplyEmail = ({
@@ -28,6 +30,8 @@ export const AutoReplyEmail = ({
   inquiryContent,
   inquiryType,
   email,
+  phoneNumber,
+  privacyPolicy,
 }: Props) => (
   <Html>
     <Tailwind>

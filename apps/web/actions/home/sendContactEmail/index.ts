@@ -7,9 +7,11 @@ import { createSafeAction } from '~/lib/create-safe-action'
 
 const contactEmailSchema = z.object({
   userName: z.string(),
+  email: z.string().email(),
+  phoneNumber: z.string(),
   inquiryContent: z.string(),
   inquiryType: z.string(),
-  email: z.string().email(),
+  privacyPolicy: z.boolean(),
 })
 
 export async function handler(data: z.infer<typeof contactEmailSchema>) {
