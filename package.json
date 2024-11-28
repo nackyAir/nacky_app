@@ -3,17 +3,34 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "pnpm with-env turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "clean": "pnpm with-env turbo run clean",
+    "fmt": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky",
+    "with-env": "dotenv -e .env.local --"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "husky": "^9.1.6",
+    "lefthook": "^1.8.4",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "turbo": "^2.1.3",
     "typescript": "^5.4.5"
   },
   "packageManager": "pnpm@8.15.6",
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{tsx,ts,json}": [
+      "prettier --check",
+      ""
+    ]
+  },
+  "dependencies": {
+    "dotenv-cli": "^7.4.4"
   }
 }
