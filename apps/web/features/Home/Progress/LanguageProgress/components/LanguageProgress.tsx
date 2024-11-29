@@ -45,49 +45,51 @@ export const LanguageProgress = () => {
   }
 
   return (
-    <Card className="w-full max-w-2xl">
-      <CardHeader>
-        <CardTitle>Language Statistics</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <TooltipProvider>
-          {languages.map((lang) => (
-            <div key={lang.name} className="space-y-1.5">
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <div
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: lang.color }}
-                  />
-                  <span>{lang.name}</span>
+    <div className="mx-auto max-w-2xl">
+      <Card className="w-full max-w-2xl">
+        <CardHeader>
+          <CardTitle>Language Statistics</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <TooltipProvider>
+            {languages.map((lang) => (
+              <div key={lang.name} className="space-y-1.5">
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="h-3 w-3 rounded-full"
+                      style={{ backgroundColor: lang.color }}
+                    />
+                    <span>{lang.name}</span>
+                  </div>
+                  <span>{lang.percentage?.toFixed(1)}%</span>
                 </div>
-                <span>{lang.percentage?.toFixed(1)}%</span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Progress
+                      value={lang.percentage}
+                      className="h-2"
+                      style={
+                        {
+                          backgroundColor: `${lang.color}20`,
+                          ['--progress-background']: lang.color,
+                        } as React.CSSProperties
+                      }
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p className="text-sm">
+                      {lang.name}: {lang.percentage?.toFixed(1)}%
+                      <br />
+                      {(lang.bytes / 1024).toFixed(1)}KB
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
               </div>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Progress
-                    value={lang.percentage}
-                    className="h-2"
-                    style={
-                      {
-                        backgroundColor: `${lang.color}20`,
-                        ['--progress-background']: lang.color,
-                      } as React.CSSProperties
-                    }
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="text-sm">
-                    {lang.name}: {lang.percentage?.toFixed(1)}%
-                    <br />
-                    {(lang.bytes / 1024).toFixed(1)}KB
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          ))}
-        </TooltipProvider>
-      </CardContent>
-    </Card>
+            ))}
+          </TooltipProvider>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
