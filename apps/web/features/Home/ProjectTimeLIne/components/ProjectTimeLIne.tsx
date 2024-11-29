@@ -9,7 +9,7 @@ import { Card } from '@repo/ui/components/card'
 import { CircleDot } from '@repo/ui/icon/lucide'
 import { motion } from 'framer-motion'
 
-import { TimeLineItem } from '../type'
+import { TimeLineItem } from '~/features/Home/ProjectTimeLIne/type'
 
 export function Timeline({ items }: { items: Array<TimeLineItem> }) {
   return (

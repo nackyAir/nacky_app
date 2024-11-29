@@ -16,8 +16,8 @@ const SKILLS = [
 export const SkillBadges = () => {
   return (
     <div className="flex flex-wrap justify-center gap-4">
-      {SKILLS.map((skill) => (
-        <Badge key={skill} variant="secondary" className="px-4 py-2 text-lg">
+      {SKILLS.map((skill, index) => (
+        <Badge key={index} variant="secondary" className="px-4 py-2 text-lg">
           {skill}
         </Badge>
       ))}
