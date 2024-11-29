@@ -2,14 +2,16 @@
 
 import React from 'react'
 
+import Link from 'next/link'
+
 import { Badge } from '@repo/ui/components/badge'
 import { Card } from '@repo/ui/components/card'
 import { CircleDot } from '@repo/ui/icon/lucide'
 import { motion } from 'framer-motion'
 
-import { TimelineItem } from '../type'
+import { TimeLineItem } from '../type'
 
-export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
+export function Timeline({ items }: { items: Array<TimeLineItem> }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -46,44 +48,46 @@ export function TimelineSection({ items }: { items: Array<TimelineItem> }) {
             className="flex-1"
           >
             <Card className="border-border border p-5 transition-all duration-300 hover:shadow-lg">
-              <div className="flex flex-col space-y-3">
-                <div className="flex items-center justify-between">
-                  <motion.span
-                    whileHover={{ scale: 1.05 }}
-                    className="bg-foreground text-background rounded-full px-3 py-1 text-sm font-medium"
-                  >
-                    {item.period}
-                  </motion.span>
-                  <span className="text-foreground/70 text-sm font-medium">
-                    {item.role}
-                  </span>
-                </div>
-
-                <h3 className="text-foreground text-lg font-semibold">
-                  {item.title}
-                </h3>
-
-                <div className="flex flex-wrap gap-2">
-                  {item.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skillIndex}
+              <Link href={item.url || ''} target="_blank">
+                <div className="flex flex-col space-y-3">
+                  <div className="flex items-center justify-between">
+                    <motion.span
                       whileHover={{ scale: 1.05 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
+                      className="bg-foreground text-background rounded-full px-3 py-1 text-sm font-medium"
                     >
-                      <Badge
-                        variant="secondary"
-                        className="bg-muted text-foreground/80 hover:bg-muted/80"
-                      >
-                        {skill}
-                      </Badge>
-                    </motion.div>
-                  ))}
-                </div>
+                      {item.period}
+                    </motion.span>
+                    <span className="text-foreground/70 text-sm font-medium">
+                      {item.role}
+                    </span>
+                  </div>
 
-                <p className="text-foreground/70 pt-1 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+                  <h3 className="text-foreground text-lg font-semibold">
+                    {item.title}
+                  </h3>
+
+                  <div className="flex flex-wrap gap-2">
+                    {item.skills.map((skill, skillIndex) => (
+                      <motion.div
+                        key={skillIndex}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: 'spring', stiffness: 300 }}
+                      >
+                        <Badge
+                          variant="secondary"
+                          className="bg-muted text-foreground/80 hover:bg-muted/80"
+                        >
+                          {skill}
+                        </Badge>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <p className="text-foreground/70 pt-1 text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </Link>
             </Card>
           </motion.div>
         </motion.div>
