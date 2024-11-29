@@ -16,7 +16,7 @@ const contactEmailSchema = z.object({
 
 export async function handler(data: z.infer<typeof contactEmailSchema>) {
   const resend = new Resend({
-    apiKey: process.env.NEXT_PUBLIC_RESEND_API_KEY as string,
+    apiKey: process.env.RESEND_API_KEY as string,
   })
 
   try {
