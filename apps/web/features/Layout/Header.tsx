@@ -19,7 +19,7 @@ const Header = () => {
 
           <div className="hidden items-center gap-2 lg:flex">
             {siteConfig.map((item) => (
-              <Button variant="ghost" asChild>
+              <Button variant="ghost" asChild key={item.url}>
                 <a href={item.url} target="_blank">
                   {item.icon}
                 </a>
