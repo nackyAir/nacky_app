@@ -1,4 +1,4 @@
-import { HomeWrapper } from '~/features/Home/Wrapper'
+import { HomeWrapper } from '~/features/Home/HomeWrapper'
 
 export default function Home() {
   return <HomeWrapper />
