@@ -15,16 +15,18 @@
 pre-commit:
   parallel: true
   commands:
-    prettier:
-      glob: '**/*.{ts,tsx,css,scss,md,json}'
-      run: pnpm prettier --write {staged_files}
-
-    eslint:
-      glob: '**/*.{ts,tsx}'
-      run: pnpm eslint --fix {staged_files}
+    lint:
+      glob: '*.{js,jsx,ts,tsx,md}'
+      exclude: '(^|/)\.next/.*'
+      run: pnpm run check
 
 pre-push:
   commands:
+    check:
+      glob: '*.{js,jsx,ts,tsx,md}'
+      exclude: '(^|/)\.next/.*'
+      run: pnpm check
+
     lint:
       run: pnpm lint
 

@@ -7,14 +7,12 @@
     "lint": "turbo lint",
     "clean": "pnpm with-env turbo run clean",
     "fmt": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky",
+    "check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "with-env": "dotenv -e .env.local --"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "husky": "^9.1.6",
     "lefthook": "^1.8.4",
-    "lint-staged": "^15.2.10",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "turbo": "^2.1.3",
