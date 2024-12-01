@@ -17,5 +17,6 @@
     "Hayashida",
     "tailwindcss",
     "sonner"
-  ]
+  ],
+  "cSpell.ignorePaths": [".env.local", ".github", ".husky"]
 }
