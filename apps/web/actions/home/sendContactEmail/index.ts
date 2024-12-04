@@ -7,6 +7,7 @@ import { createSafeAction } from '~/lib/create-safe-action'
 
 const contactEmailSchema = z.object({
   userName: z.string(),
+  companyName: z.string().optional(),
   email: z.string().email(),
   phoneNumber: z.string(),
   inquiryContent: z.string(),
