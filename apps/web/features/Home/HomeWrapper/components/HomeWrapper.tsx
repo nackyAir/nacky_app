@@ -5,9 +5,9 @@ import { Loader2 } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
 
 import { siteConfig } from '~/config/siteConfig'
-import { ContactForm } from '~/features/Home/Form/ContactForm/components/ContactForm'
-import { LanguageProgress } from '~/features/Home/Progress/LanguageProgress'
-import { ProjectTabs } from '~/features/Home/ProjectTabs/components/ProjectTabs'
+import { ContactForm } from '~/features/Home/ContactForm'
+import { LanguageProgress } from '~/features/Home/LanguageProgress'
+import { ProjectTabs } from '~/features/Home/ProjectTabs'
 import { SkillBadges } from '~/features/Home/SkillBadges'
 import { SocialLinks } from '~/features/Home/SocialLinks'
 
@@ -17,49 +17,48 @@ const ANIMATION_CONFIG = {
   transition: { duration: 0.5 },
 } as const
 
-interface SectionProps {
+type SectionProps = {
   title: string
   children: React.ReactNode
   className?: string
   delay?: number
 }
 
-const Section = ({
-  title,
-  children,
-  className = '',
-  delay = 0,
-}: SectionProps) => (
-  <div className={`container mx-auto px-4 py-20 ${className}`}>
-    <motion.h2
-      {...ANIMATION_CONFIG}
-      className="mb-8 text-center text-3xl font-bold"
-    >
-      {title}
-    </motion.h2>
-    <motion.div {...ANIMATION_CONFIG} transition={{ duration: 0.5, delay }}>
-      {children}
-    </motion.div>
-  </div>
-)
+function Section({ title, children, className = '', delay = 0 }: SectionProps) {
+  return (
+    <div className={`container mx-auto px-4 py-20 ${className}`}>
+      <motion.h2
+        {...ANIMATION_CONFIG}
+        className="mb-8 text-center text-3xl font-bold"
+      >
+        {title}
+      </motion.h2>
+      <motion.div {...ANIMATION_CONFIG} transition={{ duration: 0.5, delay }}>
+        {children}
+      </motion.div>
+    </div>
+  )
+}
 
-const Profile = () => (
-  <div className="flex min-h-screen items-center justify-center">
-    <motion.div
-      {...ANIMATION_CONFIG}
-      className="flex flex-col items-center justify-center text-center"
-    >
-      <Avatar className="my-4 size-40 border-2 border-slate-400">
-        <AvatarImage src="./avatarImage.jpg" alt="Naoki Hayashida" />
-      </Avatar>
-      <h1 className="mb-4 text-4xl font-bold">Naoki Hayashida</h1>
-      <p className="mb-8 text-xl">フロントエンドエンジニア</p>
-      <SocialLinks config={siteConfig} />
-    </motion.div>
-  </div>
-)
+function Profile() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <motion.div
+        {...ANIMATION_CONFIG}
+        className="flex flex-col items-center justify-center text-center"
+      >
+        <Avatar className="my-4 size-40 border-2 border-slate-400">
+          <AvatarImage src="./avatarImage.jpg" alt="Naoki Hayashida" />
+        </Avatar>
+        <h1 className="mb-4 text-4xl font-bold">Naoki Hayashida</h1>
+        <p className="mb-8 text-xl">フロントエンドエンジニア</p>
+        <SocialLinks config={siteConfig} />
+      </motion.div>
+    </div>
+  )
+}
 
-export const HomeWrapper = () => {
+export function HomeWrapper() {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <div className="bg-background text-foreground min-h-screen">
@@ -93,10 +92,12 @@ export const HomeWrapper = () => {
   )
 }
 
-const LoadingScreen = () => (
-  <div className="bg-background/90 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
-    <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-400 border-t-transparent">
-      <Loader2 className="h-5 w-5" />
+function LoadingScreen() {
+  return (
+    <div className="bg-background/90 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+      <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-400 border-t-transparent">
+        <Loader2 className="h-5 w-5" />
+      </div>
     </div>
-  </div>
-)
+  )
+}

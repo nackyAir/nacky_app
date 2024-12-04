@@ -7,6 +7,7 @@ import AutoReplyEmail from '../emails/contactForm'
 
 type SendEmailProps = {
   userName: string
+  companyName?: string | null
   email: string
   phoneNumber: string
   inquiryContent: string
