@@ -47,7 +47,7 @@ export function Timeline({ items }: { items: Array<TimeLineItem> }) {
             transition={{ type: 'spring', stiffness: 300 }}
             className="flex-1"
           >
-            <Card className="border-border border p-5 transition-all duration-300 hover:shadow-lg">
+            <Card className="border p-5 transition-all duration-300 hover:shadow-lg">
               <Link href={item.url || ''} target="_blank">
                 <div className="flex flex-col space-y-3">
                   <div className="flex items-center justify-between">
