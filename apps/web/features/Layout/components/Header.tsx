@@ -6,7 +6,7 @@ import { Button } from '@repo/ui/components/button'
 
 import { siteConfig } from '~/config/siteConfig'
 
-const Header = () => {
+export const Header = () => {
   return (
     <header className="bg-background/80 fixed left-0 right-0 top-0 z-40 flex w-full border-b border-gray-200 backdrop-blur-sm">
       <div className="container mx-auto">
@@ -31,5 +31,3 @@ const Header = () => {
     </header>
   )
 }
-
-export default Header
