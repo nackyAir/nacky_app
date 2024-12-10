@@ -25,51 +25,13 @@ import { Textarea } from '@repo/ui/components/textarea'
 import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { z } from 'zod'
 
 import { sendContactEmail } from '~/actions/home/sendContactEmail'
+import {
+  ContactFormType,
+  contactFormSchema,
+} from '~/features/Home/ContactForm/schema'
 
-const contactFormSchema = z.object({
-  userName: z
-    .string()
-    .min(1, { message: '名前を入力して下さい' })
-    .max(50, { message: '名前は50文字以内で入力してください' })
-    .regex(/^[^\d]+$/, { message: '名前に数字を含めることはできません' }),
-
-  companyName: z
-    .string()
-    .max(50, { message: '会社名は50文字以内で入力してください' })
-    .optional(),
-
-  email: z
-    .string()
-    .min(1, { message: 'メールアドレスを入力してください' })
-    .email({ message: '有効なメールアドレスを入力してください' })
-    .max(100, { message: 'メールアドレスは100文字以内で入力してください' }),
-
-  phoneNumber: z
-    .string()
-    .regex(/^[0-9-]*$/, { message: '有効な電話番号を入力してください' })
-    .min(10, { message: '電話番号は10桁以上で入力してください' })
-    .max(15, { message: '電話番号は15桁以内で入力してください' }),
-
-  inquiryType: z.enum(['inquiry', 'recruit', 'other'], {
-    required_error: 'お問い合わせ種別を選択してください',
-  }),
-
-  inquiryContent: z
-    .string()
-    .min(1, { message: '内容は必須項目です' })
-    .max(1000, { message: 'メッセージは1000文字以内で入力してください' }),
-
-  privacyPolicy: z.boolean().refine((val) => val === true, {
-    message: 'プライバシーポリシーに同意する必要があります',
-  }),
-})
-
-type ContactFormType = z.infer<typeof contactFormSchema>
-
-// 必須バッジのコンポーネント化
 const RequiredBadge = () => (
   <span className="rounded-md bg-blue-100 px-2 py-0.5 text-[10px] font-medium text-blue-700">
     必須
@@ -85,6 +47,7 @@ export function ContactForm() {
       userName: '',
       companyName: '',
       email: '',
+      confirmEmail: '',
       phoneNumber: '',
       inquiryContent: '',
       inquiryType: 'inquiry',
@@ -96,6 +59,7 @@ export function ContactForm() {
   const { executeAsync } = useAction(sendContactEmail, {
     onSuccess: () => {
       toast.success('送信が完了しました')
+      form.reset()
     },
     onError: () => {
       toast.error('送信に失敗しました。', {
@@ -121,6 +85,7 @@ export function ContactForm() {
         loading: '送信中...',
       }
     )
+
     setLoading(false)
   }
 
@@ -195,6 +160,30 @@ export function ContactForm() {
                         <div className="flex items-center gap-2">
                           <FormLabel className="text-sm font-semibold text-gray-700">
                             メールアドレス
+                          </FormLabel>
+                          <RequiredBadge />
+                        </div>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="email"
+                            className="border-input w-full bg-white/50"
+                            placeholder="example@example.com"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="confirmEmail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex items-center gap-2">
+                          <FormLabel className="text-sm font-semibold text-gray-700">
+                            メールアドレス（確認用）
                           </FormLabel>
                           <RequiredBadge />
                         </div>
@@ -304,7 +293,7 @@ export function ContactForm() {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="text-sm font-medium text-gray-700">
-                            プライバシーポリシーに同意する
+                            個人情報に関する同意
                           </FormLabel>
                           <FormMessage />
                         </div>
