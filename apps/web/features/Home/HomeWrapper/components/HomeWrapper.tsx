@@ -1,7 +1,6 @@
 import { Suspense } from 'react'
 
 import { Avatar, AvatarImage } from '@repo/ui/components/avatar'
-import { Loader2 } from '@repo/ui/icon/lucide'
 import * as motion from 'framer-motion/client'
 
 import { siteConfig } from '~/config/siteConfig'
@@ -10,6 +9,7 @@ import { LanguageProgress } from '~/features/Home/LanguageProgress'
 import { ProjectTabs } from '~/features/Home/ProjectTabs'
 import { SkillBadges } from '~/features/Home/SkillBadges'
 import { SocialLinks } from '~/features/Home/SocialLinks'
+import { LoadingScreen } from '~/features/Layout'
 
 const ANIMATION_CONFIG = {
   initial: { opacity: 0, y: 20 },
@@ -89,15 +89,5 @@ export function HomeWrapper() {
         </Section>
       </div>
     </Suspense>
-  )
-}
-
-function LoadingScreen() {
-  return (
-    <div className="bg-background/90 fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-400 border-t-transparent">
-        <Loader2 className="h-5 w-5" />
-      </div>
-    </div>
   )
 }
