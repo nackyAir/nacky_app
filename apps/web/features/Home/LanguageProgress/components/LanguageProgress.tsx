@@ -19,7 +19,7 @@ import { Loader2 } from '@repo/ui/icons/lucide'
 
 import { useGithubLanguages } from '../hooks/useGithubLanguages'
 
-export const LanguageProgress = () => {
+export function LanguageProgress() {
   const { languages, isLoading, error } = useGithubLanguages('nackyAir')
 
   if (isLoading) {
