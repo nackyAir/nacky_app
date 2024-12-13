@@ -13,7 +13,7 @@ const SKILLS = [
   'Nest',
 ] as const
 
-export const SkillBadges = () => {
+export function SkillBadges() {
   return (
     <div className="flex flex-wrap justify-center gap-4">
       {SKILLS.map((skill) => (
