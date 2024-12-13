@@ -1,6 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ]
+  "extends": ["config:recommended"],
+
+  "packageRules": [
+    {
+      "matchFileNames": ["apps/**"],
+      "groupName": "apps"
+    },
+    {
+      "matchFileNames": ["packages/**"],
+      "groupName": "packages"
+    },
+    {
+      "groupName": "root",
+      "matchFileNames": ["**"]
+    }
+  ],
+  "schedule": ["every weekend"]
 }
