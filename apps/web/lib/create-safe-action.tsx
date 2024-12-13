@@ -56,8 +56,9 @@ export function createSafeAction<TInput, TOutput>(
       actionName,
     })
     .schema(schema, {
-      handleValidationErrorsShape: (ve) =>
-        flattenValidationErrors(ve).fieldErrors as FieldErrors<TInput>,
+      handleValidationErrorsShape: (ve) => {
+        return flattenValidationErrors(ve).fieldErrors as FieldErrors<TInput>
+      },
     })
 
     .action(async ({ parsedInput }) => {
