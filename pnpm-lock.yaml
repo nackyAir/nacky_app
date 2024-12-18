@@ -43,7 +43,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
       autoprefixer:
-        specifier: ^10.4.20
+        specifier: ^10.4.14
         version: 10.4.20(postcss@8.4.49)
       framer-motion:
         specifier: ^11.11.11
@@ -55,7 +55,7 @@ importers:
         specifier: ^7.9.9
         version: 7.10.2(next@15.1.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(zod@3.24.1)
       postcss:
-        specifier: ^8.4.47
+        specifier: ^8.4.21
         version: 8.4.49
       react:
         specifier: 19.0.0
@@ -70,7 +70,7 @@ importers:
         specifier: ^1.7.0
         version: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       tailwindcss:
-        specifier: ^3.4.13
+        specifier: ^3.3.0
         version: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2))
       zod:
         specifier: ^3.23.8
@@ -245,7 +245,7 @@ importers:
         specifier: ^2.10.3
         version: 2.10.3
       autoprefixer:
-        specifier: ^10.4.20
+        specifier: ^10.4.14
         version: 10.4.20(postcss@8.4.49)
       class-variance-authority:
         specifier: ^0.7.0
@@ -260,7 +260,7 @@ importers:
         specifier: ^0.447.0
         version: 0.447.0(react@19.0.0)
       postcss:
-        specifier: ^8.4.47
+        specifier: ^8.4.21
         version: 8.4.49
       react:
         specifier: ^19.0.0
@@ -272,7 +272,7 @@ importers:
         specifier: ^2.5.3
         version: 2.5.5
       tailwindcss:
-        specifier: ^3.4.13
+        specifier: ^3.3.0
         version: 3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2))
       tailwindcss-animate:
         specifier: ^1.0.7
