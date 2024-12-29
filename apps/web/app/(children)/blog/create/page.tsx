@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 
 import { RichEditor } from '@repo/ui/components/RichTextEditor'
 import { Button } from '@repo/ui/components/button'
