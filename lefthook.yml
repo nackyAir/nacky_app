@@ -32,3 +32,11 @@ pre-push:
 
     build:
       run: pnpm build
+
+post-merge:
+  commands:
+    install:
+      run: pnpm install
+
+    build:
+      run: pnpm build
