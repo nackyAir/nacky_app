@@ -31,7 +31,7 @@ import { Toggle } from '../../components/ui/toggle'
 
 const lowlight = createLowlight(common)
 
-export function RichEditor() {
+export function RichTextEditor() {
   const [imageUrl, setImageUrl] = useState('')
 
   const editor = useEditor({
