@@ -29,9 +29,14 @@ import {
 } from '../../components/ui/popover'
 import { Toggle } from '../../components/ui/toggle'
 
+type RichTextEditorProps = {
+  content: string
+  onChange: (value: string) => void
+}
+
 const lowlight = createLowlight(common)
 
-export function RichTextEditor() {
+export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
   const [imageUrl, setImageUrl] = useState('')
 
   const editor = useEditor({
@@ -47,12 +52,16 @@ export function RichTextEditor() {
         lowlight,
       }),
     ],
-    content: '<p>Hello World! 🌎️</p>',
+    content,
     editorProps: {
       attributes: {
         class:
           'prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
       },
+    },
+
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML())
     },
   })
 
