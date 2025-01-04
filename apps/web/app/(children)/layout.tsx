@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Header />
       </Suspense>
 
-      <main className="flex-1">{children}</main>
+      <main className="my-20 flex-1">{children}</main>
     </div>
   )
 }

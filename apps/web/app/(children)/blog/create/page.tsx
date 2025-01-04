@@ -31,7 +31,6 @@ export default function CreateBlogPage() {
             </label>
             <Input
               type="text"
-              id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter your blog title"
@@ -50,9 +49,10 @@ export default function CreateBlogPage() {
               <RichEditor />
             </div>
           </div>
-          <Button type="submit" className="w-full">
-            Publish Blog Post
-          </Button>
+
+          <div className="flex justify-center">
+            <Button type="submit">Publish Blog Post</Button>
+          </div>
         </form>
       </div>
     </Suspense>
