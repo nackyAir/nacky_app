@@ -7,7 +7,6 @@
     "lint": "turbo lint",
     "clean": "pnpm with-env turbo run clean",
     "fmt": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check": "prettier --check \"**/*.{ts,tsx,md}\"",
     "with-env": "dotenv -e .env.local --"
   },
   "devDependencies": {

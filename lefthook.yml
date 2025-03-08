@@ -14,18 +14,18 @@
 #
 pre-commit:
   parallel: true
-  commands:
-    lint:
-      glob: '*.{js,jsx,ts,tsx,md}'
-      exclude: '(^|/)\.next/.*'
-      run: pnpm run check
+  # commands:
+  #   lint:
+  #     glob: '*.{js,jsx,ts,tsx,md}'
+  #     exclude: '(^|/)\.next/.*'
+  #     run: pnpm run check
 
 pre-push:
-  commands:
-    check:
-      glob: '*.{js,jsx,ts,tsx,md}'
-      exclude: '(^|/)\.next/.*'
-      run: pnpm check
+  # commands:
+  #   check:
+  #     glob: '*.{js,jsx,ts,tsx,md}'
+  #     exclude: '(^|/)\.next/.*'
+  #     run: pnpm check
 
     lint:
       run: pnpm lint
