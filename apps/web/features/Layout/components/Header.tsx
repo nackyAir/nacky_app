@@ -12,7 +12,7 @@ export const Header = () => {
       <div className="container mx-auto">
         <div className="flex h-16 items-center justify-center lg:justify-between">
           <div className="flex items-center">
-            <Link href="/home" className="text-xl font-bold">
+            <Link href="/home" className={"text-xl font-bold"}>
               Naoki Hayashida
             </Link>
           </div>

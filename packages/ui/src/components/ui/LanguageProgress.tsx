@@ -28,7 +28,7 @@ const LanguageProgress = React.forwardRef<
     <ProgressPrimitive.Root
       ref={ref}
       className={cn(
-        'bg-secondary relative h-6 w-full overflow-hidden rounded',
+        'bg-secondary relative h-6 w-full overflow-hidden rounded-xs',
         className
       )}
       {...props}
