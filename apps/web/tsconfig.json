@@ -24,7 +24,7 @@
       "~/*": ["./*"],
       "@repo/ui/components/*": ["../../packages/ui/src/components/ui/*"],
       "@repo/ui/icons/*": ["../../packages/ui/src/icons/*"],
-      "@repo/ui/utils/*": ["../../packages/ui/src/utils/*"],
+      "@repo/ui/utils/*": ["../../packages/ui/src/lib/*.ts"],
       "@repo/resend/*": ["../../packages/resend/src/*"]
     }
   },
