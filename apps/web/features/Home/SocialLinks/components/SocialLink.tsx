@@ -11,7 +11,7 @@ export function SocialLinks({ config }: SocialLinksProps) {
     <div className="flex flex-row gap-4 justify-center">
       {config.map((item) => (
         <Button key={item.value} variant="outline" size="icon" asChild>
-          <a href={item.url} target="_blank" rel="noopener noreferrer">
+          <a href={item.url} target="_blank" >
             {item.icon}
           </a>
         </Button>
