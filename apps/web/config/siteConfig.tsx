@@ -15,7 +15,7 @@ export const siteConfig: SiteConfig = [
   },
   {
     value: 'Github',
-    icon: <CustomIcons.Github className="size-12" />,
+    icon: <CustomIcons.Github className="size-6" />,
     url: 'https://github.com/nackyAir',
   },
 ]
