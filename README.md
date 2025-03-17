@@ -1,81 +1,71 @@
-# Turborepo starter
+# Naoki Hayashida Portfolioです🚀
 
-This is an official starter Turborepo.
+## 概要
+プロジェクトの簡潔な説明。何を解決するためのアプリケーションか、主な機能は何かなど。
 
-## Using this example
+## 技術スタック
+- [Next.js](https://nextjs.org/) - Appルーター採用のReactフレームワーク
+- [Supabase](https://supabase.com/) - バックエンドサービス（認証、データベース、ストレージ）
+- [TypeScript](https://www.typescriptlang.org/) - 型安全な開発環境
+- [Tailwind CSS](https://tailwindcss.com/) - ユーティリティファーストCSSフレームワーク
+- [Zod](https://zod.dev/) - スキーマ検証ライブラリ
+- [shadcnUI](https://ui.shadcn.com/) - UIコンポーネントライブラリ
 
-Run the following command:
+## 開発環境のセットアップ
 
-```sh
-npx create-turbo@latest
+### 前提条件
+- Node.js 20.x以上
+- pnpm 8.x以上
+
+### インストール手順
+1. リポジトリをクローン
+```bash
+git clone https://github.com/nackyAir/nacky_app.git
+cd nacky_app
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+2. 依存関係のインストール
+```bash
+pnpm install
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
+4. 開発サーバーの起動
+```bash
 pnpm dev
 ```
 
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+## プロジェクト構造
+```
+├── apps/                 # アプリケーションディレクトリ
+│   ├── web/              # メインのWebアプリケーション
+│   │   ├── app/          # Appルーターのルート
+│   │   │   ├── (auth)/   # 認証関連のルート
+│   │   │   ├── (dashboard)/ # ダッシュボード関連のルート
+│   │   │   ├── api/      # APIルート
+│   │   │   └── layout.tsx # ルートレイアウト
+│   │   ├── components/   # アプリ固有のコンポーネント
+│   │   ├── lib/          # アプリ固有のユーティリティ
+│   │   ├── public/       # 静的ファイル
+│   │   └── types/        # アプリ固有の型定義
+├── packages/             # 共有パッケージディレクトリ
+│   ├── ui/               # 共有UIコンポーネントライブラリ
+│   │   ├── components/   # shadcnのUIコンポーネント
+│   ├── tsconfig/         # 共有TypeScript設定
+│   └── utils/            # 共有ユーティリティ関数
 
 ```
-cd my-turborepo
-npx turbo login
-```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 主な機能
+- 機能1の説明
+- 機能2の説明
+- 機能3の説明
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## デプロイ
+Vercelへのデプロイ手順：
+1. [Vercel](https://vercel.com)でアカウントを作成
+2. リポジトリを接続
+3. 環境変数を設定
+4. デプロイボタンをクリック
 
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## ライセンス
+[MIT](LICENSE)
