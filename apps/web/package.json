@@ -14,7 +14,7 @@
     "@repo/ui": "workspace:*",
     "autoprefixer": "^10.4.14",
     "framer-motion": "^12.0.0",
-    "next": "15.2.1",
+    "next": "15.2.3",
     "next-safe-action": "^7.9.9",
     "postcss": "^8.4.21",
     "react": "19.0.0",
