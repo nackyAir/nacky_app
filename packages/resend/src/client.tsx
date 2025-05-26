@@ -25,21 +25,22 @@ export class Resend {
   public async sendEmail(props: SendEmailProps) {
     const html = await render(<AutoReplyEmail {...props} />)
 
+    // 開発環境では onboarding@resend.dev を使用
+    const fromAddress = process.env.NODE_ENV === 'production' 
+      ? '林田 直樹 <no-reply@nacky.me>'
+      : 'Naoki Hayashida <onboarding@resend.dev>'
+
     try {
       const res = await this.client.emails.send({
-        from: '林田 直樹 <no-reply@nacky.me>',
+        from: fromAddress,
         to: props.email,
         subject: 'お問い合わせありがとうございます',
         html,
       })
 
-      if (!res.error) {
-        return
-      }
-
-      throw res.error
+      return res
     } catch (error) {
-      console.error(error)
+      throw error
     }
   }
 }

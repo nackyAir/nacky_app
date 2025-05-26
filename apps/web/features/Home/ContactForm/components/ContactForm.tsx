@@ -61,19 +61,24 @@ export function ContactForm() {
     onSuccess: () => {
       toast.success('送信が完了しました')
       form.reset()
+      setLoading(false)
     },
-    onError: () => {
+    onError: (error) => {
+      const errorMessage = typeof error.error?.serverError === 'string' 
+        ? error.error.serverError 
+        : 'しばらくしてから再度お試しください。'
       toast.error('送信に失敗しました。', {
-        description: `しばらくしてから再度お試しください。`,
+        description: errorMessage,
       })
+      setLoading(false)
     },
   })
 
   const onSubmit = async (data: ContactFormType) => {
     setLoading(true)
 
-    toast.promise(
-      executeAsync({
+    try {
+      const result = await executeAsync({
         userName: data.userName,
         companyName: data.companyName,
         email: data.email,
@@ -81,13 +86,15 @@ export function ContactForm() {
         inquiryType: data.inquiryType,
         inquiryContent: data.inquiryContent,
         privacyPolicy: data.privacyPolicy,
-      }),
-      {
-        loading: '送信中...',
-      }
-    )
+      })
 
-    setLoading(false)
+      if (!result?.data) {
+        // 送信処理は完了したが、想定と異なるレスポンス
+        setLoading(false)
+      }
+    } catch (err) {
+      setLoading(false)
+    }
   }
 
   return (
