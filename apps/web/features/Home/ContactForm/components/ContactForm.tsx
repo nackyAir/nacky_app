@@ -26,7 +26,7 @@ import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as motion from 'framer-motion/client'
-import { Send, Plane } from 'lucide-react'
+import { Send, Plane } from '@repo/ui/icons/lucide'
 
 import { sendContactEmail } from '~/actions/home/sendContactEmail'
 import {
