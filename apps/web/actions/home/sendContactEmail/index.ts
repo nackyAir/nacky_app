@@ -16,17 +16,40 @@ const contactEmailSchema = z.object({
 })
 
 export async function handler(data: z.infer<typeof contactEmailSchema>) {
+  // Server Actionでは通常の環境変数のみを使用（セキュア）
+  const apiKey = process.env.RESEND_API_KEY
+
+  if (!apiKey) {
+    return {
+      error: 'メール送信サービスが設定されていません',
+    }
+  }
+
+  const cleanApiKey = apiKey.trim().replace(/[\n\r]/g, '')
+
   const resend = new Resend({
-    apiKey: process.env.RESEND_API_KEY as string,
+    apiKey: cleanApiKey,
   })
 
   try {
-    await resend.sendEmail(data)
+    const result = await resend.sendEmail(data)
+    
+    if (result.autoReply.error) {
+      return {
+        error: `メール送信に失敗しました: ${result.autoReply.error.message || result.autoReply.error}`,
+      }
+    }
 
     return {
       data: 'success',
     }
   } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        error: `送信エラー: ${e.message}`,
+      }
+    }
+    
     return {
       error: '不明なエラーが発生しました',
     }

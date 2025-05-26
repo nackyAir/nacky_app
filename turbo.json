@@ -12,11 +12,11 @@
     },
     "dev": {
       "cache": false,
-      "env": ["RESEND_API_KEY"]
+      "env": ["RESEND_API_KEY", "ADMIN_EMAIL"]
     },
     "clean": {
       "cache": false
     }
   },
-  "globalEnv": ["NEXT_PUBLIC_*", "!NEXT_PUBLIC_VERCEL_*", "RESEND_API_KEY"]
+  "globalEnv": ["NEXT_PUBLIC_*", "!NEXT_PUBLIC_VERCEL_*", "RESEND_API_KEY", "ADMIN_EMAIL"]
 }
