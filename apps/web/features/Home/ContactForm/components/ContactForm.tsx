@@ -26,6 +26,7 @@ import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as motion from 'framer-motion/client'
+import { Send, Plane } from 'lucide-react'
 
 import { sendContactEmail } from '~/actions/home/sendContactEmail'
 import {
@@ -41,6 +42,7 @@ const RequiredBadge = () => (
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false)
+  const [showPlaneAnimation, setShowPlaneAnimation] = useState(false)
 
   const form = useForm<ContactFormType>({
     resolver: zodResolver(contactFormSchema),
@@ -59,9 +61,23 @@ export function ContactForm() {
 
   const { executeAsync } = useAction(sendContactEmail, {
     onSuccess: () => {
-      toast.success('送信が完了しました')
+      // 飛行機アニメーションを開始
+      setShowPlaneAnimation(true)
+      
+      // 1秒後にトーストを表示（飛行機が飛んだ後）
+      setTimeout(() => {
+        toast.success('送信が完了しました', {
+          description: 'メッセージが正常に送信されました ✈️',
+        })
+      }, 1000)
+      
       form.reset()
       setLoading(false)
+      
+      // 3秒後にアニメーションを非表示
+      setTimeout(() => {
+        setShowPlaneAnimation(false)
+      }, 3000)
     },
     onError: (error) => {
       const errorMessage = typeof error.error?.serverError === 'string' 
@@ -98,7 +114,105 @@ export function ContactForm() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto relative">
+      {/* 飛行機フライトアニメーション */}
+      {showPlaneAnimation && (
+        <motion.div
+          className="fixed inset-0 pointer-events-none z-50 overflow-hidden"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          {/* 飛行機本体 */}
+          <motion.div
+            className="absolute top-1/2 -left-20"
+            initial={{ 
+              x: -100, 
+              y: 0,
+              rotate: -15,
+              scale: 0.8,
+            }}
+            animate={{ 
+              x: [0, window.innerWidth + 100],
+              y: [0, -50, -30, -80, -40],
+              rotate: [-15, -10, -5, 0, 5],
+              scale: [0.8, 1, 1.2, 1, 0.8],
+            }}
+            transition={{
+              duration: 2.5,
+              ease: "easeInOut",
+              times: [0, 0.3, 0.6, 0.8, 1]
+            }}
+          >
+            <Plane className="w-12 h-12 text-blue-600 drop-shadow-lg" />
+          </motion.div>
+          
+          {/* 飛行機雲効果 */}
+          <motion.div
+            className="absolute top-1/2 -left-20"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ 
+              x: [50, window.innerWidth - 100],
+              opacity: [0, 0.6, 0.8, 0.4, 0]
+            }}
+            transition={{
+              duration: 2.5,
+              delay: 0.2,
+              ease: "easeOut"
+            }}
+          >
+            <div className="flex space-x-2">
+              {[...Array(5)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-8 h-2 bg-white/40 rounded-full"
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{ 
+                    scaleX: [0, 1, 0.8, 0.5, 0],
+                    opacity: [0, 0.8, 0.6, 0.3, 0]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    delay: i * 0.1,
+                    ease: "easeOut"
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+          
+          {/* キラキラ効果 */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute"
+              style={{
+                left: `${20 + i * 15}%`,
+                top: `${45 + Math.sin(i) * 10}%`,
+              }}
+              initial={{ 
+                scale: 0, 
+                opacity: 0,
+                rotate: 0 
+              }}
+              animate={{ 
+                scale: [0, 1, 0.5, 0],
+                opacity: [0, 1, 0.8, 0],
+                rotate: [0, 180, 360],
+                y: [0, -20, -10, -30]
+              }}
+              transition={{
+                duration: 2,
+                delay: 0.3 + i * 0.1,
+                ease: "easeOut"
+              }}
+            >
+              <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-lg animate-pulse" />
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -328,9 +442,38 @@ export function ContactForm() {
                   type="submit"
                   disabled={!form.formState.isValid || loading}
                   size="lg"
-                  className="w-full sm:w-auto px-12 py-4 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="w-full sm:w-auto px-12 py-4 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors relative overflow-hidden group"
                 >
-                  {loading ? '送信中...' : '送信する'}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    initial={{ x: -30, opacity: 0 }}
+                    animate={loading ? { x: 0, opacity: 1 } : { x: -30, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Send className="w-5 h-5" />
+                  </motion.div>
+                  <motion.span
+                    initial={{ x: 0 }}
+                    animate={loading ? { x: 30 } : { x: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative flex items-center gap-2"
+                  >
+                    {!loading && <Plane className="w-5 h-5" />}
+                    {loading ? '送信中...' : '送信する'}
+                  </motion.span>
+                  {loading && (
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                      animate={{
+                        x: ['-100%', '100%'],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: 'linear',
+                      }}
+                    />
+                  )}
                 </Button>
               </div>
             </form>
