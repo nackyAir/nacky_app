@@ -48,94 +48,48 @@ function LanguageCard({ language, percentage, bytes, delay }: {
   
   return (
     <motion.div
-      initial={{ opacity: 0, x: -30, scale: 0.9 }}
-      whileInView={{ opacity: 1, x: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.6, 
-        delay, 
-        ease: [0.25, 0.1, 0.25, 1],
-        type: "spring",
-        stiffness: 100
-      }}
-      whileHover={{ 
-        scale: 1.02,
-        x: 10,
-        transition: { duration: 0.2 }
-      }}
-      className="group relative"
+      transition={{ duration: 0.5, delay }}
     >
-      {/* Glow effect */}
-      <div 
-        className="absolute -inset-2 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500"
-        style={{ backgroundColor: config.color }}
-      ></div>
-      
-      {/* Main card */}
-      <div className="relative bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-slate-700/20 rounded-2xl p-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-        {/* Language header */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              {/* Icon background */}
-              <div 
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold shadow-lg"
-                style={{ backgroundColor: config.color }}
-              >
-                <span className="text-2xl">{config.icon}</span>
-              </div>
-              {/* Pulse effect */}
-              <div 
-                className="absolute inset-0 rounded-xl opacity-20 animate-ping"
-                style={{ backgroundColor: config.color }}
-              ></div>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center text-white"
+              style={{ backgroundColor: config.color }}
+            >
+              <span className="text-xl">{config.icon}</span>
             </div>
             <div>
-              <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+              <h3 className="font-semibold text-slate-900 dark:text-white">
                 {language}
               </h3>
-              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 {config.category}
               </p>
             </div>
           </div>
           <div className="text-right">
-            <div className="text-2xl font-black text-slate-900 dark:text-white">
+            <div className="text-lg font-semibold text-slate-900 dark:text-white">
               {percentage.toFixed(1)}%
             </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            <div className="text-xs text-slate-600 dark:text-slate-400">
               {(bytes / 1024).toFixed(1)}KB
             </div>
           </div>
         </div>
 
-        {/* Progress bar */}
-        <div className="space-y-2">
-          <div className="relative h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${percentage}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, delay: delay + 0.2, ease: "easeOut" }}
-              className="h-full rounded-full relative"
-              style={{ backgroundColor: config.color }}
-            >
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
-              {/* Highlight */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-white/40 rounded-full"></div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Category badge */}
-        <div className="absolute top-4 right-4">
-          <div 
-            className="px-2 py-1 rounded-full text-xs font-bold text-white"
-            style={{ backgroundColor: `${config.color}80` }}
-          >
-            {config.category}
-          </div>
+        <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            whileInView={{ width: `${percentage}%` }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: delay + 0.1, ease: "easeOut" }}
+            className="h-full rounded-full"
+            style={{ backgroundColor: config.color }}
+          />
         </div>
       </div>
     </motion.div>
@@ -150,20 +104,19 @@ function StatsCard({ icon: Icon, label, value, color }: {
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-      whileHover={{ scale: 1.05 }}
-      className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-700/20 rounded-xl p-6 text-center shadow-xl"
+      transition={{ duration: 0.5 }}
+      className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 text-center"
     >
-      <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl ${color} mb-3`}>
-        <Icon className="w-6 h-6 text-white" />
+      <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${color} mb-2`}>
+        <Icon className="w-5 h-5 text-white" />
       </div>
-      <div className="text-2xl font-black text-slate-900 dark:text-white mb-1">
+      <div className="text-xl font-semibold text-slate-900 dark:text-white">
         {value}
       </div>
-      <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+      <div className="text-sm text-slate-600 dark:text-slate-400">
         {label}
       </div>
     </motion.div>
@@ -216,91 +169,83 @@ export function LanguageProgress() {
   const avgPercentage = languages.reduce((acc, lang) => acc + (lang.percentage || 0), 0) / languages.length
 
   return (
-    <div className="relative max-w-6xl mx-auto">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-indigo-50/30 to-purple-50/50 dark:from-slate-900/30 dark:via-slate-800/30 dark:to-slate-900/50 rounded-3xl blur-3xl"></div>
-      
-      <div className="relative">
-        {/* Stats overview */}
+    <div className="max-w-6xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
+      >
+        <StatsCard 
+          icon={Code}
+          label="Languages"
+          value={languages.length}
+          color="bg-blue-600"
+        />
+        <StatsCard 
+          icon={TrendingUp}
+          label="Avg Usage"
+          value={`${avgPercentage.toFixed(1)}%`}
+          color="bg-blue-600"
+        />
+        <StatsCard 
+          icon={Database}
+          label="Total Code"
+          value={`${(totalBytes / 1024).toFixed(0)}KB`}
+          color="bg-blue-600"
+        />
+        <StatsCard 
+          icon={Code}
+          label="Top Lang"
+          value={languages[0]?.name || 'N/A'}
+          color="bg-blue-600"
+        />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="space-y-3"
+      >
+        {topLanguages.map((lang, index) => (
+          <LanguageCard
+            key={lang.name}
+            language={lang.name}
+            percentage={lang.percentage || 0}
+            bytes={lang.bytes}
+            delay={index * 0.05}
+          />
+        ))}
+      </motion.div>
+
+      {languages.length > 5 && (
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4"
         >
-          <StatsCard 
-            icon={Code}
-            label="Languages"
-            value={languages.length}
-            color="bg-blue-600"
-          />
-          <StatsCard 
-            icon={TrendingUp}
-            label="Avg Usage"
-            value={`${avgPercentage.toFixed(1)}%`}
-            color="bg-indigo-600"
-          />
-          <StatsCard 
-            icon={Database}
-            label="Total Code"
-            value={`${(totalBytes / 1024).toFixed(0)}KB`}
-            color="bg-purple-600"
-          />
-          <StatsCard 
-            icon={Code}
-            label="Top Lang"
-            value={languages[0]?.name || 'N/A'}
-            color="bg-emerald-600"
-          />
-        </motion.div>
-
-        {/* Language cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="space-y-4"
-        >
-          {topLanguages.map((lang, index) => (
-            <LanguageCard
-              key={lang.name}
-              language={lang.name}
-              percentage={lang.percentage || 0}
-              bytes={lang.bytes}
-              delay={index * 0.1}
-            />
-          ))}
-        </motion.div>
-
-        {/* Additional languages summary */}
-        {languages.length > 5 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-8 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-700/20 rounded-2xl p-6 shadow-xl"
-          >
-            <div className="text-center">
-              <div className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-                +{languages.length - 5} その他の言語
-              </div>
-              <div className="flex flex-wrap justify-center gap-2">
-                {languages.slice(5).map((lang) => (
-                  <span 
-                    key={lang.name}
-                    className="px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-sm text-slate-600 dark:text-slate-400"
-                  >
-                    {lang.name} ({lang.percentage?.toFixed(1)}%)
-                  </span>
-                ))}
-              </div>
+          <div className="text-center">
+            <div className="text-base font-medium text-slate-900 dark:text-white mb-2">
+              +{languages.length - 5} その他の言語
             </div>
-          </motion.div>
-        )}
-      </div>
+            <div className="flex flex-wrap justify-center gap-2">
+              {languages.slice(5).map((lang) => (
+                <span 
+                  key={lang.name}
+                  className="px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded text-sm text-slate-600 dark:text-slate-400"
+                >
+                  {lang.name} ({lang.percentage?.toFixed(1)}%)
+                </span>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
     </div>
   )
 }

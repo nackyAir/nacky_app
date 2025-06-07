@@ -87,73 +87,44 @@ const SKILLS: SkillType[] = [
 function SkillCard({ skill, delay }: { skill: SkillType; delay: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
-      whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.6, 
-        delay, 
-        ease: [0.25, 0.1, 0.25, 1],
-        type: "spring",
-        stiffness: 100
-      }}
-      whileHover={{ 
-        scale: 1.05, 
-        rotateY: 5,
-        transition: { duration: 0.2 }
-      }}
-      className="group relative"
+      transition={{ duration: 0.5, delay }}
+      className="group"
     >
-      {/* Glow effect */}
-      <div className={`absolute -inset-1 rounded-xl bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-30 blur-sm transition-all duration-500`}></div>
-      
-      {/* Main card */}
-      <div className="relative bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-white/20 dark:border-slate-700/20 rounded-xl p-6 shadow-xl group-hover:shadow-2xl transition-all duration-300">
-        {/* Skill icon and name */}
-        <div className="flex items-center gap-4 mb-4">
-          <div className="text-3xl transform group-hover:scale-110 transition-transform duration-300">
-            {skill.icon}
-          </div>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 hover:border-slate-300 dark:hover:border-slate-700 transition-colors duration-200">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="text-2xl">{skill.icon}</span>
           <div>
-            <h3 className="font-bold text-lg text-slate-900 dark:text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text transition-all duration-300" 
-                style={{ 
-                  backgroundImage: skill.color.includes('from-') 
-                    ? `linear-gradient(to right, var(--tw-gradient-stops))` 
-                    : undefined 
-                }}>
+            <h3 className="font-semibold text-slate-900 dark:text-white">
               {skill.name}
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               {skill.category}
             </p>
           </div>
         </div>
 
-        {/* Skill level */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
+            <span className="text-xs text-slate-600 dark:text-slate-400">
               Proficiency
             </span>
-            <span className="text-sm font-bold text-slate-900 dark:text-white">
+            <span className="text-xs font-medium text-slate-900 dark:text-white">
               {skill.level}%
             </span>
           </div>
-          <div className="relative h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div className="h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: `${skill.level}%` }}
               viewport={{ once: true }}
-              transition={{ duration: 1, delay: delay + 0.3, ease: "easeOut" }}
-              className={`h-full rounded-full bg-gradient-to-r ${skill.color} relative`}
-            >
-              <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-            </motion.div>
+              transition={{ duration: 0.8, delay: delay + 0.2, ease: "easeOut" }}
+              className="h-full bg-blue-600 dark:bg-blue-500 rounded-full"
+            />
           </div>
         </div>
-
-        {/* Decorative corner */}
-        <div className="absolute top-4 right-4 w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
     </motion.div>
   )
@@ -167,85 +138,66 @@ export function SkillBadges() {
   }, [])
 
   return (
-    <div className="relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 via-indigo-50/30 to-purple-50/50 dark:from-slate-900/30 dark:via-slate-800/30 dark:to-slate-900/50 rounded-3xl blur-3xl"></div>
-      
-      <div className="relative max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {SKILLS.map((skill, index) => (
+            <SkillCard 
+              key={skill.name} 
+              skill={skill} 
+              delay={index * 0.05} 
+            />
+          ))}
+        </div>
+
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6"
         >
-          {/* Tech grid background - only render on client */}
-          {isMounted && (
-            <div className="absolute inset-0 opacity-5 dark:opacity-10">
-              <div className="grid grid-cols-8 gap-4 h-full">
-                {Array.from({ length: 32 }).map((_, i) => (
-                  <div key={i} className="bg-blue-500 rounded opacity-20"></div>
-                ))}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                {SKILLS.length}
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                Technologies
               </div>
             </div>
-          )}
-
-          {/* Skills grid */}
-          <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-8">
-            {SKILLS.map((skill, index) => (
-              <SkillCard 
-                key={skill.name} 
-                skill={skill} 
-                delay={index * 0.08} 
-              />
-            ))}
+            <div>
+              <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                3+
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                Years Exp
+              </div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                {Math.round(SKILLS.reduce((acc, skill) => acc + skill.level, 0) / SKILLS.length)}%
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                Avg Proficiency
+              </div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                10+
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                Projects
+              </div>
+            </div>
           </div>
-
-          {/* Stats summary */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-slate-700/20 rounded-2xl p-8 shadow-xl"
-          >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <div>
-                <div className="text-3xl font-black text-blue-600 dark:text-blue-400">
-                  {SKILLS.length}
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Technologies
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-indigo-600 dark:text-indigo-400">
-                  3+
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Years Exp
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-purple-600 dark:text-purple-400">
-                  {Math.round(SKILLS.reduce((acc, skill) => acc + skill.level, 0) / SKILLS.length)}%
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Avg Proficiency
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
-                  10+
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Projects
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </div>
   )
 }

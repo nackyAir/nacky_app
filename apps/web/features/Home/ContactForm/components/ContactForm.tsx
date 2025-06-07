@@ -35,14 +35,11 @@ import {
 } from '~/features/Home/ContactForm/schema'
 
 const RequiredBadge = () => (
-  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-    必須
-  </span>
+  <span className="text-red-500 text-sm">*</span>
 )
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false)
-  const [showPlaneAnimation, setShowPlaneAnimation] = useState(false)
 
   const form = useForm<ContactFormType>({
     resolver: zodResolver(contactFormSchema),
@@ -61,23 +58,12 @@ export function ContactForm() {
 
   const { executeAsync } = useAction(sendContactEmail, {
     onSuccess: () => {
-      // 飛行機アニメーションを開始
-      setShowPlaneAnimation(true)
-      
-      // 1秒後にトーストを表示（飛行機が飛んだ後）
-      setTimeout(() => {
-        toast.success('送信が完了しました', {
-          description: 'メッセージが正常に送信されました ✈️',
-        })
-      }, 1000)
+      toast.success('送信が完了しました', {
+        description: 'メッセージが正常に送信されました',
+      })
       
       form.reset()
       setLoading(false)
-      
-      // 3秒後にアニメーションを非表示
-      setTimeout(() => {
-        setShowPlaneAnimation(false)
-      }, 3000)
     },
     onError: (error) => {
       const errorMessage = typeof error.error?.serverError === 'string' 
@@ -115,103 +101,6 @@ export function ContactForm() {
 
   return (
     <div className="max-w-4xl mx-auto relative">
-      {/* 飛行機フライトアニメーション */}
-      {showPlaneAnimation && (
-        <motion.div
-          className="fixed inset-0 pointer-events-none z-50 overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          {/* 飛行機本体 */}
-          <motion.div
-            className="absolute top-1/2 -left-20"
-            initial={{ 
-              x: -100, 
-              y: 0,
-              rotate: -15,
-              scale: 0.8,
-            }}
-            animate={{ 
-              x: [0, window.innerWidth + 100],
-              y: [0, -50, -30, -80, -40],
-              rotate: [-15, -10, -5, 0, 5],
-              scale: [0.8, 1, 1.2, 1, 0.8],
-            }}
-            transition={{
-              duration: 2.5,
-              ease: "easeInOut",
-              times: [0, 0.3, 0.6, 0.8, 1]
-            }}
-          >
-            <Plane className="w-12 h-12 text-blue-600 drop-shadow-lg" />
-          </motion.div>
-          
-          {/* 飛行機雲効果 */}
-          <motion.div
-            className="absolute top-1/2 -left-20"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ 
-              x: [50, window.innerWidth - 100],
-              opacity: [0, 0.6, 0.8, 0.4, 0]
-            }}
-            transition={{
-              duration: 2.5,
-              delay: 0.2,
-              ease: "easeOut"
-            }}
-          >
-            <div className="flex space-x-2">
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="w-8 h-2 bg-white/40 rounded-full"
-                  initial={{ scaleX: 0, opacity: 0 }}
-                  animate={{ 
-                    scaleX: [0, 1, 0.8, 0.5, 0],
-                    opacity: [0, 0.8, 0.6, 0.3, 0]
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: i * 0.1,
-                    ease: "easeOut"
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-          
-          {/* キラキラ効果 */}
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${20 + i * 15}%`,
-                top: `${45 + Math.sin(i) * 10}%`,
-              }}
-              initial={{ 
-                scale: 0, 
-                opacity: 0,
-                rotate: 0 
-              }}
-              animate={{ 
-                scale: [0, 1, 0.5, 0],
-                opacity: [0, 1, 0.8, 0],
-                rotate: [0, 180, 360],
-                y: [0, -20, -10, -30]
-              }}
-              transition={{
-                duration: 2,
-                delay: 0.3 + i * 0.1,
-                ease: "easeOut"
-              }}
-            >
-              <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-lg animate-pulse" />
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

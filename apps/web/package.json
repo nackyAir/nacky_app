@@ -6,7 +6,9 @@
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "biome lint .",
+    "fmt": "biome format --write .",
+    "check": "biome check --write ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.0",
@@ -26,13 +28,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "15.3.3",
     "typescript": "^5"
   }
 }
