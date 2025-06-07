@@ -82,9 +82,9 @@ export function ContactForm() {
     try {
       const result = await executeAsync({
         userName: data.userName,
-        companyName: data.companyName,
-        email: data.email,
-        phoneNumber: data.phoneNumber,
+        companyName: data.companyName || '',
+        email: data.email || '',
+        phoneNumber: data.phoneNumber || '',
         inquiryType: data.inquiryType,
         inquiryContent: data.inquiryContent,
         privacyPolicy: data.privacyPolicy,

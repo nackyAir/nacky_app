@@ -1,10 +1,11 @@
 'use client'
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import * as motion from 'framer-motion/client'
 import { Loader2, TrendingUp, Code, Database } from '@repo/ui/icons/lucide'
 
 import { useGithubLanguages } from '../hooks/useGithubLanguages'
+import { useIntersectionObserver } from '../../../../lib/hooks/useIntersectionObserver'
 
 // 言語ごとの色とカテゴリ定義
 const LANGUAGE_CONFIG: Record<string, { 
@@ -124,7 +125,22 @@ function StatsCard({ icon: Icon, label, value, color }: {
 }
 
 export function LanguageProgress() {
-  const { languages, isLoading, error } = useGithubLanguages('nackyAir')
+  const intersectionOptions = useMemo(() => ({ 
+    threshold: 0.2, 
+    triggerOnce: true 
+  }), [])
+  const [setRef, isInView] = useIntersectionObserver(intersectionOptions)
+  const githubConfig = useMemo(() => ({
+    username: 'nackyAir',
+    rateLimitFallback: [
+      { name: 'TypeScript', percentage: 45.2, bytes: 125000, color: '#3178c6' },
+      { name: 'JavaScript', percentage: 32.1, bytes: 89000, color: '#f7df1e' },
+      { name: 'CSS', percentage: 12.5, bytes: 34500, color: '#1572b6' },
+      { name: 'HTML', percentage: 8.7, bytes: 24000, color: '#e34f26' },
+      { name: 'Python', percentage: 1.5, bytes: 4200, color: '#3776ab' },
+    ]
+  }), [])
+  const { languages, isLoading, error, refetch } = useGithubLanguages(githubConfig)
 
   if (isLoading) {
     return (
@@ -154,7 +170,7 @@ export function LanguageProgress() {
           </h3>
           <p className="text-red-700 dark:text-red-300 mb-6">{error}</p>
           <button
-            onClick={() => window.location.reload()}
+            onClick={refetch}
             className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-medium transition-colors shadow-lg"
           >
             再試行
@@ -169,11 +185,10 @@ export function LanguageProgress() {
   const avgPercentage = languages.reduce((acc, lang) => acc + (lang.percentage || 0), 0) / languages.length
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div ref={setRef} className="max-w-6xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
       >
@@ -205,8 +220,7 @@ export function LanguageProgress() {
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.6, delay: 0.1 }}
         className="space-y-3"
       >
@@ -224,8 +238,7 @@ export function LanguageProgress() {
       {languages.length > 5 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4"
         >

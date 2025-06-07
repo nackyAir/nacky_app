@@ -1,48 +1,42 @@
 import { z } from 'zod'
+import { 
+  createUserNameSchema, 
+  createEmailSchema, 
+  createPhoneSchema, 
+  inquiryTypeSchema, 
+  privacyPolicySchema,
+  createTextSchema
+} from '../../../lib/types/schemas'
+import { APP_CONFIG } from '../../../lib/constants/app'
 
 export const contactFormSchema = z
   .object({
-    userName: z
-      .string()
-      .min(1, { message: '名前を入力して下さい' })
-      .max(50, { message: '名前は50文字以内で入力してください' })
-      .regex(/^[^\d]+$/, { message: '名前に数字を含めることはできません' }),
+    userName: createUserNameSchema(),
 
-    companyName: z
-      .string()
-      .max(50, { message: '会社名は50文字以内で入力してください' })
-      .optional(),
+    companyName: createTextSchema(
+      0, 
+      APP_CONFIG.LIMITS.CONTACT_FORM.COMPANY_MAX,
+      { max: `会社名は${APP_CONFIG.LIMITS.CONTACT_FORM.COMPANY_MAX}文字以内で入力してください` }
+    ).optional(),
 
-    email: z
-      .string()
-      .min(1, { message: 'メールアドレスを入力してください' })
-      .email({ message: '有効なメールアドレスを入力してください' })
-      .max(100, { message: 'メールアドレスは100文字以内で入力してください' }),
+    email: createEmailSchema(),
 
-    confirmEmail: z
-      .string()
-      .min(1, { message: 'メールアドレスを入力してください' })
-      .email({ message: '有効なメールアドレスを入力してください' })
-      .max(100, { message: 'メールアドレスは100文字以内で入力してください' }),
+    confirmEmail: createEmailSchema(),
 
-    phoneNumber: z
-      .string()
-      .regex(/^[0-9-]*$/, { message: '有効な電話番号を入力してください' })
-      .min(10, { message: '電話番号は10桁以上で入力してください' })
-      .max(15, { message: '電話番号は15桁以内で入力してください' }),
+    phoneNumber: createPhoneSchema(false),
 
-    inquiryType: z.enum(['inquiry', 'recruit', 'other'], {
-      required_error: 'お問い合わせ種別を選択してください',
-    }),
+    inquiryType: inquiryTypeSchema,
 
-    inquiryContent: z
-      .string()
-      .min(1, { message: '内容は必須項目です' })
-      .max(1000, { message: 'メッセージは1000文字以内で入力してください' }),
+    inquiryContent: createTextSchema(
+      1,
+      APP_CONFIG.LIMITS.CONTACT_FORM.MESSAGE_MAX,
+      {
+        min: '内容は必須項目です',
+        max: `メッセージは${APP_CONFIG.LIMITS.CONTACT_FORM.MESSAGE_MAX}文字以内で入力してください`
+      }
+    ),
 
-    privacyPolicy: z.boolean().refine((val) => val === true, {
-      message: 'プライバシーポリシーに同意する必要があります',
-    }),
+    privacyPolicy: privacyPolicySchema,
   })
   .refine((data) => data.email === data.confirmEmail, {
     message: 'メールアドレスが一致しません',
@@ -50,3 +44,13 @@ export const contactFormSchema = z
   })
 
 export type ContactFormType = z.infer<typeof contactFormSchema>
+
+export const contactFormDefaultValues: Partial<ContactFormType> = {
+  userName: '',
+  companyName: '',
+  email: '',
+  confirmEmail: '',
+  phoneNumber: '',
+  inquiryContent: '',
+  privacyPolicy: false,
+}
