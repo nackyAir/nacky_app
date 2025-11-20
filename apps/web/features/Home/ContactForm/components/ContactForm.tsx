@@ -26,7 +26,7 @@ import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as motion from 'framer-motion/client'
-import { Send, Plane } from '@repo/ui/icons/lucide'
+import { Send } from '@repo/ui/icons/lucide'
 
 import { sendContactEmail } from '~/actions/home/sendContactEmail'
 import {
@@ -35,14 +35,11 @@ import {
 } from '~/features/Home/ContactForm/schema'
 
 const RequiredBadge = () => (
-  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-    必須
-  </span>
+  <span className="text-red-500 ml-1">*</span>
 )
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false)
-  const [showPlaneAnimation, setShowPlaneAnimation] = useState(false)
 
   const form = useForm<ContactFormType>({
     resolver: zodResolver(contactFormSchema),
@@ -61,23 +58,12 @@ export function ContactForm() {
 
   const { executeAsync } = useAction(sendContactEmail, {
     onSuccess: () => {
-      // 飛行機アニメーションを開始
-      setShowPlaneAnimation(true)
-      
-      // 1秒後にトーストを表示（飛行機が飛んだ後）
-      setTimeout(() => {
-        toast.success('送信が完了しました', {
-          description: 'メッセージが正常に送信されました ✈️',
-        })
-      }, 1000)
+      toast.success('送信が完了しました', {
+        description: 'メッセージが正常に送信されました',
+      })
       
       form.reset()
       setLoading(false)
-      
-      // 3秒後にアニメーションを非表示
-      setTimeout(() => {
-        setShowPlaneAnimation(false)
-      }, 3000)
     },
     onError: (error) => {
       const errorMessage = typeof error.error?.serverError === 'string' 
@@ -115,113 +101,15 @@ export function ContactForm() {
 
   return (
     <div className="max-w-4xl mx-auto relative">
-      {/* 飛行機フライトアニメーション */}
-      {showPlaneAnimation && (
-        <motion.div
-          className="fixed inset-0 pointer-events-none z-50 overflow-hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          {/* 飛行機本体 */}
-          <motion.div
-            className="absolute top-1/2 -left-20"
-            initial={{ 
-              x: -100, 
-              y: 0,
-              rotate: -15,
-              scale: 0.8,
-            }}
-            animate={{ 
-              x: [0, window.innerWidth + 100],
-              y: [0, -50, -30, -80, -40],
-              rotate: [-15, -10, -5, 0, 5],
-              scale: [0.8, 1, 1.2, 1, 0.8],
-            }}
-            transition={{
-              duration: 2.5,
-              ease: "easeInOut",
-              times: [0, 0.3, 0.6, 0.8, 1]
-            }}
-          >
-            <Plane className="w-12 h-12 text-blue-600 drop-shadow-lg" />
-          </motion.div>
-          
-          {/* 飛行機雲効果 */}
-          <motion.div
-            className="absolute top-1/2 -left-20"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ 
-              x: [50, window.innerWidth - 100],
-              opacity: [0, 0.6, 0.8, 0.4, 0]
-            }}
-            transition={{
-              duration: 2.5,
-              delay: 0.2,
-              ease: "easeOut"
-            }}
-          >
-            <div className="flex space-x-2">
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="w-8 h-2 bg-white/40 rounded-full"
-                  initial={{ scaleX: 0, opacity: 0 }}
-                  animate={{ 
-                    scaleX: [0, 1, 0.8, 0.5, 0],
-                    opacity: [0, 0.8, 0.6, 0.3, 0]
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    delay: i * 0.1,
-                    ease: "easeOut"
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-          
-          {/* キラキラ効果 */}
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${20 + i * 15}%`,
-                top: `${45 + Math.sin(i) * 10}%`,
-              }}
-              initial={{ 
-                scale: 0, 
-                opacity: 0,
-                rotate: 0 
-              }}
-              animate={{ 
-                scale: [0, 1, 0.5, 0],
-                opacity: [0, 1, 0.8, 0],
-                rotate: [0, 180, 360],
-                y: [0, -20, -10, -30]
-              }}
-              transition={{
-                duration: 2,
-                delay: 0.3 + i * 0.1,
-                ease: "easeOut"
-              }}
-            >
-              <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-lg animate-pulse" />
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden"
+        className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden"
       >
         {/* Header */}
-        <div className="bg-slate-50 dark:bg-slate-800 px-8 py-6 border-b border-slate-200 dark:border-slate-700">
+        <div className="bg-slate-50 dark:bg-slate-900 px-8 py-6 border-b border-slate-200 dark:border-slate-800">
           <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
             お問い合わせフォーム
           </h3>
@@ -250,7 +138,7 @@ export function ContactForm() {
                       <FormControl>
                         <Input
                           {...field}
-                          className="h-12 text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800"
+                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
                           placeholder="山田 太郎"
                         />
                       </FormControl>
@@ -270,7 +158,7 @@ export function ContactForm() {
                       <FormControl>
                         <Input
                           {...field}
-                          className="h-12 text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800"
+                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
                           placeholder="株式会社サンプル"
                         />
                       </FormControl>
@@ -297,7 +185,7 @@ export function ContactForm() {
                         <Input
                           {...field}
                           type="email"
-                          className="h-12 text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800"
+                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
                           placeholder="example@example.com"
                         />
                       </FormControl>
@@ -321,7 +209,7 @@ export function ContactForm() {
                         <Input
                           {...field}
                           type="email"
-                          className="h-12 text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800"
+                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
                           placeholder="example@example.com"
                         />
                       </FormControl>
@@ -347,7 +235,7 @@ export function ContactForm() {
                         <Input
                           {...field}
                           type="tel"
-                          className="h-12 text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800"
+                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
                           placeholder="090-1234-5678"
                         />
                       </FormControl>
@@ -369,7 +257,7 @@ export function ContactForm() {
                       </div>
                       <Select value={field.value} onValueChange={field.onChange}>
                         <FormControl>
-                          <SelectTrigger className="h-12 text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800">
+                          <SelectTrigger className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950">
                             <SelectValue placeholder="お問い合わせ種別を選択してください" />
                           </SelectTrigger>
                         </FormControl>
@@ -400,7 +288,7 @@ export function ContactForm() {
                     <FormControl>
                       <Textarea
                         {...field}
-                        className="min-h-[120px] text-base border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 resize-none"
+                        className="min-h-[120px] text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 resize-none"
                         placeholder="お問い合わせ内容をできるだけ詳しくご記入ください"
                       />
                     </FormControl>
@@ -414,7 +302,7 @@ export function ContactForm() {
                 control={form.control}
                 name="privacyPolicy"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3 space-y-0 rounded-lg border border-slate-200 dark:border-slate-700 p-6 bg-slate-50 dark:bg-slate-800">
+                  <FormItem className="flex items-start space-x-3 space-y-0 rounded-lg border border-slate-200 dark:border-slate-800 p-6 bg-slate-50 dark:bg-slate-900">
                     <FormControl>
                       <Checkbox
                         checked={field.value}
@@ -442,38 +330,12 @@ export function ContactForm() {
                   type="submit"
                   disabled={!form.formState.isValid || loading}
                   size="lg"
-                  className="w-full sm:w-auto px-12 py-4 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-md disabled:opacity-50 disabled:cursor-not-allowed transition-colors relative overflow-hidden group"
+                  className="w-full sm:w-auto px-12 py-4 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
-                  <motion.div
-                    className="absolute inset-0 flex items-center justify-center"
-                    initial={{ x: -30, opacity: 0 }}
-                    animate={loading ? { x: 0, opacity: 1 } : { x: -30, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Send className="w-5 h-5" />
-                  </motion.div>
-                  <motion.span
-                    initial={{ x: 0 }}
-                    animate={loading ? { x: 30 } : { x: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative flex items-center gap-2"
-                  >
-                    {!loading && <Plane className="w-5 h-5" />}
+                  <span className="flex items-center gap-2">
+                    {!loading && <Send className="w-5 h-5" />}
                     {loading ? '送信中...' : '送信する'}
-                  </motion.span>
-                  {loading && (
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                      animate={{
-                        x: ['-100%', '100%'],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: 'linear',
-                      }}
-                    />
-                  )}
+                  </span>
                 </Button>
               </div>
             </form>
