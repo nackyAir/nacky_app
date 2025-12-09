@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import {
   Body,
   Container,
@@ -10,6 +8,7 @@ import {
   Tailwind,
   Text,
 } from '@react-email/components'
+import * as React from 'react'
 
 type Props = {
   userName: string
@@ -58,9 +57,10 @@ export const AutoReplyEmail = ({
             <Text className="text-xl font-semibold text-gray-800 mb-2">
               {companyName ? `${companyName}` : ''} {userName} 様
             </Text>
-            
+
             <Text className="mb-8 text-base leading-relaxed text-gray-600">
-              以下の内容でお問い合わせを承りました。<br />
+              以下の内容でお問い合わせを承りました。
+              <br />
               内容を確認の上、担当者より
               <span className="font-semibold text-blue-600">1-2営業日以内</span>
               にご連絡させていただきます。
@@ -71,7 +71,7 @@ export const AutoReplyEmail = ({
               <Heading className="mb-6 text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3">
                 📋 お問い合わせ内容
               </Heading>
-              
+
               <div className="space-y-5">
                 {companyName && (
                   <div className="flex items-start gap-3">
@@ -82,7 +82,9 @@ export const AutoReplyEmail = ({
                       <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                         会社名・組織名
                       </Text>
-                      <Text className="text-base font-medium text-gray-800">{companyName}</Text>
+                      <Text className="text-base font-medium text-gray-800">
+                        {companyName}
+                      </Text>
                     </div>
                   </div>
                 )}
@@ -95,7 +97,9 @@ export const AutoReplyEmail = ({
                     <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       お名前
                     </Text>
-                    <Text className="text-base font-medium text-gray-800">{userName}</Text>
+                    <Text className="text-base font-medium text-gray-800">
+                      {userName}
+                    </Text>
                   </div>
                 </div>
 
@@ -107,7 +111,9 @@ export const AutoReplyEmail = ({
                     <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       メールアドレス
                     </Text>
-                    <Text className="text-base font-medium text-gray-800">{email}</Text>
+                    <Text className="text-base font-medium text-gray-800">
+                      {email}
+                    </Text>
                   </div>
                 </div>
 
@@ -119,7 +125,9 @@ export const AutoReplyEmail = ({
                     <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       お電話番号
                     </Text>
-                    <Text className="text-base font-medium text-gray-800">{phoneNumber}</Text>
+                    <Text className="text-base font-medium text-gray-800">
+                      {phoneNumber}
+                    </Text>
                   </div>
                 </div>
 
@@ -162,23 +170,34 @@ export const AutoReplyEmail = ({
               </Heading>
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">1</div>
-                  <Text className="text-blue-800">内容確認・担当者振り分け</Text>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">
+                    1
+                  </div>
+                  <Text className="text-blue-800">
+                    内容確認・担当者振り分け
+                  </Text>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">2</div>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">
+                    2
+                  </div>
                   <Text className="text-blue-800">1-2営業日以内にご連絡</Text>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">3</div>
-                  <Text className="text-blue-800">詳細なご相談・サポート開始</Text>
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">
+                    3
+                  </div>
+                  <Text className="text-blue-800">
+                    詳細なご相談・サポート開始
+                  </Text>
                 </div>
               </div>
             </Section>
 
             <Section className="rounded-lg bg-amber-50 border border-amber-200 p-4">
               <Text className="text-sm text-amber-800">
-                <span className="font-semibold">📌 重要:</span> このメールは自動送信されています。
+                <span className="font-semibold">📌 重要:</span>{' '}
+                このメールは自動送信されています。
                 このメールに返信いただいてもお答えできない場合がございます。
                 ご質問がございましたら、改めてお問い合わせフォームをご利用ください。
               </Text>
@@ -224,16 +243,15 @@ export const AdminNotificationEmail = ({
             <Heading className="text-3xl font-bold text-white mb-2">
               新しいお問い合わせが届きました
             </Heading>
-            <Text className="text-orange-100 text-lg">
-              対応が必要です
-            </Text>
+            <Text className="text-orange-100 text-lg">対応が必要です</Text>
           </Section>
 
           {/* メインコンテンツ */}
           <Section className="bg-white px-8 py-8 shadow-lg">
             <div className="mb-6 rounded-lg bg-gradient-to-r from-red-50 to-orange-50 p-4 border border-red-200">
               <Text className="text-lg font-semibold text-red-800">
-                🚨 至急対応: {companyName ? `${companyName}` : ''} {userName} 様からお問い合わせ
+                🚨 至急対応: {companyName ? `${companyName}` : ''} {userName}{' '}
+                様からお問い合わせ
               </Text>
               <Text className="text-sm text-red-600 mt-1">
                 送信日時: {new Date().toLocaleString('ja-JP')}
@@ -245,7 +263,7 @@ export const AdminNotificationEmail = ({
               <Heading className="mb-6 text-lg font-semibold text-gray-800 border-b border-gray-200 pb-3">
                 👤 顧客情報
               </Heading>
-              
+
               <div className="space-y-5">
                 {companyName && (
                   <div className="flex items-start gap-3">
@@ -256,7 +274,9 @@ export const AdminNotificationEmail = ({
                       <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                         会社名・組織名
                       </Text>
-                      <Text className="text-base font-medium text-gray-800">{companyName}</Text>
+                      <Text className="text-base font-medium text-gray-800">
+                        {companyName}
+                      </Text>
                     </div>
                   </div>
                 )}
@@ -269,7 +289,9 @@ export const AdminNotificationEmail = ({
                     <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       お名前
                     </Text>
-                    <Text className="text-base font-medium text-gray-800">{userName}</Text>
+                    <Text className="text-base font-medium text-gray-800">
+                      {userName}
+                    </Text>
                   </div>
                 </div>
 
@@ -281,7 +303,9 @@ export const AdminNotificationEmail = ({
                     <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       メールアドレス
                     </Text>
-                    <Text className="text-base font-medium text-blue-600 underline">{email}</Text>
+                    <Text className="text-base font-medium text-blue-600 underline">
+                      {email}
+                    </Text>
                   </div>
                 </div>
 
@@ -293,7 +317,9 @@ export const AdminNotificationEmail = ({
                     <Text className="mb-1 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       お電話番号
                     </Text>
-                    <Text className="text-base font-medium text-gray-800">{phoneNumber}</Text>
+                    <Text className="text-base font-medium text-gray-800">
+                      {phoneNumber}
+                    </Text>
                   </div>
                 </div>
 

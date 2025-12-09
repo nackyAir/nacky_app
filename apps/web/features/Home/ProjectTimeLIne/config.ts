@@ -1,4 +1,4 @@
-import { TimeLineItem } from './type'
+import type { TimeLineItem } from './type'
 
 export const personalProjects: Array<TimeLineItem> = [
   {

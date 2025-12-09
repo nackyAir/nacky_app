@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nacky.me'
 
@@ -21,18 +21,27 @@ export function generateSEOMetadata({
   noIndex = false,
   canonicalUrl,
 }: SEOConfig): Metadata {
-  const fullTitle = title === 'ホーム' 
-    ? 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア | nacky.me' 
-    : `${title} | Naoki Hayashida - フロントエンドエンジニア`
+  const fullTitle =
+    title === 'ホーム'
+      ? 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア | nacky.me'
+      : `${title} | Naoki Hayashida - フロントエンドエンジニア`
   const url = `${baseUrl}${path}`
   const imageUrl = ogImage ? `${baseUrl}${ogImage}` : `${baseUrl}/og-image.png`
-  
+
   const defaultKeywords = [
-    'Naoki Hayashida', '林田直樹', 'Nacky',
-    'フロントエンドエンジニア', 'frontend engineer', 'frontend developer',
-    'Webサイト制作', 'web development', 'React', 'Next.js', 'TypeScript'
+    'Naoki Hayashida',
+    '林田直樹',
+    'Nacky',
+    'フロントエンドエンジニア',
+    'frontend engineer',
+    'frontend developer',
+    'Webサイト制作',
+    'web development',
+    'React',
+    'Next.js',
+    'TypeScript',
   ]
-  
+
   return {
     title: fullTitle,
     description,
@@ -64,17 +73,21 @@ export function generateSEOMetadata({
     alternates: {
       canonical: canonicalUrl || url,
     },
-    robots: noIndex ? {
-      index: false,
-      follow: false,
-    } : {
-      index: true,
-      follow: true,
-    },
+    robots: noIndex
+      ? {
+          index: false,
+          follow: false,
+        }
+      : {
+          index: true,
+          follow: true,
+        },
   }
 }
 
-export function generateBreadcrumbs(items: Array<{ name: string; href: string }>) {
+export function generateBreadcrumbs(
+  items: Array<{ name: string; href: string }>
+) {
   return items.map((item, index) => ({
     '@type': 'ListItem' as const,
     position: index + 1,
@@ -83,28 +96,59 @@ export function generateBreadcrumbs(items: Array<{ name: string; href: string }>
   }))
 }
 
-export function truncateDescription(text: string, maxLength: number = 160): string {
+export function truncateDescription(
+  text: string,
+  maxLength: number = 160
+): string {
   if (text.length <= maxLength) return text
   return text.substring(0, maxLength - 3) + '...'
 }
 
-export function generateArticleKeywords(content: string, baseKeywords: string[] = []): string[] {
+export function generateArticleKeywords(
+  content: string,
+  baseKeywords: string[] = []
+): string[] {
   // フロントエンド関連の技術用語
   const frontendTerms = [
-    'React', 'Next.js', 'TypeScript', 'JavaScript', 'CSS', 'HTML', 
-    'Tailwind CSS', 'Styled Components', 'Sass', 'SCSS',
-    'Webpack', 'Vite', 'ESLint', 'Prettier', 'Jest', 'Cypress',
-    'Redux', 'Zustand', 'SWR', 'React Query', 'GraphQL', 'REST API',
-    'UI/UX', 'レスポンシブデザイン', 'アクセシビリティ', 'パフォーマンス最適化',
-    'SEO', 'PWA', 'SSG', 'SSR', 'SPA'
+    'React',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
+    'CSS',
+    'HTML',
+    'Tailwind CSS',
+    'Styled Components',
+    'Sass',
+    'SCSS',
+    'Webpack',
+    'Vite',
+    'ESLint',
+    'Prettier',
+    'Jest',
+    'Cypress',
+    'Redux',
+    'Zustand',
+    'SWR',
+    'React Query',
+    'GraphQL',
+    'REST API',
+    'UI/UX',
+    'レスポンシブデザイン',
+    'アクセシビリティ',
+    'パフォーマンス最適化',
+    'SEO',
+    'PWA',
+    'SSG',
+    'SSR',
+    'SPA',
   ]
-  
-  const foundTerms = frontendTerms.filter(term => 
+
+  const foundTerms = frontendTerms.filter((term) =>
     content.toLowerCase().includes(term.toLowerCase())
   )
-  
+
   // 個人ブランドキーワードを追加
   const personalKeywords = ['Naoki Hayashida', '林田直樹', 'Nacky']
-  
+
   return [...new Set([...baseKeywords, ...foundTerms, ...personalKeywords])]
-} 
+}

@@ -1,4 +1,10 @@
-import { WebSite, Organization, BreadcrumbList, Article, WithContext } from 'schema-dts'
+import type {
+  Article,
+  BreadcrumbList,
+  Organization,
+  WebSite,
+  WithContext,
+} from 'schema-dts'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nacky.me'
 
@@ -9,7 +15,8 @@ export function generatePersonStructuredData() {
     name: 'Naoki Hayashida',
     alternateName: ['林田直樹', 'Nacky'],
     jobTitle: 'フロントエンドエンジニア',
-    description: 'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発を提供します。',
+    description:
+      'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発を提供します。',
     url: baseUrl,
     image: `${baseUrl}/profile-image.jpg`,
     sameAs: [
@@ -48,7 +55,8 @@ export function generateProfessionalServiceStructuredData() {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: 'Naoki Hayashida - フロントエンド開発サービス',
-    description: 'モダンなフロントエンド技術を活用したWebサイト制作・開発サービス',
+    description:
+      'モダンなフロントエンド技術を活用したWebサイト制作・開発サービス',
     provider: {
       '@type': 'Person',
       name: 'Naoki Hayashida',
@@ -76,7 +84,8 @@ export function generateWebsiteStructuredData(): WithContext<WebSite> {
     '@type': 'WebSite',
     name: 'Naoki Hayashida Portfolio',
     alternateName: 'nacky.me',
-    description: 'Naoki Hayashida（林田直樹）のポートフォリオサイト。フロントエンドエンジニアとしての実績とスキルを紹介。',
+    description:
+      'Naoki Hayashida（林田直樹）のポートフォリオサイト。フロントエンドエンジニアとしての実績とスキルを紹介。',
     url: baseUrl,
     potentialAction: {
       '@type': 'SearchAction',
@@ -186,4 +195,4 @@ export function generateArticleStructuredData({
 
 export function generateStructuredDataScript(data: unknown): string {
   return `<script type="application/ld+json">${JSON.stringify(data)}</script>`
-} 
+}

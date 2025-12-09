@@ -1,42 +1,46 @@
 'use client'
 
-import { useState } from 'react'
+import { Briefcase, Code2, Sparkles, User } from '@repo/ui/icons/lucide'
 import * as motion from 'framer-motion/client'
-import { Briefcase, User, Code2, Sparkles } from '@repo/ui/icons/lucide'
+import { useState } from 'react'
 
 import {
-  Timeline,
   clientProjects,
   personalProjects,
+  Timeline,
 } from '~/features/Home/ProjectTimeLIne'
 
 type TabType = 'personal' | 'client'
 
-const tabs: Array<{ 
-  id: TabType; 
-  label: string; 
-  icon: React.ComponentType<any>;
-  description: string;
-  count: number;
+const tabs: Array<{
+  id: TabType
+  label: string
+  icon: React.ComponentType<any>
+  description: string
+  count: number
 }> = [
-  { 
-    id: 'personal', 
+  {
+    id: 'personal',
     label: '個人プロジェクト',
     icon: User,
     description: '自主的な技術探求とイノベーション',
-    count: personalProjects.length
+    count: personalProjects.length,
   },
-  { 
-    id: 'client', 
+  {
+    id: 'client',
     label: '受託開発・インターン',
     icon: Briefcase,
     description: '実務経験とチーム開発の実績',
-    count: clientProjects.length
+    count: clientProjects.length,
   },
 ]
 
-function TabButton({ tab, isActive, onClick }: {
-  tab: typeof tabs[0]
+function TabButton({
+  tab,
+  isActive,
+  onClick,
+}: {
+  tab: (typeof tabs)[0]
   isActive: boolean
   onClick: () => void
 }) {
@@ -45,54 +49,67 @@ function TabButton({ tab, isActive, onClick }: {
       onClick={onClick}
       className={`
         relative flex-1 rounded-xl p-4 md:p-6 text-left transition-all duration-200
-        ${isActive 
-          ? 'bg-white dark:bg-slate-950 shadow-sm border border-slate-200 dark:border-slate-800' 
-          : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'
+        ${
+          isActive
+            ? 'bg-white dark:bg-slate-950 shadow-sm border border-slate-200 dark:border-slate-800'
+            : 'bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent'
         }
       `}
     >
       {/* Content */}
       <div className="relative">
         <div className="flex items-center gap-3 md:gap-4 mb-2">
-          <div className={`
+          <div
+            className={`
             p-2 rounded-lg transition-colors duration-200
-            ${isActive 
-              ? 'bg-blue-600 text-white' 
-              : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+            ${
+              isActive
+                ? 'bg-blue-600 text-white'
+                : 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
             }
-          `}>
+          `}
+          >
             <tab.icon className="w-4 h-4 md:w-5 md:h-5" />
           </div>
           <div>
-            <h3 className={`
+            <h3
+              className={`
               font-bold text-base md:text-lg transition-colors duration-200
-              ${isActive 
-                ? 'text-slate-900 dark:text-white' 
-                : 'text-slate-600 dark:text-slate-400'
+              ${
+                isActive
+                  ? 'text-slate-900 dark:text-white'
+                  : 'text-slate-600 dark:text-slate-400'
               }
-            `}>
+            `}
+            >
               {tab.label}
             </h3>
           </div>
         </div>
-        
+
         <div className="flex items-center gap-2 pl-1">
-          <span className={`
+          <span
+            className={`
             text-xs md:text-sm transition-colors duration-200 line-clamp-1
-            ${isActive 
-              ? 'text-slate-600 dark:text-slate-400' 
-              : 'text-slate-500 dark:text-slate-500'
+            ${
+              isActive
+                ? 'text-slate-600 dark:text-slate-400'
+                : 'text-slate-500 dark:text-slate-500'
             }
-          `}>
+          `}
+          >
             {tab.description}
           </span>
-          <span className={`
+          <span
+            className={`
             px-2 py-0.5 rounded-full text-[10px] md:text-xs font-medium transition-all duration-200
-            ${isActive
-              ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
-              : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+            ${
+              isActive
+                ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                : 'bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
             }
-          `}>
+          `}
+          >
             {tab.count}
           </span>
         </div>
@@ -102,8 +119,8 @@ function TabButton({ tab, isActive, onClick }: {
 }
 
 function ProjectsHeader({ activeTab }: { activeTab: TabType }) {
-  const currentTab = tabs.find(tab => tab.id === activeTab)
-  
+  const currentTab = tabs.find((tab) => tab.id === activeTab)
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -174,7 +191,7 @@ export function ProjectTabs() {
               Total Projects
             </div>
           </div>
-          
+
           <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 md:p-6 text-center shadow-sm">
             <div className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-indigo-600 mb-2 md:mb-3">
               <Briefcase className="w-4 h-4 md:w-5 md:h-5 text-white" />
@@ -186,7 +203,7 @@ export function ProjectTabs() {
               Client Work
             </div>
           </div>
-          
+
           <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 md:p-6 text-center shadow-sm">
             <div className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-purple-600 mb-2 md:mb-3">
               <User className="w-4 h-4 md:w-5 md:h-5 text-white" />
@@ -198,7 +215,7 @@ export function ProjectTabs() {
               Personal
             </div>
           </div>
-          
+
           <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-4 md:p-6 text-center shadow-sm">
             <div className="inline-flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-emerald-600 mb-2 md:mb-3">
               <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-white" />

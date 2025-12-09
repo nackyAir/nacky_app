@@ -9,4 +9,4 @@ export function StructuredData({ data }: StructuredDataProps) {
       dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
     />
   )
-} 
+}

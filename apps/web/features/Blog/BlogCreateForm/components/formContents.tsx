@@ -1,6 +1,5 @@
 'use client'
 
-import { RichTextEditor } from '@repo/ui/components/RichTextEditor'
 import {
   Form,
   FormControl,
@@ -9,6 +8,7 @@ import {
   FormLabel,
 } from '@repo/ui/components/form'
 import { Input } from '@repo/ui/components/input'
+import { RichTextEditor } from '@repo/ui/components/RichTextEditor'
 import { useForm } from 'react-hook-form'
 
 export const FormContents = () => {

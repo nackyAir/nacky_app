@@ -1,26 +1,40 @@
 import type { Metadata } from 'next'
+
 import { HomeWrapper } from '~/features/Home/HomeWrapper'
 import { StructuredData } from '~/lib/components/structured-data'
-import { 
-  generateWebsiteStructuredData, 
+import {
   generatePersonStructuredData,
-  generateProfessionalServiceStructuredData
+  generateProfessionalServiceStructuredData,
+  generateWebsiteStructuredData,
 } from '~/lib/structured-data'
 
 export const metadata: Metadata = {
   title: 'ホーム',
-  description: 'Naoki Hayashida（林田直樹）のポートフォリオサイト。フロントエンドエンジニアとして、React・Next.js・TypeScriptを使用したWebサイト制作・Web開発を行っています。モダンで高品質なWeb体験を提供します。',
+  description:
+    'Naoki Hayashida（林田直樹）のポートフォリオサイト。フロントエンドエンジニアとして、React・Next.js・TypeScriptを使用したWebサイト制作・Web開発を行っています。モダンで高品質なWeb体験を提供します。',
   keywords: [
-    'Naoki Hayashida', '林田直樹', 'Nacky',
-    'ポートフォリオ', 'portfolio',
-    'フロントエンドエンジニア', 'frontend engineer', 'frontend developer',
-    'Webサイト制作', 'Web開発', 'web development',
-    'React', 'Next.js', 'TypeScript', 'JavaScript',
-    'UI/UX', 'レスポンシブデザイン'
+    'Naoki Hayashida',
+    '林田直樹',
+    'Nacky',
+    'ポートフォリオ',
+    'portfolio',
+    'フロントエンドエンジニア',
+    'frontend engineer',
+    'frontend developer',
+    'Webサイト制作',
+    'Web開発',
+    'web development',
+    'React',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
+    'UI/UX',
+    'レスポンシブデザイン',
   ],
   openGraph: {
     title: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
-    description: 'フロントエンドエンジニアとして、React・Next.js・TypeScriptを使用したWebサイト制作・Web開発を行っています。',
+    description:
+      'フロントエンドエンジニアとして、React・Next.js・TypeScriptを使用したWebサイト制作・Web開発を行っています。',
     type: 'website',
     images: [
       {
@@ -34,7 +48,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
-    description: 'React・Next.js・TypeScriptを使用したWebサイト制作・Web開発のプロフェッショナル。',
+    description:
+      'React・Next.js・TypeScriptを使用したWebサイト制作・Web開発のプロフェッショナル。',
     images: ['/og-home.png'],
   },
   alternates: {

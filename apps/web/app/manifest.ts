@@ -1,10 +1,11 @@
-import { MetadataRoute } from 'next'
+import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア ポートフォリオ',
     short_name: 'Naoki Hayashida',
-    description: 'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発。',
+    description:
+      'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発。',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

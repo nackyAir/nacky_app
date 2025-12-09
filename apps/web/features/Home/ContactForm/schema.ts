@@ -32,7 +32,7 @@ export const contactFormSchema = z
       .max(15, { message: '電話番号は15桁以内で入力してください' }),
 
     inquiryType: z.enum(['inquiry', 'recruit', 'other'], {
-      required_error: 'お問い合わせ種別を選択してください',
+      error: 'お問い合わせ種別を選択してください',
     }),
 
     inquiryContent: z

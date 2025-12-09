@@ -58,12 +58,10 @@ export function GoogleTagManager({ gtmId }: GoogleTagManagerProps) {
 
 export function SearchConsoleVerification() {
   const verificationCode = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-  
+
   if (!verificationCode) return null
-  
-  return (
-    <meta name="google-site-verification" content={verificationCode} />
-  )
+
+  return <meta name="google-site-verification" content={verificationCode} />
 }
 
 interface ClarityProps {
@@ -82,4 +80,4 @@ export function MicrosoftClarity({ projectId }: ClarityProps) {
       `}
     </Script>
   )
-} 
+}

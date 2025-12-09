@@ -11,75 +11,75 @@ type SkillType = {
 }
 
 const SKILLS: SkillType[] = [
-  { 
-    name: 'React', 
+  {
+    name: 'React',
     category: 'Frontend',
     level: 95,
     icon: '⚛️',
-    color: 'from-blue-500 to-cyan-400'
+    color: 'from-blue-500 to-cyan-400',
   },
-  { 
-    name: 'TypeScript', 
+  {
+    name: 'TypeScript',
     category: 'Language',
     level: 90,
     icon: '📘',
-    color: 'from-blue-600 to-blue-800'
+    color: 'from-blue-600 to-blue-800',
   },
-  { 
-    name: 'Next.js', 
+  {
+    name: 'Next.js',
     category: 'Framework',
     level: 88,
     icon: '⚡',
-    color: 'from-slate-800 to-slate-600'
+    color: 'from-slate-800 to-slate-600',
   },
-  { 
-    name: 'Tailwind CSS', 
+  {
+    name: 'Tailwind CSS',
     category: 'Styling',
     level: 92,
     icon: '🎨',
-    color: 'from-cyan-500 to-teal-400'
+    color: 'from-cyan-500 to-teal-400',
   },
-  { 
-    name: 'Node.js', 
+  {
+    name: 'Node.js',
     category: 'Backend',
     level: 80,
     icon: '🟢',
-    color: 'from-green-600 to-green-400'
+    color: 'from-green-600 to-green-400',
   },
-  { 
-    name: 'Supabase', 
+  {
+    name: 'Supabase',
     category: 'Database',
     level: 85,
     icon: '🗄️',
-    color: 'from-emerald-600 to-emerald-400'
+    color: 'from-emerald-600 to-emerald-400',
   },
-  { 
-    name: 'Firebase', 
+  {
+    name: 'Firebase',
     category: 'Backend',
     level: 75,
     icon: '🔥',
-    color: 'from-orange-500 to-yellow-400'
+    color: 'from-orange-500 to-yellow-400',
   },
-  { 
-    name: 'React Native', 
+  {
+    name: 'React Native',
     category: 'Mobile',
     level: 70,
     icon: '📱',
-    color: 'from-purple-600 to-blue-500'
+    color: 'from-purple-600 to-blue-500',
   },
-  { 
-    name: 'Hono', 
+  {
+    name: 'Hono',
     category: 'Framework',
     level: 75,
     icon: '🔥',
-    color: 'from-red-500 to-pink-400'
+    color: 'from-red-500 to-pink-400',
   },
-  { 
-    name: 'NestJS', 
+  {
+    name: 'NestJS',
     category: 'Backend',
     level: 78,
     icon: '🦁',
-    color: 'from-red-600 to-red-400'
+    color: 'from-red-600 to-red-400',
   },
 ]
 
@@ -89,14 +89,14 @@ function SkillCard({ skill, delay }: { skill: SkillType; delay: number }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.5, 
-        delay, 
-        ease: "easeOut"
+      transition={{
+        duration: 0.5,
+        delay,
+        ease: 'easeOut',
       }}
-      whileHover={{ 
+      whileHover={{
         y: -5,
-        transition: { duration: 0.2 }
+        transition: { duration: 0.2 },
       }}
       className="group relative"
     >
@@ -104,9 +104,7 @@ function SkillCard({ skill, delay }: { skill: SkillType; delay: number }) {
       <div className="relative bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
         {/* Skill icon and name */}
         <div className="flex items-center gap-4 mb-4">
-          <div className="text-3xl">
-            {skill.icon}
-          </div>
+          <div className="text-3xl">{skill.icon}</div>
           <div>
             <h3 className="font-bold text-lg text-slate-900 dark:text-white">
               {skill.name}
@@ -132,7 +130,7 @@ function SkillCard({ skill, delay }: { skill: SkillType; delay: number }) {
               initial={{ width: 0 }}
               whileInView={{ width: `${skill.level}%` }}
               viewport={{ once: true }}
-              transition={{ duration: 1, delay: delay + 0.2, ease: "easeOut" }}
+              transition={{ duration: 1, delay: delay + 0.2, ease: 'easeOut' }}
               className={`h-full rounded-full bg-gradient-to-r ${skill.color}`}
             />
           </div>
@@ -156,11 +154,7 @@ export function SkillBadges() {
           {/* Skills grid */}
           <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-8">
             {SKILLS.map((skill, index) => (
-              <SkillCard 
-                key={skill.name} 
-                skill={skill} 
-                delay={index * 0.05} 
-              />
+              <SkillCard key={skill.name} skill={skill} delay={index * 0.05} />
             ))}
           </div>
 
@@ -185,7 +179,11 @@ export function SkillBadges() {
               </div>
               <div>
                 <div className="text-3xl font-black text-purple-600 dark:text-purple-400">
-                  {Math.round(SKILLS.reduce((acc, skill) => acc + skill.level, 0) / SKILLS.length)}%
+                  {Math.round(
+                    SKILLS.reduce((acc, skill) => acc + skill.level, 0) /
+                      SKILLS.length
+                  )}
+                  %
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                   Avg Proficiency

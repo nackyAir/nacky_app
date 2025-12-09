@@ -7,19 +7,31 @@ import { generateBreadcrumbStructuredData } from '~/lib/structured-data'
 
 export const metadata: Metadata = {
   title: 'ブログ',
-  description: 'Naoki Hayashida（林田直樹）の技術ブログ。フロントエンド開発、React、Next.js、TypeScriptに関する最新情報、開発ノウハウ、実装のTipsを共有しています。',
+  description:
+    'Naoki Hayashida（林田直樹）の技術ブログ。フロントエンド開発、React、Next.js、TypeScriptに関する最新情報、開発ノウハウ、実装のTipsを共有しています。',
   keywords: [
-    'ブログ', 'tech blog', 'technical blog',
-    'Naoki Hayashida', '林田直樹',
-    'フロントエンド開発', 'frontend development',
-    'React', 'Next.js', 'TypeScript', 'JavaScript',
-    'Web開発', 'web development',
-    'プログラミング', 'programming',
-    '技術記事', '開発ノウハウ'
+    'ブログ',
+    'tech blog',
+    'technical blog',
+    'Naoki Hayashida',
+    '林田直樹',
+    'フロントエンド開発',
+    'frontend development',
+    'React',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
+    'Web開発',
+    'web development',
+    'プログラミング',
+    'programming',
+    '技術記事',
+    '開発ノウハウ',
   ],
   openGraph: {
     title: 'ブログ | Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
-    description: 'フロントエンド開発、React、Next.js、TypeScriptに関する技術情報・開発ノウハウを発信しています。',
+    description:
+      'フロントエンド開発、React、Next.js、TypeScriptに関する技術情報・開発ノウハウを発信しています。',
     type: 'website',
     images: [
       {
@@ -33,7 +45,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ブログ | Naoki Hayashida（林田直樹）',
-    description: 'フロントエンド開発、React、Next.js、TypeScriptに関する技術情報・開発ノウハウを発信。',
+    description:
+      'フロントエンド開発、React、Next.js、TypeScriptに関する技術情報・開発ノウハウを発信。',
     images: ['/og-blog.png'],
   },
   alternates: {

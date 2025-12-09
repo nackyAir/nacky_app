@@ -1,9 +1,8 @@
 'use client'
 
-import { Suspense } from 'react'
-
 import { Avatar, AvatarImage } from '@repo/ui/components/avatar'
 import * as motion from 'framer-motion/client'
+import { Suspense } from 'react'
 
 import { siteConfig } from '~/config/siteConfig'
 import { ContactForm } from '~/features/Home/ContactForm'
@@ -28,24 +27,22 @@ type SectionProps = {
   variant?: 'default' | 'alternate'
 }
 
-function Section({ 
-  title, 
+function Section({
+  title,
   subtitle,
-  children, 
-  className = '', 
-  variant = 'default' 
+  children,
+  className = '',
+  variant = 'default',
 }: SectionProps) {
-  const bgClass = variant === 'alternate' 
-    ? 'bg-slate-50 dark:bg-slate-900/50' 
-    : 'bg-white dark:bg-slate-950'
-  
+  const bgClass =
+    variant === 'alternate'
+      ? 'bg-slate-50 dark:bg-slate-900/50'
+      : 'bg-white dark:bg-slate-950'
+
   return (
     <section className={`py-20 lg:py-32 ${bgClass} ${className}`}>
       <div className="container mx-auto px-6 lg:px-8 max-w-7xl">
-        <motion.div
-          {...FADE_IN_ANIMATION}
-          className="mb-16 md:mb-24"
-        >
+        <motion.div {...FADE_IN_ANIMATION} className="mb-16 md:mb-24">
           <h2 className="text-3xl lg:text-4xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white">
             {title}
           </h2>
@@ -55,7 +52,7 @@ function Section({
             </p>
           )}
         </motion.div>
-        
+
         <motion.div
           {...FADE_IN_ANIMATION}
           transition={{ duration: 0.5, delay: 0.2, ease: 'easeOut' }}
@@ -85,7 +82,7 @@ function Profile() {
               </Avatar>
             </div>
           </div>
-          
+
           {/* Text Content */}
           <div className="text-center md:text-left space-y-6">
             <div className="space-y-2">
@@ -97,10 +94,11 @@ function Profile() {
               </p>
             </div>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-              モダンなWeb技術で革新的なユーザーエクスペリエンスを創造する<br className="hidden md:block" />
+              モダンなWeb技術で革新的なユーザーエクスペリエンスを創造する
+              <br className="hidden md:block" />
               3年間の実務経験を持つプロフェッショナル
             </p>
-            
+
             <div className="flex flex-wrap gap-4 justify-center md:justify-start pt-4">
               <a
                 href="#contact"
@@ -132,11 +130,12 @@ function Footer() {
               Naoki Hayashida
             </h3>
             <p className="text-slate-600 dark:text-slate-400 text-sm max-w-md">
-              次世代のWebエクスペリエンスを一緒に創造しませんか？<br />
+              次世代のWebエクスペリエンスを一緒に創造しませんか？
+              <br />
               技術的な課題から創造的なソリューションまで、お気軽にご相談ください。
             </p>
           </div>
-          
+
           <div className="flex flex-col items-center md:items-end gap-6">
             <SocialLinks config={siteConfig} />
             <p className="text-slate-500 dark:text-slate-500 text-sm">
@@ -155,8 +154,8 @@ export function HomeWrapper() {
       <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-white">
         <Profile />
 
-        <Section 
-          title="About Me" 
+        <Section
+          title="About Me"
           subtitle="テクノロジーへの情熱と実務経験を組み合わせ、ユーザー中心の革新的なソリューションを提供"
           variant="alternate"
         >
@@ -165,37 +164,38 @@ export function HomeWrapper() {
               私は3年間のフロントエンド開発経験を持つエンジニアです。
               React、TypeScript、Next.jsを中心としたモダンなWeb技術を駆使して、
               ユーザーエクスペリエンスを最優先に考えた高品質なアプリケーションの開発に取り組んでいます。
-              <br /><br />
+              <br />
+              <br />
               常に最新の技術トレンドをキャッチアップし、パフォーマンス最適化から
               アクセシビリティまで、総合的な視点でプロダクト開発に貢献します。
             </p>
           </div>
         </Section>
 
-        <Section 
-          title="Skills" 
+        <Section
+          title="Skills"
           subtitle="最新技術スタックを駆使した高品質なフロントエンド開発"
         >
           <SkillBadges />
         </Section>
 
-        <Section 
-          title="Language Progress" 
+        <Section
+          title="Language Progress"
           subtitle="GitHubアクティビティから見る技術的専門性と継続的な学習"
           variant="alternate"
         >
           <LanguageProgress />
         </Section>
 
-        <Section 
-          title="Projects" 
+        <Section
+          title="Projects"
           subtitle="実務経験と個人プロジェクトで培った技術力とクリエイティビティ"
         >
           <ProjectTabs />
         </Section>
 
-        <Section 
-          title="Contact" 
+        <Section
+          title="Contact"
           subtitle="次のプロジェクトでご一緒できることを楽しみにしています"
           variant="alternate"
         >
@@ -207,4 +207,3 @@ export function HomeWrapper() {
     </Suspense>
   )
 }
-
