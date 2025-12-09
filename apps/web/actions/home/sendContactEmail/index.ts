@@ -33,7 +33,7 @@ export async function handler(data: z.infer<typeof contactEmailSchema>) {
 
   try {
     const result = await resend.sendEmail(data)
-    
+
     if (result.autoReply.error) {
       return {
         error: `メール送信に失敗しました: ${result.autoReply.error.message || result.autoReply.error}`,
@@ -49,7 +49,7 @@ export async function handler(data: z.infer<typeof contactEmailSchema>) {
         error: `送信エラー: ${e.message}`,
       }
     }
-    
+
     return {
       error: '不明なエラーが発生しました',
     }

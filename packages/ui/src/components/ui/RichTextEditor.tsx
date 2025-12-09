@@ -1,13 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import Color from '@tiptap/extension-color'
 import Image from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align'
-import TextStyle from '@tiptap/extension-text-style'
-import { Editor, EditorContent, useEditor } from '@tiptap/react'
+import { TextStyle } from '@tiptap/extension-text-style'
+import { type Editor, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
 import {
@@ -22,6 +20,7 @@ import {
   ImageIcon,
   Italic,
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '../../components/ui/button'
 import { Input } from '../../components/ui/input'

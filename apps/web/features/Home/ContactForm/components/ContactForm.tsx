@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@repo/ui/components/button'
 import { Checkbox } from '@repo/ui/components/checkbox'
@@ -22,21 +20,20 @@ import {
   SelectValue,
 } from '@repo/ui/components/select'
 import { Textarea } from '@repo/ui/components/textarea'
+import { Send } from '@repo/ui/icons/lucide'
+import * as motion from 'framer-motion/client'
 import { useAction } from 'next-safe-action/hooks'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import * as motion from 'framer-motion/client'
-import { Send } from '@repo/ui/icons/lucide'
 
 import { sendContactEmail } from '~/actions/home/sendContactEmail'
 import {
-  ContactFormType,
+  type ContactFormType,
   contactFormSchema,
 } from '~/features/Home/ContactForm/schema'
 
-const RequiredBadge = () => (
-  <span className="text-red-500 ml-1">*</span>
-)
+const RequiredBadge = () => <span className="text-red-500 ml-1">*</span>
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false)
@@ -61,14 +58,15 @@ export function ContactForm() {
       toast.success('送信が完了しました', {
         description: 'メッセージが正常に送信されました',
       })
-      
+
       form.reset()
       setLoading(false)
     },
     onError: (error) => {
-      const errorMessage = typeof error.error?.serverError === 'string' 
-        ? error.error.serverError 
-        : 'しばらくしてから再度お試しください。'
+      const errorMessage =
+        typeof error.error?.serverError === 'string'
+          ? error.error.serverError
+          : 'しばらくしてから再度お試しください。'
       toast.error('送信に失敗しました。', {
         description: errorMessage,
       })
@@ -255,7 +253,10 @@ export function ContactForm() {
                         </FormLabel>
                         <RequiredBadge />
                       </div>
-                      <Select value={field.value} onValueChange={field.onChange}>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
                         <FormControl>
                           <SelectTrigger className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950">
                             <SelectValue placeholder="お問い合わせ種別を選択してください" />

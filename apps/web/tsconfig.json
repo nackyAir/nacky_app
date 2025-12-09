@@ -11,7 +11,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "resolveJsonModule": true,
     "plugins": [
@@ -35,7 +35,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "../../packages/ui/**/*.ts",
-    "../../packages/ui/**/*.tsx"
+    "../../packages/ui/**/*.tsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

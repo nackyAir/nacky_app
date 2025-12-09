@@ -1,60 +1,68 @@
 'use client'
 
-import React from 'react'
+import { Code, Database, Loader2, TrendingUp } from '@repo/ui/icons/lucide'
 import * as motion from 'framer-motion/client'
-import { Loader2, TrendingUp, Code, Database } from '@repo/ui/icons/lucide'
+import type React from 'react'
 
 import { useGithubLanguages } from '../hooks/useGithubLanguages'
 
 // 言語ごとの色とカテゴリ定義
-const LANGUAGE_CONFIG: Record<string, { 
-  color: string; 
-  category: 'Frontend' | 'Backend' | 'Mobile' | 'Data' | 'System' | 'Styling';
-  icon: string;
-}> = {
-  'JavaScript': { color: '#f7df1e', category: 'Frontend', icon: '🟨' },
-  'TypeScript': { color: '#3178c6', category: 'Frontend', icon: '🔷' },
-  'Python': { color: '#3776ab', category: 'Backend', icon: '🐍' },
-  'Java': { color: '#ed8b00', category: 'Backend', icon: '☕' },
+const LANGUAGE_CONFIG: Record<
+  string,
+  {
+    color: string
+    category: 'Frontend' | 'Backend' | 'Mobile' | 'Data' | 'System' | 'Styling'
+    icon: string
+  }
+> = {
+  JavaScript: { color: '#f7df1e', category: 'Frontend', icon: '🟨' },
+  TypeScript: { color: '#3178c6', category: 'Frontend', icon: '🔷' },
+  Python: { color: '#3776ab', category: 'Backend', icon: '🐍' },
+  Java: { color: '#ed8b00', category: 'Backend', icon: '☕' },
   'C++': { color: '#00599c', category: 'System', icon: '⚡' },
-  'C': { color: '#a8b9cc', category: 'System', icon: '🔧' },
-  'Go': { color: '#00add8', category: 'Backend', icon: '🔵' },
-  'Rust': { color: '#ce422b', category: 'System', icon: '🦀' },
-  'PHP': { color: '#777bb4', category: 'Backend', icon: '🐘' },
-  'Ruby': { color: '#cc342d', category: 'Backend', icon: '💎' },
-  'Swift': { color: '#fa7343', category: 'Mobile', icon: '🍎' },
-  'Kotlin': { color: '#7f52ff', category: 'Mobile', icon: '📱' },
-  'Dart': { color: '#0175c2', category: 'Mobile', icon: '🎯' },
-  'HTML': { color: '#e34f26', category: 'Styling', icon: '🏗️' },
-  'CSS': { color: '#1572b6', category: 'Styling', icon: '🎨' },
-  'SCSS': { color: '#cf649a', category: 'Styling', icon: '💅' },
-  'Vue': { color: '#4fc08d', category: 'Frontend', icon: '🟢' },
-  'React': { color: '#61dafb', category: 'Frontend', icon: '⚛️' },
-  'Angular': { color: '#dd0031', category: 'Frontend', icon: '🅰️' },
-  'Svelte': { color: '#ff3e00', category: 'Frontend', icon: '🔥' },
+  C: { color: '#a8b9cc', category: 'System', icon: '🔧' },
+  Go: { color: '#00add8', category: 'Backend', icon: '🔵' },
+  Rust: { color: '#ce422b', category: 'System', icon: '🦀' },
+  PHP: { color: '#777bb4', category: 'Backend', icon: '🐘' },
+  Ruby: { color: '#cc342d', category: 'Backend', icon: '💎' },
+  Swift: { color: '#fa7343', category: 'Mobile', icon: '🍎' },
+  Kotlin: { color: '#7f52ff', category: 'Mobile', icon: '📱' },
+  Dart: { color: '#0175c2', category: 'Mobile', icon: '🎯' },
+  HTML: { color: '#e34f26', category: 'Styling', icon: '🏗️' },
+  CSS: { color: '#1572b6', category: 'Styling', icon: '🎨' },
+  SCSS: { color: '#cf649a', category: 'Styling', icon: '💅' },
+  Vue: { color: '#4fc08d', category: 'Frontend', icon: '🟢' },
+  React: { color: '#61dafb', category: 'Frontend', icon: '⚛️' },
+  Angular: { color: '#dd0031', category: 'Frontend', icon: '🅰️' },
+  Svelte: { color: '#ff3e00', category: 'Frontend', icon: '🔥' },
 }
 
-function LanguageCard({ language, percentage, bytes, delay }: { 
+function LanguageCard({
+  language,
+  percentage,
+  bytes,
+  delay,
+}: {
   language: string
   percentage: number
   bytes: number
   delay: number
 }) {
-  const config = LANGUAGE_CONFIG[language] || { 
-    color: '#6b7280', 
-    category: 'System' as const, 
-    icon: '⚪' 
+  const config = LANGUAGE_CONFIG[language] || {
+    color: '#6b7280',
+    category: 'System' as const,
+    icon: '⚪',
   }
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.5, 
-        delay, 
-        ease: "easeOut"
+      transition={{
+        duration: 0.5,
+        delay,
+        ease: 'easeOut',
       }}
       className="group relative"
     >
@@ -65,7 +73,7 @@ function LanguageCard({ language, percentage, bytes, delay }: {
           <div className="flex items-center gap-4">
             <div className="relative">
               {/* Icon background */}
-              <div 
+              <div
                 className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold"
                 style={{ backgroundColor: config.color }}
               >
@@ -98,7 +106,7 @@ function LanguageCard({ language, percentage, bytes, delay }: {
               initial={{ width: 0 }}
               whileInView={{ width: `${percentage}%` }}
               viewport={{ once: true }}
-              transition={{ duration: 1, delay: delay + 0.2, ease: "easeOut" }}
+              transition={{ duration: 1, delay: delay + 0.2, ease: 'easeOut' }}
               className="h-full rounded-full"
               style={{ backgroundColor: config.color }}
             />
@@ -109,7 +117,12 @@ function LanguageCard({ language, percentage, bytes, delay }: {
   )
 }
 
-function StatsCard({ icon: Icon, label, value, color }: {
+function StatsCard({
+  icon: Icon,
+  label,
+  value,
+  color,
+}: {
   icon: React.ComponentType<any>
   label: string
   value: string | number
@@ -123,15 +136,15 @@ function StatsCard({ icon: Icon, label, value, color }: {
       transition={{ duration: 0.5 }}
       className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-6 text-center shadow-sm"
     >
-      <div className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${color} mb-3`}>
+      <div
+        className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${color} mb-3`}
+      >
         <Icon className="w-5 h-5 text-white" />
       </div>
       <div className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
         {value}
       </div>
-      <div className="text-sm text-slate-600 dark:text-slate-400">
-        {label}
-      </div>
+      <div className="text-sm text-slate-600 dark:text-slate-400">{label}</div>
     </motion.div>
   )
 }
@@ -176,7 +189,9 @@ export function LanguageProgress() {
 
   const topLanguages = languages.slice(0, 5)
   const totalBytes = languages.reduce((acc, lang) => acc + lang.bytes, 0)
-  const avgPercentage = languages.reduce((acc, lang) => acc + (lang.percentage || 0), 0) / languages.length
+  const avgPercentage =
+    languages.reduce((acc, lang) => acc + (lang.percentage || 0), 0) /
+    languages.length
 
   return (
     <div className="relative max-w-6xl mx-auto">
@@ -189,25 +204,25 @@ export function LanguageProgress() {
           transition={{ duration: 0.6 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
         >
-          <StatsCard 
+          <StatsCard
             icon={Code}
             label="Languages"
             value={languages.length}
             color="bg-blue-600"
           />
-          <StatsCard 
+          <StatsCard
             icon={TrendingUp}
             label="Avg Usage"
             value={`${avgPercentage.toFixed(1)}%`}
             color="bg-indigo-600"
           />
-          <StatsCard 
+          <StatsCard
             icon={Database}
             label="Total Code"
             value={`${(totalBytes / 1024).toFixed(0)}KB`}
             color="bg-purple-600"
           />
-          <StatsCard 
+          <StatsCard
             icon={Code}
             label="Top Lang"
             value={languages[0]?.name || 'N/A'}
@@ -249,7 +264,7 @@ export function LanguageProgress() {
               </div>
               <div className="flex flex-wrap justify-center gap-2">
                 {languages.slice(5).map((lang) => (
-                  <span 
+                  <span
                     key={lang.name}
                     className="px-3 py-1 bg-slate-100 dark:bg-slate-900 rounded-full text-sm text-slate-600 dark:text-slate-400"
                   >
