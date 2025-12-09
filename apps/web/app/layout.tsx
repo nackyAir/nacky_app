@@ -19,17 +19,33 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア | nacky.me',
+    default:
+      'Naoki Hayashida（林田直樹） - フロントエンドエンジニア | nacky.me',
     template: '%s | Naoki Hayashida - フロントエンドエンジニア',
   },
-  description: 'Naoki Hayashida（林田直樹）のポートフォリオサイト。フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発を提供します。',
+  description:
+    'Naoki Hayashida（林田直樹）のポートフォリオサイト。フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発を提供します。',
   keywords: [
-    'Naoki Hayashida', '林田直樹', 'Nacky', 
-    'フロントエンドエンジニア', 'FrontEnd developer', 'Frontend engineer',
-    'Webサイト制作', 'Web developer', 'Web制作',
-    'React', 'Next.js', 'TypeScript', 'JavaScript',
-    'UI/UX', 'レスポンシブデザイン', 'モダンWeb開発',
-    'ポートフォリオ', 'エンジニア', '東京', '日本'
+    'Naoki Hayashida',
+    '林田直樹',
+    'Nacky',
+    'フロントエンドエンジニア',
+    'FrontEnd developer',
+    'Frontend engineer',
+    'Webサイト制作',
+    'Web developer',
+    'Web制作',
+    'React',
+    'Next.js',
+    'TypeScript',
+    'JavaScript',
+    'UI/UX',
+    'レスポンシブデザイン',
+    'モダンWeb開発',
+    'ポートフォリオ',
+    'エンジニア',
+    '東京',
+    '日本',
   ],
   authors: [{ name: 'Naoki Hayashida', url: 'https://nacky.me' }],
   creator: 'Naoki Hayashida（林田直樹）',
@@ -43,7 +59,8 @@ export const metadata: Metadata = {
     locale: 'ja_JP',
     url: '/',
     title: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
-    description: 'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発を提供します。',
+    description:
+      'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発を提供します。',
     siteName: 'Naoki Hayashida Portfolio',
     images: [
       {
@@ -57,7 +74,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
-    description: 'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発。',
+    description:
+      'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発。',
     images: ['/og-image.png'],
     creator: '@nacky_hayashida',
     site: '@nacky_hayashida',
@@ -101,9 +119,15 @@ export default function RootLayout({
     <html lang="ja">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Toaster position="bottom-right" />
         {children}
         {gaId && <GoogleAnalytics measurementId={gaId} />}

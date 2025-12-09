@@ -1,17 +1,21 @@
 'use client'
 
-import React from 'react'
-import Link from 'next/link'
+import {
+  ArrowRight,
+  Award,
+  Calendar,
+  Code,
+  ExternalLink,
+} from '@repo/ui/icons/lucide'
 import * as motion from 'framer-motion/client'
-import { ExternalLink, Calendar, Code, Award, ArrowRight } from '@repo/ui/icons/lucide'
+import Link from 'next/link'
+import React from 'react'
 
-import { TimeLineItem } from '../type'
+import type { TimeLineItem } from '../type'
 
 function SkillTag({ skill, index }: { skill: string; index: number }) {
   return (
-    <span
-      className="inline-flex items-center px-2.5 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
-    >
+    <span className="inline-flex items-center px-2.5 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
       {skill}
     </span>
   )
@@ -23,16 +27,16 @@ function ProjectCard({ item, index }: { item: TimeLineItem; index: number }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ 
-        duration: 0.5, 
-        delay: index * 0.1, 
-        ease: "easeOut"
+      transition={{
+        duration: 0.5,
+        delay: index * 0.1,
+        ease: 'easeOut',
       }}
       className="group relative"
     >
       {/* Timeline connector */}
       <div className="absolute left-[15px] md:left-6 top-12 md:top-16 bottom-0 w-px bg-slate-200 dark:bg-slate-800"></div>
-      
+
       {/* Main card */}
       <div className="relative flex gap-3 md:gap-8">
         {/* Timeline indicator */}
@@ -44,9 +48,9 @@ function ProjectCard({ item, index }: { item: TimeLineItem; index: number }) {
 
         {/* Content card */}
         <div className="flex-1 pb-8 md:pb-12">
-          <Link 
-            href={item.url || '#'} 
-            target={item.url ? "_blank" : undefined}
+          <Link
+            href={item.url || '#'}
+            target={item.url ? '_blank' : undefined}
             className="block group/card"
           >
             <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-5 md:p-8 shadow-sm hover:shadow-md transition-all duration-300">
@@ -60,7 +64,7 @@ function ProjectCard({ item, index }: { item: TimeLineItem; index: number }) {
                       {item.period}
                     </span>
                   </div>
-                  
+
                   {/* Role badge */}
                   <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-900/20">
                     <Award className="w-3.5 h-3.5 md:w-4 md:h-4 text-blue-600 dark:text-blue-400" />
