@@ -16,6 +16,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { requestDownloadUrl } from '~/actions/resume/requestDownloadUrl'
+import { FileSelector } from '~/features/Resume/FileSelector'
 import type { ResumeFileId } from '~/lib/resume/token.types'
 
 function getActionError(value: unknown) {
@@ -33,19 +34,20 @@ function getActionError(value: unknown) {
 
 export function DownloadForm() {
   const [password, setPassword] = useState('')
-  const [pendingFileId, setPendingFileId] = useState<ResumeFileId | null>(null)
+  const [selectedFileIds, setSelectedFileIds] = useState<ResumeFileId[]>([])
+  const [isPending, setIsPending] = useState(false)
   const { executeAsync } = useAction(requestDownloadUrl)
 
-  async function handleDownload(id: ResumeFileId) {
+  async function handleDownload() {
     if (!password) {
       toast.error('パスワードを入力してください')
       return
     }
 
-    setPendingFileId(id)
+    setIsPending(true)
 
     try {
-      const result = await executeAsync({ password, id })
+      const result = await executeAsync({ password, ids: selectedFileIds })
       const actionError = getActionError(result?.data)
 
       if (actionError) {
@@ -64,7 +66,7 @@ export function DownloadForm() {
     } catch {
       toast.error('ダウンロードURLを発行できませんでした')
     } finally {
-      setPendingFileId(null)
+      setIsPending(false)
     }
   }
 
@@ -76,7 +78,7 @@ export function DownloadForm() {
           共有されたパスワードを入力し、必要な書類を選んでください。
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <Label htmlFor="resume-password">パスワード</Label>
           <Input
@@ -87,48 +89,22 @@ export function DownloadForm() {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
+        <FileSelector
+          idPrefix="resume-download"
+          legend="ダウンロードするファイル"
+          value={selectedFileIds}
+          onChange={setSelectedFileIds}
+        />
       </CardContent>
-      <CardFooter className="flex flex-col items-stretch gap-3">
-        <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2">
-          <p className="font-medium">履歴書</p>
-          <Button
-            type="button"
-            className="min-w-20"
-            disabled={pendingFileId !== null}
-            onClick={() => handleDownload('rirekisho-pdf')}
-          >
-            {pendingFileId === 'rirekisho-pdf' ? '準備中…' : 'PDF'}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="min-w-20"
-            disabled={pendingFileId !== null}
-            onClick={() => handleDownload('rirekisho-xlsx')}
-          >
-            {pendingFileId === 'rirekisho-xlsx' ? '準備中…' : 'Excel'}
-          </Button>
-        </div>
-        <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2">
-          <p className="font-medium">職務経歴書</p>
-          <Button
-            type="button"
-            className="min-w-20"
-            disabled={pendingFileId !== null}
-            onClick={() => handleDownload('shokumu-keirekisho-pdf')}
-          >
-            {pendingFileId === 'shokumu-keirekisho-pdf' ? '準備中…' : 'PDF'}
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            className="min-w-20"
-            disabled={pendingFileId !== null}
-            onClick={() => handleDownload('shokumu-keirekisho-xlsx')}
-          >
-            {pendingFileId === 'shokumu-keirekisho-xlsx' ? '準備中…' : 'Excel'}
-          </Button>
-        </div>
+      <CardFooter>
+        <Button
+          type="button"
+          className="w-full"
+          disabled={selectedFileIds.length === 0 || isPending}
+          onClick={handleDownload}
+        >
+          {isPending ? '準備中…' : '選択したファイルをダウンロード'}
+        </Button>
       </CardFooter>
     </Card>
   )

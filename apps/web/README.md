@@ -47,6 +47,8 @@ Create the Vercel Blob store with private access. Configure the following server
 
 Vercel ダッシュボード → Storage → Blob で private access のストアを作成し、次の pathname へ4ファイルをアップロードする。
 
+ダウンロード画面では対象ファイルを選択でき、1件なら単体、2件以上なら選択分だけをZIPで配信する。ファイル名には氏名とJSTのダウンロード日時が付与される。
+
 - `resume/rirekisho.pdf`
 - `resume/rirekisho.xlsx`
 - `resume/shokumu-keirekisho.pdf`

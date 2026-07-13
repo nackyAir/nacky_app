@@ -1,47 +1,134 @@
 import { describe, expect, it } from 'vitest'
 
 import { createResumeToken, verifyResumeToken } from '~/lib/resume/token'
-import type { ResumeFileId } from '~/lib/resume/token.types'
 
 const SECRET = 'test-signing-secret'
 const CREATED_AT = new Date('2026-07-13T00:00:00.000Z')
 const EXPIRES_AT = new Date('2026-07-13T00:05:00.000Z')
-const FILE_IDS: ResumeFileId[] = [
-  'rirekisho-pdf',
-  'rirekisho-xlsx',
-  'shokumu-keirekisho-pdf',
-  'shokumu-keirekisho-xlsx',
-]
 
 describe('resume token', () => {
-  it.each(
-    FILE_IDS
-  )('creates a token that verifies with the same file: %s', (id) => {
-    const token = createResumeToken({ id, expiresAt: EXPIRES_AT }, SECRET)
-
-    expect(
-      verifyResumeToken(
-        {
-          id: token.id,
-          exp: String(token.exp),
-          sig: token.sig,
-        },
-        SECRET,
-        CREATED_AT
-      )
-    ).toEqual({ ok: true, id })
-  })
-
-  it('rejects an expired token', () => {
+  it('creates and verifies a token for one file', () => {
     const token = createResumeToken(
-      { id: 'rirekisho-pdf', expiresAt: EXPIRES_AT },
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
       SECRET
     )
 
     expect(
       verifyResumeToken(
         {
-          id: token.id,
+          ids: token.ids,
+          exp: String(token.exp),
+          sig: token.sig,
+        },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({ ok: true, ids: ['rirekisho-pdf'] })
+  })
+
+  it('creates and verifies a token for multiple files', () => {
+    const token = createResumeToken(
+      {
+        ids: ['rirekisho-xlsx', 'shokumu-keirekisho-pdf'],
+        expiresAt: EXPIRES_AT,
+      },
+      SECRET
+    )
+
+    expect(
+      verifyResumeToken(
+        {
+          ids: token.ids,
+          exp: String(token.exp),
+          sig: token.sig,
+        },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({
+      ok: true,
+      ids: ['rirekisho-xlsx', 'shokumu-keirekisho-pdf'],
+    })
+  })
+
+  it('uses the same signature regardless of order or duplicates', () => {
+    const first = createResumeToken(
+      {
+        ids: ['shokumu-keirekisho-pdf', 'rirekisho-pdf', 'rirekisho-pdf'],
+        expiresAt: EXPIRES_AT,
+      },
+      SECRET
+    )
+    const second = createResumeToken(
+      {
+        ids: ['rirekisho-pdf', 'shokumu-keirekisho-pdf'],
+        expiresAt: EXPIRES_AT,
+      },
+      SECRET
+    )
+
+    expect(first.sig).toBe(second.sig)
+    expect(first.ids).toEqual(['rirekisho-pdf', 'shokumu-keirekisho-pdf'])
+    expect(
+      verifyResumeToken(
+        {
+          ids: ['shokumu-keirekisho-pdf', 'rirekisho-pdf'],
+          exp: String(first.exp),
+          sig: first.sig,
+        },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({
+      ok: true,
+      ids: ['rirekisho-pdf', 'shokumu-keirekisho-pdf'],
+    })
+  })
+
+  it('rejects an empty file list', () => {
+    const token = createResumeToken(
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
+      SECRET
+    )
+
+    expect(
+      verifyResumeToken(
+        { ids: [], exp: String(token.exp), sig: token.sig },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({ ok: false, reason: 'invalid' })
+  })
+
+  it('rejects a list containing an invalid file ID', () => {
+    const token = createResumeToken(
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
+      SECRET
+    )
+
+    expect(
+      verifyResumeToken(
+        {
+          ids: ['rirekisho-pdf', 'invalid-file'],
+          exp: String(token.exp),
+          sig: token.sig,
+        },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({ ok: false, reason: 'invalid' })
+  })
+
+  it('rejects an expired token', () => {
+    const token = createResumeToken(
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
+      SECRET
+    )
+
+    expect(
+      verifyResumeToken(
+        {
+          ids: token.ids,
           exp: String(token.exp),
           sig: token.sig,
         },
@@ -54,35 +141,32 @@ describe('resume token', () => {
   it.each([
     {
       name: 'signature',
-      id: 'rirekisho-pdf',
+      ids: ['rirekisho-pdf'],
       signature: 'tampered',
       secret: SECRET,
     },
     {
-      name: 'file',
-      id: 'shokumu-keirekisho-pdf',
+      name: 'file list',
+      ids: ['shokumu-keirekisho-pdf'],
       signature: undefined,
       secret: SECRET,
     },
     {
       name: 'secret',
-      id: 'rirekisho-pdf',
+      ids: ['rirekisho-pdf'],
       signature: undefined,
       secret: 'different-secret',
     },
-  ])('rejects a token with a tampered $name', ({ id, signature, secret }) => {
+  ])('rejects a token with a tampered $name', ({ ids, signature, secret }) => {
     const token = createResumeToken(
-      {
-        id: 'rirekisho-pdf',
-        expiresAt: EXPIRES_AT,
-      },
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
       SECRET
     )
 
     expect(
       verifyResumeToken(
         {
-          id,
+          ids,
           exp: String(token.exp),
           sig: signature ?? token.sig,
         },
