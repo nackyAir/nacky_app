@@ -112,6 +112,12 @@ function Profile() {
               >
                 ポートフォリオを見る
               </a>
+              <a
+                href="/resume"
+                className="px-8 py-3 rounded-lg border border-slate-200 dark:border-slate-800 font-medium hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+              >
+                経歴書ダウンロード
+              </a>
             </div>
           </div>
         </motion.div>
