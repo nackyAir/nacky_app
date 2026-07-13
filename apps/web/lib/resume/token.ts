@@ -26,22 +26,48 @@ export function isResumeFileId(value: string): value is ResumeFileId {
   )
 }
 
+function normalizeResumeFileIds(ids: readonly string[]) {
+  if (ids.length === 0) {
+    return null
+  }
+
+  const normalizedIds = new Set<ResumeFileId>()
+
+  for (const id of ids) {
+    if (!isResumeFileId(id)) {
+      return null
+    }
+
+    normalizedIds.add(id)
+  }
+
+  return Array.from(normalizedIds).sort()
+}
+
 export function createResumeToken(
-  input: { id: ResumeFileId; expiresAt: Date },
+  input: { ids: ResumeFileId[]; expiresAt: Date },
   secret: string
 ): ResumeToken {
-  const exp = Math.floor(input.expiresAt.getTime() / 1000)
-  const sig = createSignature(`${input.id}:${exp}`, secret)
+  const ids = normalizeResumeFileIds(input.ids)
 
-  return { id: input.id, exp, sig }
+  if (!ids) {
+    throw new Error('At least one resume file is required')
+  }
+
+  const exp = Math.floor(input.expiresAt.getTime() / 1000)
+  const sig = createSignature(`${ids.join(',')}:${exp}`, secret)
+
+  return { ids, exp, sig }
 }
 
 export function verifyResumeToken(
-  token: { id: string; exp: string; sig: string },
+  token: { ids: string[]; exp: string; sig: string },
   secret: string,
   now: Date
 ): VerifyResult {
-  if (!isResumeFileId(token.id) || !/^\d+$/.test(token.exp)) {
+  const ids = normalizeResumeFileIds(token.ids)
+
+  if (!ids || !/^\d+$/.test(token.exp)) {
     return { ok: false, reason: 'invalid' }
   }
 
@@ -51,7 +77,7 @@ export function verifyResumeToken(
     return { ok: false, reason: 'invalid' }
   }
 
-  const expected = createSignature(`${token.id}:${token.exp}`, secret)
+  const expected = createSignature(`${ids.join(',')}:${token.exp}`, secret)
 
   if (!signaturesMatch(token.sig, expected)) {
     return { ok: false, reason: 'invalid' }
@@ -61,7 +87,7 @@ export function verifyResumeToken(
     return { ok: false, reason: 'expired' }
   }
 
-  return { ok: true, id: token.id }
+  return { ok: true, ids }
 }
 
 export function createAdminSessionToken(expiresAt: Date, secret: string) {

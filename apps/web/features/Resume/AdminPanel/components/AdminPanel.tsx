@@ -24,6 +24,7 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { issueDownloadUrl } from '~/actions/resume/issueDownloadUrl'
+import { FileSelector } from '~/features/Resume/FileSelector'
 import type { ResumeFileId } from '~/lib/resume/token.types'
 
 function getActionError(value: unknown) {
@@ -40,7 +41,7 @@ function getActionError(value: unknown) {
 }
 
 export function AdminPanel() {
-  const [fileId, setFileId] = useState<ResumeFileId>('rirekisho-pdf')
+  const [selectedFileIds, setSelectedFileIds] = useState<ResumeFileId[]>([])
   const [expiresInDays, setExpiresInDays] = useState<'1' | '7' | '30'>('1')
   const [issuedUrl, setIssuedUrl] = useState('')
   const [issuedExpiresAt, setIssuedExpiresAt] = useState('')
@@ -52,7 +53,7 @@ export function AdminPanel() {
     setIsPending(true)
 
     try {
-      const result = await executeAsync({ id: fileId, expiresInDays })
+      const result = await executeAsync({ ids: selectedFileIds, expiresInDays })
       const actionError = getActionError(result?.data)
 
       if (actionError) {
@@ -96,38 +97,12 @@ export function AdminPanel() {
       </CardHeader>
       <form onSubmit={handleIssue}>
         <CardContent className="flex flex-col gap-5">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="resume-document">書類</Label>
-            <Select
-              value={fileId}
-              onValueChange={(value) => {
-                if (
-                  value === 'rirekisho-pdf' ||
-                  value === 'rirekisho-xlsx' ||
-                  value === 'shokumu-keirekisho-pdf' ||
-                  value === 'shokumu-keirekisho-xlsx'
-                ) {
-                  setFileId(value)
-                }
-              }}
-            >
-              <SelectTrigger id="resume-document" className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="rirekisho-pdf">履歴書 PDF</SelectItem>
-                  <SelectItem value="rirekisho-xlsx">履歴書 Excel</SelectItem>
-                  <SelectItem value="shokumu-keirekisho-pdf">
-                    職務経歴書 PDF
-                  </SelectItem>
-                  <SelectItem value="shokumu-keirekisho-xlsx">
-                    職務経歴書 Excel
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
+          <FileSelector
+            idPrefix="resume-admin"
+            legend="共有するファイル"
+            value={selectedFileIds}
+            onChange={setSelectedFileIds}
+          />
 
           <div className="flex flex-col gap-2">
             <Label htmlFor="resume-expiration">有効期限</Label>
@@ -168,7 +143,11 @@ export function AdminPanel() {
           )}
         </CardContent>
         <CardFooter className="pt-6">
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={selectedFileIds.length === 0 || isPending}
+          >
             {isPending ? '発行中…' : 'URLを発行'}
           </Button>
         </CardFooter>

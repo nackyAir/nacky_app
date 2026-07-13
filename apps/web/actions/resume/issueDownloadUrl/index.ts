@@ -35,9 +35,9 @@ export async function handler(input: z.infer<typeof schema>) {
     now.getTime() + Number(input.expiresInDays) * 24 * 60 * 60 * 1000
   )
   const secret = getRequiredResumeEnv('RESUME_SIGNING_SECRET')
-  const token = createResumeToken({ id: input.id, expiresAt }, secret)
+  const token = createResumeToken({ ids: input.ids, expiresAt }, secret)
   const searchParams = new URLSearchParams({
-    id: token.id,
+    ids: token.ids.join(','),
     exp: String(token.exp),
     sig: token.sig,
   })

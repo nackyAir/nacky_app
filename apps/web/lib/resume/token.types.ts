@@ -9,11 +9,11 @@ export type ResumeFile = {
 export type ResumeFileId = `${ResumeDoc}-${ResumeFormat}`
 
 export type ResumeToken = {
-  id: ResumeFileId
+  ids: ResumeFileId[]
   exp: number
   sig: string
 }
 
 export type VerifyResult =
-  | { ok: true; id: ResumeFileId }
+  | { ok: true; ids: ResumeFileId[] }
   | { ok: false; reason: 'expired' | 'invalid' }
