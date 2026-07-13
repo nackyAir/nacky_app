@@ -34,3 +34,26 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Resume download environment variables
+
+Create the Vercel Blob store with private access. Configure the following server-only environment variables in each deployment environment. Do not add them to `next.config.mjs` or commit the resume files to this repository.
+
+- `RESUME_PASSWORD`: Password for the `/resume` download form
+- `RESUME_ADMIN_PASSWORD`: Password for `/admin/resume`
+- `RESUME_SIGNING_SECRET`: Secret used to sign download URLs and admin sessions
+
+### Uploading the resume files
+
+Vercel ダッシュボード → Storage → Blob で private access のストアを作成し、次の pathname へ4ファイルをアップロードする。
+
+ダウンロード画面では対象ファイルを選択でき、1件なら単体、2件以上なら選択分だけをZIPで配信する。ファイル名には氏名とJSTのダウンロード日時が付与される。
+
+- `resume/rirekisho.pdf`
+- `resume/rirekisho.xlsx`
+- `resume/shokumu-keirekisho.pdf`
+- `resume/shokumu-keirekisho.xlsx`
+
+`RESUME_SIGNING_SECRET` は `openssl rand -base64 32` などで十分に長いランダム値を生成する。
+
+Blob への認証は `@vercel/blob` SDK が環境変数から自動解決する。private ストアをプロジェクトへ接続すると、Vercel 上では認証情報が自動注入される。ローカル開発では `VERCEL_OIDC_TOKEN` と `BLOB_STORE_ID` をルートの `.env.local` に設定する（`pnpm dev` が `dotenv -e .env.local` で読み込む）。OIDC トークンは短命なので、期限切れになったら再取得すること。
