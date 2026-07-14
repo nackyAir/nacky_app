@@ -19,6 +19,7 @@ describe('resume filename', () => {
     ['rirekisho-xlsx', '林田直樹_履歴書_2026_07_13_16-39-05.xlsx'],
     ['shokumu-keirekisho-pdf', '林田直樹_職務経歴書_2026_07_13_16-39-05.pdf'],
     ['shokumu-keirekisho-xlsx', '林田直樹_職務経歴書_2026_07_13_16-39-05.xlsx'],
+    ['mynumber-pdf', '林田直樹_本人確認書類_2026_07_13_16-39-05.pdf'],
   ])('builds the filename for %s', (id, expected) => {
     expect(buildResumeFilename(id, DOWNLOAD_AT)).toBe(expected)
   })

@@ -16,7 +16,10 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { requestDownloadUrl } from '~/actions/resume/requestDownloadUrl'
-import { FileSelector } from '~/features/Resume/FileSelector'
+import {
+  FileSelector,
+  PUBLIC_FILE_OPTIONS,
+} from '~/features/Resume/FileSelector'
 import type { ResumeFileId } from '~/lib/resume/token.types'
 
 function getActionError(value: unknown) {
@@ -92,6 +95,7 @@ export function DownloadForm() {
         <FileSelector
           idPrefix="resume-download"
           legend="ダウンロードするファイル"
+          options={PUBLIC_FILE_OPTIONS}
           value={selectedFileIds}
           onChange={setSelectedFileIds}
         />
