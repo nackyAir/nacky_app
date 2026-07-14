@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
-import { createResumeToken, verifyResumeToken } from '~/lib/resume/token'
+import {
+  createResumeToken,
+  isResumeFileId,
+  verifyResumeToken,
+} from '~/lib/resume/token'
 
 const SECRET = 'test-signing-secret'
 const CREATED_AT = new Date('2026-07-13T00:00:00.000Z')
@@ -24,6 +28,25 @@ describe('resume token', () => {
         CREATED_AT
       )
     ).toEqual({ ok: true, ids: ['rirekisho-pdf'] })
+  })
+
+  it('creates and verifies a token for a My Number card', () => {
+    const token = createResumeToken(
+      { ids: ['mynumber-pdf'], expiresAt: EXPIRES_AT },
+      SECRET
+    )
+
+    expect(
+      verifyResumeToken(
+        {
+          ids: token.ids,
+          exp: String(token.exp),
+          sig: token.sig,
+        },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({ ok: true, ids: ['mynumber-pdf'] })
   })
 
   it('creates and verifies a token for multiple files', () => {
@@ -83,6 +106,33 @@ describe('resume token', () => {
       ok: true,
       ids: ['rirekisho-pdf', 'shokumu-keirekisho-pdf'],
     })
+  })
+
+  it('normalizes a My Number card mixed with a resume file', () => {
+    const token = createResumeToken(
+      {
+        ids: ['rirekisho-pdf', 'mynumber-pdf', 'mynumber-pdf'],
+        expiresAt: EXPIRES_AT,
+      },
+      SECRET
+    )
+
+    expect(token.ids).toEqual(['mynumber-pdf', 'rirekisho-pdf'])
+    expect(
+      verifyResumeToken(
+        {
+          ids: ['rirekisho-pdf', 'mynumber-pdf'],
+          exp: String(token.exp),
+          sig: token.sig,
+        },
+        SECRET,
+        CREATED_AT
+      )
+    ).toEqual({ ok: true, ids: ['mynumber-pdf', 'rirekisho-pdf'] })
+  })
+
+  it('recognizes the My Number card file ID', () => {
+    expect(isResumeFileId('mynumber-pdf')).toBe(true)
   })
 
   it('rejects an empty file list', () => {

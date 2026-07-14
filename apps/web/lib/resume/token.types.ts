@@ -6,7 +6,7 @@ export type ResumeFile = {
   format: ResumeFormat
 }
 
-export type ResumeFileId = `${ResumeDoc}-${ResumeFormat}`
+export type ResumeFileId = `${ResumeDoc}-${ResumeFormat}` | 'mynumber-pdf'
 
 export type ResumeToken = {
   ids: ResumeFileId[]

@@ -45,7 +45,7 @@ Create the Vercel Blob store with private access. Configure the following server
 
 ### Uploading the resume files
 
-Vercel ダッシュボード → Storage → Blob で private access のストアを作成し、次の pathname へ4ファイルをアップロードする。
+Vercel ダッシュボード → Storage → Blob で private access のストアを作成し、次の pathname へ5ファイルをアップロードする。
 
 ダウンロード画面では対象ファイルを選択でき、1件なら単体、2件以上なら選択分だけをZIPで配信する。ファイル名には氏名とJSTのダウンロード日時が付与される。
 
@@ -53,6 +53,9 @@ Vercel ダッシュボード → Storage → Blob で private access のスト�
 - `resume/rirekisho.xlsx`
 - `resume/shokumu-keirekisho.pdf`
 - `resume/shokumu-keirekisho.xlsx`
+- `resume/mynumber.pdf`（マイナンバーカード両面を1枚にまとめたPDF）
+
+`resume/mynumber.pdf` のダウンロードURLは `/admin/resume` からのみ発行でき、公開の `/resume` フォームからは発行できない。
 
 `RESUME_SIGNING_SECRET` は `openssl rand -base64 32` などで十分に長いランダム値を生成する。
 

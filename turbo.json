@@ -12,7 +12,14 @@
     },
     "dev": {
       "cache": false,
-      "env": ["RESEND_API_KEY", "ADMIN_EMAIL"]
+      "env": [
+        "RESEND_API_KEY",
+        "ADMIN_EMAIL",
+        "RESUME_PASSWORD",
+        "RESUME_ADMIN_PASSWORD",
+        "RESUME_SIGNING_SECRET",
+        "BLOB_STORE_ID"
+      ]
     },
     "clean": {
       "cache": false
@@ -22,6 +29,11 @@
     "NEXT_PUBLIC_*",
     "!NEXT_PUBLIC_VERCEL_*",
     "RESEND_API_KEY",
-    "ADMIN_EMAIL"
-  ]
+    "ADMIN_EMAIL",
+    "RESUME_PASSWORD",
+    "RESUME_ADMIN_PASSWORD",
+    "RESUME_SIGNING_SECRET",
+    "BLOB_STORE_ID"
+  ],
+  "globalPassThroughEnv": ["VERCEL_OIDC_TOKEN"]
 }

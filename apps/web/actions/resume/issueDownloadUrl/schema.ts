@@ -4,6 +4,7 @@ export const schema = z.object({
   ids: z
     .array(
       z.enum([
+        'mynumber-pdf',
         'rirekisho-pdf',
         'rirekisho-xlsx',
         'shokumu-keirekisho-pdf',
