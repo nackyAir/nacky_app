@@ -3,19 +3,31 @@
 import { Checkbox } from '@repo/ui/components/checkbox'
 import { Label } from '@repo/ui/components/label'
 
-import type { FileSelectorProps } from '~/features/Resume/FileSelector/FileSelector.types'
+import type {
+  FileSelectorProps,
+  ResumeFileOption,
+} from '~/features/Resume/FileSelector/FileSelector.types'
 import type { ResumeFileId } from '~/lib/resume/token.types'
 
-const FILE_OPTIONS: { id: ResumeFileId; label: string }[] = [
+export const PUBLIC_FILE_OPTIONS: ResumeFileOption[] = [
   { id: 'rirekisho-pdf', label: '履歴書 PDF' },
   { id: 'rirekisho-xlsx', label: '履歴書 Excel' },
   { id: 'shokumu-keirekisho-pdf', label: '職務経歴書 PDF' },
   { id: 'shokumu-keirekisho-xlsx', label: '職務経歴書 Excel' },
 ]
 
+export const ADMIN_FILE_OPTIONS: ResumeFileOption[] = [
+  ...PUBLIC_FILE_OPTIONS,
+  {
+    id: 'mynumber-pdf',
+    label: '本人確認書類（マイナンバーカード両面 PDF）',
+  },
+]
+
 export function FileSelector({
   idPrefix,
   legend,
+  options,
   value,
   onChange,
 }: FileSelectorProps) {
@@ -33,7 +45,7 @@ export function FileSelector({
   return (
     <fieldset className="flex flex-col gap-3">
       <legend className="mb-1 text-sm font-medium">{legend}</legend>
-      {FILE_OPTIONS.map((option) => {
+      {options.map((option) => {
         const inputId = `${idPrefix}-${option.id}`
 
         return (

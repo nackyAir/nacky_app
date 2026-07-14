@@ -9,6 +9,10 @@ import type { ResumeFileId } from '~/lib/resume/token.types'
 export const runtime = 'nodejs'
 
 const RESUME_FILES = {
+  'mynumber-pdf': {
+    pathname: 'resume/mynumber.pdf',
+    contentType: 'application/pdf',
+  },
   'rirekisho-pdf': {
     pathname: 'resume/rirekisho.pdf',
     contentType: 'application/pdf',

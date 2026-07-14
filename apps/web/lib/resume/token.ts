@@ -19,6 +19,7 @@ function signaturesMatch(actual: string, expected: string) {
 
 export function isResumeFileId(value: string): value is ResumeFileId {
   return (
+    value === 'mynumber-pdf' ||
     value === 'rirekisho-pdf' ||
     value === 'rirekisho-xlsx' ||
     value === 'shokumu-keirekisho-pdf' ||

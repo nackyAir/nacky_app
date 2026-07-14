@@ -24,7 +24,10 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { issueDownloadUrl } from '~/actions/resume/issueDownloadUrl'
-import { FileSelector } from '~/features/Resume/FileSelector'
+import {
+  ADMIN_FILE_OPTIONS,
+  FileSelector,
+} from '~/features/Resume/FileSelector'
 import type { ResumeFileId } from '~/lib/resume/token.types'
 
 function getActionError(value: unknown) {
@@ -100,6 +103,7 @@ export function AdminPanel() {
           <FileSelector
             idPrefix="resume-admin"
             legend="共有するファイル"
+            options={ADMIN_FILE_OPTIONS}
             value={selectedFileIds}
             onChange={setSelectedFileIds}
           />

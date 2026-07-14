@@ -3,6 +3,7 @@ import type { ResumeFileId } from '~/lib/resume/token.types'
 export const OWNER_NAME = '林田直樹'
 
 const RESUME_FILE_NAMES = {
+  'mynumber-pdf': { label: '本人確認書類', extension: 'pdf' },
   'rirekisho-pdf': { label: '履歴書', extension: 'pdf' },
   'rirekisho-xlsx': { label: '履歴書', extension: 'xlsx' },
   'shokumu-keirekisho-pdf': { label: '職務経歴書', extension: 'pdf' },
