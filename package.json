@@ -14,9 +14,9 @@
     "@biomejs/biome": "^2.3.8",
     "lefthook": "^2.0.9",
     "turbo": "^2.6.3",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.0"
   },
-  "packageManager": "pnpm@10.34.5",
+  "packageManager": "pnpm@11.20.0",
   "engines": {
     "node": ">=18"
   },
