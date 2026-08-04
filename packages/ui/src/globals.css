@@ -118,11 +118,81 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+:root {
+  --paper: oklch(0.978 0.0045 85);
+  --paper-raised: oklch(0.995 0.002 85);
+  --ink: oklch(0.19 0.008 65);
+  --ink-muted: oklch(0.505 0.006 70);
+  --ink-faint: oklch(0.665 0.005 75);
+  --rule: oklch(0.885 0.004 80);
+  --rule-strong: oklch(0.79 0.005 78);
+  --grain-opacity: 0.035;
+}
+
+.dark {
+  --paper: oklch(0.163 0.006 70);
+  --paper-raised: oklch(0.205 0.006 70);
+  --ink: oklch(0.955 0.003 85);
+  --ink-muted: oklch(0.685 0.005 75);
+  --ink-faint: oklch(0.505 0.005 72);
+  --rule: oklch(0.29 0.006 70);
+  --rule-strong: oklch(0.395 0.006 70);
+  --grain-opacity: 0.055;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+
+  --font-sans: var(--font-zen-kaku), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-shippori), ui-serif, Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .rule-grid {
+    background-image:
+      linear-gradient(to right, var(--rule) 1px, transparent 1px);
+    background-size: 25% 100%;
+  }
+
+  .text-balance-jp {
+    text-wrap: balance;
+    word-break: auto-phrase;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

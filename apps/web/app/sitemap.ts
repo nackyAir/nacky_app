@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next'
 
+import { featuredWorks } from '~/features/Works'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nacky.me'
   const lastModified = new Date()
@@ -35,17 +37,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   //   priority: 0.7,
   // }))
 
-  // TODO: ポートフォリオ作品ページも追加予定
-  // const portfolioRoutes: MetadataRoute.Sitemap = portfolios.map((work) => ({
-  //   url: `${baseUrl}/portfolio/${work.slug}`,
-  //   lastModified: new Date(work.updatedAt),
-  //   changeFrequency: 'monthly',
-  //   priority: 0.6,
-  // }))
+  const workRoutes: MetadataRoute.Sitemap = featuredWorks.map((work) => ({
+    url: `${baseUrl}/works/${work.slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
 
   return [
     ...staticRoutes,
+    ...workRoutes,
     // ...blogRoutes,
-    // ...portfolioRoutes,
   ]
 }

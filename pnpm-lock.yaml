@@ -54,6 +54,9 @@ importers:
       next-safe-action:
         specifier: ^8.0.11
         version: 8.5.5(next@16.2.11(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      next-themes:
+        specifier: ^0.4.6
+        version: 0.4.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       postcss:
         specifier: ^8.5.6
         version: 8.5.23
@@ -3191,6 +3194,12 @@ packages:
       react: '>= 18.2.0'
       react-dom: '>= 18.2.0'
 
+  next-themes@0.4.6:
+    resolution: {integrity: sha512-pZvgD5L0IEvX5/9GWyHMf3m8BKiVQwsCMHfoFosXtXBMnaS0ZnIJ9ST4b4NqLVKDEm8QBxoNNGNaBv2JNF6XNA==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+      react-dom: ^16.8 || ^17 || ^18 || ^19 || ^19.0.0-rc
+
   next@16.1.7:
     resolution: {integrity: sha512-WM0L7WrSvKwoLegLYr6V+mz+RIofqQgVAfHhMp9a88ms0cFX8iX9ew+snpWlSBwpkURJOUdvCEt3uLl3NNzvWg==}
     engines: {node: '>=20.9.0'}
@@ -6181,6 +6190,11 @@ snapshots:
   next-safe-action@8.5.5(next@16.2.11(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       next: 16.2.11(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+
+  next-themes@0.4.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+    dependencies:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
 

@@ -1,19 +1,31 @@
 import type { Metadata, Viewport } from 'next'
-import localFont from 'next/font/local'
+import { IBM_Plex_Mono, Shippori_Mincho_B1, Zen_Kaku_Gothic_New } from 'next/font/google'
 
 import '@repo/ui/globals.css'
 import { Toaster } from 'sonner'
+import { ThemeProvider } from '~/lib/components/theme-provider'
 import { GoogleAnalytics, MicrosoftClarity } from '~/lib/components/analytics'
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
+const displaySerif = Shippori_Mincho_B1({
+  subsets: ['latin'],
+  weight: ['400', '600', '800'],
+  variable: '--font-shippori',
   display: 'swap',
   preload: true,
 })
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
+
+const bodySans = Zen_Kaku_Gothic_New({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-zen-kaku',
+  display: 'swap',
+  preload: true,
+})
+
+const labelMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-plex-mono',
   display: 'swap',
 })
 
@@ -64,7 +76,7 @@ export const metadata: Metadata = {
     siteName: 'Naoki Hayashida Portfolio',
     images: [
       {
-        url: '/og-image.png',
+        url: '/api/og',
         width: 1200,
         height: 630,
         alt: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
@@ -76,7 +88,7 @@ export const metadata: Metadata = {
     title: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
     description:
       'フロントエンドエンジニア・Webサイト制作のプロフェッショナル。React、Next.js、TypeScriptを活用したモダンWeb開発。',
-    images: ['/og-image.png'],
+    images: ['/api/og'],
     creator: '@nacky_hayashida',
     site: '@nacky_hayashida',
   },
@@ -116,20 +128,14 @@ export default function RootLayout({
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID
 
   return (
-    <html lang="ja">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-      </head>
+    <html lang="ja" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${bodySans.variable} ${displaySerif.variable} ${labelMono.variable} font-sans antialiased`}
       >
-        <Toaster position="bottom-right" />
-        {children}
+        <ThemeProvider>
+          <Toaster position="bottom-right" />
+          {children}
+        </ThemeProvider>
         {gaId && <GoogleAnalytics measurementId={gaId} />}
         {clarityId && <MicrosoftClarity projectId={clarityId} />}
       </body>

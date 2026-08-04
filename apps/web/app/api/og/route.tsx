@@ -3,12 +3,19 @@ import type { NextRequest } from 'next/server'
 
 export const runtime = 'edge'
 
+const PAPER = '#f6f4f0'
+const INK = '#1c1a18'
+const INK_MUTED = '#6f6a63'
+const RULE = '#d8d4cd'
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const title = searchParams.get('title') || 'Nacky App'
+    const title = searchParams.get('title') || 'Naoki Hayashida'
     const description =
-      searchParams.get('description') || '革新的なWebアプリケーション'
+      searchParams.get('description') ||
+      'フロントエンドを軸に、バックエンド・インフラまで並走するエンジニア'
+    const label = searchParams.get('label') || 'PORTFOLIO'
 
     return new ImageResponse(
       <div
@@ -17,70 +24,75 @@ export async function GET(request: NextRequest) {
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#ffffff',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          justifyContent: 'space-between',
+          backgroundColor: PAPER,
+          padding: '72px 80px',
         }}
       >
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            borderRadius: '20px',
-            padding: '60px',
-            margin: '40px',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
-            maxWidth: '1000px',
+            justifyContent: 'space-between',
+            fontSize: 22,
+            letterSpacing: '0.28em',
+            color: INK_MUTED,
           }}
         >
+          <span>{label}</span>
+          <span>NACKY.ME</span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
-              fontSize: '64px',
-              fontWeight: 'bold',
-              color: '#1f2937',
-              textAlign: 'center',
-              marginBottom: '20px',
-              lineHeight: '1.2',
+              display: 'flex',
+              fontSize: 84,
+              lineHeight: 1.15,
+              color: INK,
+              letterSpacing: '-0.02em',
             }}
           >
             {title}
           </div>
           <div
             style={{
-              fontSize: '32px',
-              color: '#6b7280',
-              textAlign: 'center',
-              maxWidth: '800px',
-              lineHeight: '1.3',
+              display: 'flex',
+              marginTop: 28,
+              fontSize: 30,
+              lineHeight: 1.6,
+              color: INK_MUTED,
+              maxWidth: 900,
             }}
           >
             {description}
           </div>
-          <div
-            style={{
-              fontSize: '24px',
-              color: '#9ca3af',
-              marginTop: '40px',
-              fontWeight: '500',
-            }}
-          >
-            nacky-app.com
-          </div>
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderTop: `1px solid ${RULE}`,
+            paddingTop: 28,
+            fontSize: 24,
+            color: INK,
+          }}
+        >
+          <span>林田直樹</span>
+          <span style={{ color: INK_MUTED }}>
+            React · Next.js · TypeScript · Google Cloud
+          </span>
         </div>
       </div>,
       {
         width: 1200,
         height: 630,
-      }
+      },
     )
-  } catch (e: any) {
-    console.log(`${e.message}`)
-    return new Response(`Failed to generate the image`, {
-      status: 500,
-    })
+  } catch (error) {
+    console.error('OG image generation failed:', error)
+    return new Response('Failed to generate the image', { status: 500 })
   }
 }

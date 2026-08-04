@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-home.png',
+        url: '/api/og',
         width: 1200,
         height: 630,
         alt: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア ポートフォリオ',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: 'Naoki Hayashida（林田直樹） - フロントエンドエンジニア',
     description:
       'React・Next.js・TypeScriptを使用したWebサイト制作・Web開発のプロフェッショナル。',
-    images: ['/og-home.png'],
+    images: ['/api/og'],
   },
   alternates: {
     canonical: '/home',

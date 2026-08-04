@@ -44,13 +44,12 @@ export function ContactForm() {
       userName: '',
       companyName: '',
       email: '',
-      confirmEmail: '',
       phoneNumber: '',
       inquiryContent: '',
       inquiryType: 'inquiry',
       privacyPolicy: false,
     },
-    mode: 'onBlur',
+    mode: 'onTouched',
   })
 
   const { executeAsync } = useAction(sendContactEmail, {
@@ -82,7 +81,7 @@ export function ContactForm() {
         userName: data.userName,
         companyName: data.companyName,
         email: data.email,
-        phoneNumber: data.phoneNumber,
+        phoneNumber: data.phoneNumber ?? '',
         inquiryType: data.inquiryType,
         inquiryContent: data.inquiryContent,
         privacyPolicy: data.privacyPolicy,
@@ -92,32 +91,25 @@ export function ContactForm() {
         // 送信処理は完了したが、想定と異なるレスポンス
         setLoading(false)
       }
-    } catch (err) {
+    } catch {
       setLoading(false)
     }
   }
 
   return (
-    <div className="max-w-4xl mx-auto relative">
+    <div className="relative">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden"
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.4 }}
       >
-        {/* Header */}
-        <div className="bg-slate-50 dark:bg-slate-900 px-8 py-6 border-b border-slate-200 dark:border-slate-800">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
-            お問い合わせフォーム
-          </h3>
-          <p className="mt-2 text-slate-600 dark:text-slate-400">
-            お気軽にお問い合わせください。通常1-2営業日以内にご返信いたします。
-          </p>
-        </div>
+        <p className="text-[0.95rem] leading-[1.9] text-ink-muted">
+          お気軽にお問い合わせください。通常1-2営業日以内にご返信いたします。
+        </p>
 
         {/* Form */}
-        <div className="p-8">
+        <div className="mt-8">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               {/* Personal Information Section */}
@@ -128,7 +120,7 @@ export function ContactForm() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
+                        <FormLabel className="font-sans text-base font-medium text-ink-faint">
                           お名前
                         </FormLabel>
                         <RequiredBadge />
@@ -136,7 +128,8 @@ export function ContactForm() {
                       <FormControl>
                         <Input
                           {...field}
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
+                          autoComplete="name"
+                          className="h-12 rounded-md border-rule bg-paper text-base text-ink placeholder:text-ink-faint focus-visible:ring-ink/20"
                           placeholder="山田 太郎"
                         />
                       </FormControl>
@@ -150,13 +143,14 @@ export function ContactForm() {
                   name="companyName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
+                      <FormLabel className="font-sans text-base font-medium text-ink-faint">
                         会社名・組織名
                       </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
+                          autoComplete="organization"
+                          className="h-12 rounded-md border-rule bg-paper text-base text-ink placeholder:text-ink-faint focus-visible:ring-ink/20"
                           placeholder="株式会社サンプル"
                         />
                       </FormControl>
@@ -174,7 +168,7 @@ export function ContactForm() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
+                        <FormLabel className="font-sans text-base font-medium text-ink-faint">
                           メールアドレス
                         </FormLabel>
                         <RequiredBadge />
@@ -182,32 +176,10 @@ export function ContactForm() {
                       <FormControl>
                         <Input
                           {...field}
+                          autoComplete="email"
+                          inputMode="email"
                           type="email"
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
-                          placeholder="example@example.com"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="confirmEmail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          メールアドレス（確認用）
-                        </FormLabel>
-                        <RequiredBadge />
-                      </div>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
+                          className="h-12 rounded-md border-rule bg-paper text-base text-ink placeholder:text-ink-faint focus-visible:ring-ink/20"
                           placeholder="example@example.com"
                         />
                       </FormControl>
@@ -224,16 +196,17 @@ export function ContactForm() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          電話番号
+                        <FormLabel className="font-sans text-base font-medium text-ink-faint">
+                          電話番号（任意）
                         </FormLabel>
-                        <RequiredBadge />
                       </div>
                       <FormControl>
                         <Input
                           {...field}
+                          autoComplete="tel"
+                          inputMode="tel"
                           type="tel"
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
+                          className="h-12 rounded-md border-rule bg-paper text-base text-ink placeholder:text-ink-faint focus-visible:ring-ink/20"
                           placeholder="090-1234-5678"
                         />
                       </FormControl>
@@ -248,7 +221,7 @@ export function ContactForm() {
                   render={({ field }) => (
                     <FormItem>
                       <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
+                        <FormLabel className="font-sans text-base font-medium text-ink-faint">
                           お問い合わせ種別
                         </FormLabel>
                         <RequiredBadge />
@@ -258,11 +231,11 @@ export function ContactForm() {
                         onValueChange={field.onChange}
                       >
                         <FormControl>
-                          <SelectTrigger className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950">
+                          <SelectTrigger className="h-12 rounded-md border-rule bg-paper text-base text-ink data-[placeholder]:text-ink-faint focus:ring-ink/20">
                             <SelectValue placeholder="お問い合わせ種別を選択してください" />
                           </SelectTrigger>
                         </FormControl>
-                        <SelectContent>
+                        <SelectContent className="border-rule bg-paper-raised text-ink">
                           <SelectItem value="inquiry">お問い合わせ</SelectItem>
                           <SelectItem value="recruit">採用について</SelectItem>
                           <SelectItem value="other">その他</SelectItem>
@@ -281,7 +254,7 @@ export function ContactForm() {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
+                      <FormLabel className="font-sans text-base font-medium text-ink-faint">
                         お問い合わせ内容
                       </FormLabel>
                       <RequiredBadge />
@@ -289,7 +262,7 @@ export function ContactForm() {
                     <FormControl>
                       <Textarea
                         {...field}
-                        className="min-h-[120px] text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 resize-none"
+                        className="min-h-[120px] resize-none rounded-md border-rule bg-paper text-base text-ink placeholder:text-ink-faint focus-visible:ring-ink/20"
                         placeholder="お問い合わせ内容をできるだけ詳しくご記入ください"
                       />
                     </FormControl>
@@ -303,39 +276,41 @@ export function ContactForm() {
                 control={form.control}
                 name="privacyPolicy"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3 space-y-0 rounded-lg border border-slate-200 dark:border-slate-800 p-6 bg-slate-50 dark:bg-slate-900">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="mt-1"
-                      />
-                    </FormControl>
-                    <div className="space-y-1">
-                      <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                        個人情報の取り扱いについて
-                      </FormLabel>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        お預かりした個人情報は、お問い合わせへの回答および関連するご連絡にのみ使用いたします。
-                        第三者への提供は行いません。
-                      </p>
-                      <FormMessage />
-                    </div>
+                  <FormItem className="space-y-0 rounded-md border border-rule bg-paper-raised p-6">
+                    <FormLabel className="flex min-h-11 cursor-pointer items-start gap-3 py-2 font-sans">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="mt-1 border-rule focus-visible:ring-ink/20 data-[state=checked]:border-ink data-[state=checked]:bg-ink data-[state=checked]:text-paper"
+                        />
+                      </FormControl>
+                      <span className="space-y-1">
+                        <span className="block text-base font-medium text-ink">
+                          個人情報の取り扱いについて
+                        </span>
+                        <span className="block text-sm font-normal leading-relaxed text-ink-muted">
+                          お預かりした個人情報は、お問い合わせへの回答および関連するご連絡にのみ使用いたします。
+                          第三者への提供は行いません。
+                        </span>
+                      </span>
+                    </FormLabel>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
               {/* Submit Button */}
-              <div className="flex justify-center pt-4">
+              <div className="flex pt-4">
                 <Button
                   type="submit"
-                  disabled={!form.formState.isValid || loading}
+                  disabled={form.formState.isSubmitting}
                   size="lg"
-                  className="w-full sm:w-auto px-12 py-4 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="h-12 w-full rounded-full bg-ink px-12 text-base font-medium text-paper transition-all hover:-translate-y-0.5 hover:bg-ink disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
                 >
                   <span className="flex items-center gap-2">
                     {!loading && <Send className="w-5 h-5" />}
-                    {loading ? '送信中...' : '送信する'}
+                    {loading ? '送信中...' : 'この内容で問い合わせる'}
                   </span>
                 </Button>
               </div>
