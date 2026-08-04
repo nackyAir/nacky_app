@@ -6,7 +6,6 @@ import { Suspense } from 'react'
 
 import { siteConfig } from '~/config/siteConfig'
 import { ContactForm } from '~/features/Home/ContactForm'
-import { LanguageProgress } from '~/features/Home/LanguageProgress'
 import { ProjectTabs } from '~/features/Home/ProjectTabs'
 import { SkillBadges } from '~/features/Home/SkillBadges'
 import { SocialLinks } from '~/features/Home/SocialLinks'
@@ -186,16 +185,9 @@ export function HomeWrapper() {
         </Section>
 
         <Section
-          title="Language Progress"
-          subtitle="GitHubアクティビティから見る技術的専門性と継続的な学習"
-          variant="alternate"
-        >
-          <LanguageProgress />
-        </Section>
-
-        <Section
           title="Projects"
           subtitle="実務経験と個人プロジェクトで培った技術力とクリエイティビティ"
+          variant="alternate"
         >
           <ProjectTabs />
         </Section>
@@ -203,7 +195,6 @@ export function HomeWrapper() {
         <Section
           title="Contact"
           subtitle="次のプロジェクトでご一緒できることを楽しみにしています"
-          variant="alternate"
         >
           <ContactForm />
         </Section>
