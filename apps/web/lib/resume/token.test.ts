@@ -2,15 +2,106 @@ import { describe, expect, it } from 'vitest'
 
 import {
   createResumeToken,
+  decodeResumeToken,
+  encodeResumeToken,
   isResumeFileId,
   verifyResumeToken,
 } from '~/lib/resume/token'
+import type { ResumeFileId } from '~/lib/resume/token.types'
 
 const SECRET = 'test-signing-secret'
 const CREATED_AT = new Date('2026-07-13T00:00:00.000Z')
 const EXPIRES_AT = new Date('2026-07-13T00:05:00.000Z')
+const ENCODE_CASES: { name: string; ids: ResumeFileId[] }[] = [
+  { name: 'one file', ids: ['rirekisho-pdf'] },
+  {
+    name: 'multiple files',
+    ids: ['rirekisho-pdf', 'shokumu-keirekisho-pdf'],
+  },
+]
 
 describe('resume token', () => {
+  it.each(ENCODE_CASES)('encodes, decodes, and verifies a token for $name', ({
+    ids,
+  }) => {
+    const token = createResumeToken({ ids, expiresAt: EXPIRES_AT }, SECRET)
+    const decodedToken = decodeResumeToken(encodeResumeToken(token))
+
+    expect(decodedToken).not.toBeNull()
+
+    if (!decodedToken) {
+      return
+    }
+
+    expect(verifyResumeToken(decodedToken, SECRET, CREATED_AT)).toEqual({
+      ok: true,
+      ids,
+    })
+  })
+
+  it('rejects an encoded token without a separator', () => {
+    expect(decodeResumeToken('invalid')).toBeNull()
+  })
+
+  it('rejects an encoded token with an invalid base64url payload', () => {
+    expect(decodeResumeToken('invalid+payload.signature')).toBeNull()
+  })
+
+  it('rejects an encoded token whose decoded payload has no separator', () => {
+    const payload = Buffer.from('invalid').toString('base64url')
+
+    expect(decodeResumeToken(`${payload}.signature`)).toBeNull()
+  })
+
+  it('fails verification when an encoded token payload is tampered with', () => {
+    const token = createResumeToken(
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
+      SECRET
+    )
+    const encodedToken = encodeResumeToken(token)
+    const separatorIndex = encodedToken.indexOf('.')
+    const tamperedPayload = Buffer.from(
+      `shokumu-keirekisho-pdf:${token.exp}`
+    ).toString('base64url')
+    const decodedToken = decodeResumeToken(
+      `${tamperedPayload}${encodedToken.slice(separatorIndex)}`
+    )
+
+    expect(decodedToken).not.toBeNull()
+
+    if (!decodedToken) {
+      return
+    }
+
+    expect(verifyResumeToken(decodedToken, SECRET, CREATED_AT)).toEqual({
+      ok: false,
+      reason: 'invalid',
+    })
+  })
+
+  it('fails verification when an encoded token signature is tampered with', () => {
+    const token = createResumeToken(
+      { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
+      SECRET
+    )
+    const encodedToken = encodeResumeToken(token)
+    const separatorIndex = encodedToken.indexOf('.')
+    const decodedToken = decodeResumeToken(
+      `${encodedToken.slice(0, separatorIndex + 1)}tampered`
+    )
+
+    expect(decodedToken).not.toBeNull()
+
+    if (!decodedToken) {
+      return
+    }
+
+    expect(verifyResumeToken(decodedToken, SECRET, CREATED_AT)).toEqual({
+      ok: false,
+      reason: 'invalid',
+    })
+  })
+
   it('creates and verifies a token for one file', () => {
     const token = createResumeToken(
       { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },

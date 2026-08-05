@@ -61,6 +61,56 @@ export function createResumeToken(
   return { ids, exp, sig }
 }
 
+export function encodeResumeToken(token: ResumeToken): string {
+  const payload = `${token.ids.join(',')}:${token.exp}`
+  const encodedPayload = Buffer.from(payload).toString('base64url')
+
+  return `${encodedPayload}.${token.sig}`
+}
+
+export function decodeResumeToken(
+  value: string
+): { ids: string[]; exp: string; sig: string } | null {
+  const parts = value.split('.')
+
+  if (parts.length !== 2) {
+    return null
+  }
+
+  const [encodedPayload, sig] = parts
+
+  if (
+    !encodedPayload ||
+    sig === undefined ||
+    !/^[A-Za-z0-9_-]+$/.test(encodedPayload)
+  ) {
+    return null
+  }
+
+  try {
+    const payloadBuffer = Buffer.from(encodedPayload, 'base64url')
+
+    if (payloadBuffer.toString('base64url') !== encodedPayload) {
+      return null
+    }
+
+    const payload = payloadBuffer.toString()
+    const separatorIndex = payload.lastIndexOf(':')
+
+    if (separatorIndex === -1) {
+      return null
+    }
+
+    return {
+      ids: payload.slice(0, separatorIndex).split(','),
+      exp: payload.slice(separatorIndex + 1),
+      sig,
+    }
+  } catch {
+    return null
+  }
+}
+
 export function verifyResumeToken(
   token: { ids: string[]; exp: string; sig: string },
   secret: string,

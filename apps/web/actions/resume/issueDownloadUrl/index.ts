@@ -7,7 +7,7 @@ import { schema } from '~/actions/resume/issueDownloadUrl/schema'
 import { createSafeAction } from '~/lib/create-safe-action'
 import { hasValidAdminSession } from '~/lib/resume/admin-session'
 import { getRequiredResumeEnv } from '~/lib/resume/env'
-import { createResumeToken } from '~/lib/resume/token'
+import { createResumeToken, encodeResumeToken } from '~/lib/resume/token'
 
 function getRequestOrigin(headerStore: Headers) {
   const host = headerStore.get('host')
@@ -36,11 +36,7 @@ export async function handler(input: z.infer<typeof schema>) {
   )
   const secret = getRequiredResumeEnv('RESUME_SIGNING_SECRET')
   const token = createResumeToken({ ids: input.ids, expiresAt }, secret)
-  const searchParams = new URLSearchParams({
-    ids: token.ids.join(','),
-    exp: String(token.exp),
-    sig: token.sig,
-  })
+  const searchParams = new URLSearchParams({ t: encodeResumeToken(token) })
   const headerStore = await headers()
   const origin = getRequestOrigin(headerStore)
 
