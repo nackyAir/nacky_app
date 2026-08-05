@@ -65,6 +65,11 @@ export function toFlightLog(
       destination,
       destinationLabel: DESTINATION_LABELS[destination],
       status: resolveStatus(project.period),
+      period: project.period,
+      role: project.role,
+      description: project.description,
+      skills: project.skills,
+      details: project.details,
       url: project.url,
     }
   })
