@@ -1,206 +1,101 @@
 'use client'
 
-import * as motion from 'framer-motion/client'
+import { motion, useReducedMotion } from 'framer-motion'
+
+import {
+  clientProjects,
+  personalProjects,
+} from '~/features/Home/ProjectTimeLIne/config'
 
 type SkillType = {
   name: string
   category: string
-  level: number
-  icon: string
-  color: string
+  minYears: number | null
+  maxYears: number
 }
 
-const SKILLS: SkillType[] = [
-  {
-    name: 'React',
-    category: 'Frontend',
-    level: 95,
-    icon: '⚛️',
-    color: 'from-blue-500 to-cyan-400',
-  },
-  {
-    name: 'TypeScript',
-    category: 'Language',
-    level: 90,
-    icon: '📘',
-    color: 'from-blue-600 to-blue-800',
-  },
-  {
-    name: 'Next.js',
-    category: 'Framework',
-    level: 88,
-    icon: '⚡',
-    color: 'from-slate-800 to-slate-600',
-  },
-  {
-    name: 'Tailwind CSS',
-    category: 'Styling',
-    level: 92,
-    icon: '🎨',
-    color: 'from-cyan-500 to-teal-400',
-  },
-  {
-    name: 'Node.js',
-    category: 'Backend',
-    level: 80,
-    icon: '🟢',
-    color: 'from-green-600 to-green-400',
-  },
-  {
-    name: 'Supabase',
-    category: 'Database',
-    level: 85,
-    icon: '🗄️',
-    color: 'from-emerald-600 to-emerald-400',
-  },
-  {
-    name: 'Firebase',
-    category: 'Backend',
-    level: 75,
-    icon: '🔥',
-    color: 'from-orange-500 to-yellow-400',
-  },
-  {
-    name: 'React Native',
-    category: 'Mobile',
-    level: 70,
-    icon: '📱',
-    color: 'from-purple-600 to-blue-500',
-  },
-  {
-    name: 'Hono',
-    category: 'Framework',
-    level: 75,
-    icon: '🔥',
-    color: 'from-red-500 to-pink-400',
-  },
-  {
-    name: 'NestJS',
-    category: 'Backend',
-    level: 78,
-    icon: '🦁',
-    color: 'from-red-600 to-red-400',
-  },
+const EASE = [0.22, 1, 0.36, 1] as const
+
+const SKILLS: ReadonlyArray<SkillType> = [
+  { name: 'TypeScript', category: 'Language', minYears: 3, maxYears: 5 },
+  { name: 'JavaScript', category: 'Language', minYears: 3, maxYears: 5 },
+  { name: 'Next.js', category: 'Framework', minYears: 3, maxYears: 5 },
+  { name: 'Figma', category: 'Design', minYears: 2, maxYears: 3 },
+  { name: 'Google Cloud', category: 'Infra', minYears: 2, maxYears: 3 },
+  { name: 'PostgreSQL', category: 'Database', minYears: 2, maxYears: 3 },
+  { name: 'GraphQL', category: 'API', minYears: null, maxYears: 1 },
+  { name: 'Ruby', category: 'Language', minYears: null, maxYears: 1 },
 ]
 
-function SkillCard({ skill, delay }: { skill: SkillType; delay: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{
-        duration: 0.5,
-        delay,
-        ease: 'easeOut',
-      }}
-      whileHover={{
-        y: -5,
-        transition: { duration: 0.2 },
-      }}
-      className="group relative"
-    >
-      {/* Main card */}
-      <div className="relative bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-        {/* Skill icon and name */}
-        <div className="flex items-center gap-4 mb-4">
-          <div className="text-3xl">{skill.icon}</div>
-          <div>
-            <h3 className="font-bold text-lg text-slate-900 dark:text-white">
-              {skill.name}
-            </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-              {skill.category}
-            </p>
-          </div>
-        </div>
+const LONGEST_YEARS = Math.max(...SKILLS.map((skill) => skill.maxYears))
 
-        {/* Skill level */}
-        <div className="space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
-              Proficiency
-            </span>
-            <span className="text-sm font-bold text-slate-900 dark:text-white">
-              {skill.level}%
-            </span>
-          </div>
-          <div className="relative h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${skill.level}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, delay: delay + 0.2, ease: 'easeOut' }}
-              className={`h-full rounded-full bg-gradient-to-r ${skill.color}`}
-            />
-          </div>
-        </div>
-      </div>
-    </motion.div>
+const SUMMARY: ReadonlyArray<{ value: string; label: string }> = [
+  { value: String(SKILLS.length), label: 'TECHNOLOGIES' },
+  { value: String(clientProjects.length), label: 'CLIENT PROJECTS' },
+  { value: String(personalProjects.length), label: 'PERSONAL PROJECTS' },
+  { value: '3年+', label: 'EXPERIENCE' },
+]
+
+function toYearsLabel(skill: SkillType): string {
+  if (skill.minYears === null) {
+    return `〜${skill.maxYears}年`
+  }
+
+  return `${skill.minYears}〜${skill.maxYears}年`
+}
+
+function SkillRow({ skill, index }: { skill: SkillType; index: number }) {
+  const shouldReduceMotion = useReducedMotion()
+  const ratio = skill.maxYears / LONGEST_YEARS
+
+  return (
+    <li className="border-hairline flex items-center gap-4 border-b py-4">
+      <span className="text-ink w-[9rem] shrink-0 text-sm font-bold">
+        {skill.name}
+      </span>
+      <span className="label-mono text-ink-muted hidden w-[6.5rem] shrink-0 sm:block">
+        {skill.category}
+      </span>
+      <span className="bg-hairline relative h-px flex-1">
+        <motion.span
+          className="bg-navy absolute inset-y-0 left-0 block origin-left"
+          initial={{ scaleX: shouldReduceMotion ? ratio : 0 }}
+          whileInView={{ scaleX: ratio }}
+          viewport={{ once: true }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.42,
+            delay: shouldReduceMotion ? 0 : index * 0.04,
+            ease: EASE,
+          }}
+          style={{ width: '100%' }}
+        />
+      </span>
+      <span className="text-ink w-[4.5rem] shrink-0 text-right font-mono text-xs">
+        {toYearsLabel(skill)}
+      </span>
+    </li>
   )
 }
 
 export function SkillBadges() {
   return (
-    <div className="relative">
-      <div className="relative max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative"
-        >
-          {/* Skills grid */}
-          <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-8">
-            {SKILLS.map((skill, index) => (
-              <SkillCard key={skill.name} skill={skill} delay={index * 0.05} />
-            ))}
-          </div>
+    <div>
+      <ul className="border-hairline grid border-t md:grid-cols-2 md:gap-x-16">
+        {SKILLS.map((skill, index) => (
+          <SkillRow key={skill.name} skill={skill} index={index} />
+        ))}
+      </ul>
 
-          {/* Stats summary */}
-          <div className="mt-12 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-              <div>
-                <div className="text-3xl font-black text-blue-600 dark:text-blue-400">
-                  {SKILLS.length}
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Technologies
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-indigo-600 dark:text-indigo-400">
-                  3+
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Years Exp
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-purple-600 dark:text-purple-400">
-                  {Math.round(
-                    SKILLS.reduce((acc, skill) => acc + skill.level, 0) /
-                      SKILLS.length
-                  )}
-                  %
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Avg Proficiency
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
-                  10+
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  Projects
-                </div>
-              </div>
-            </div>
+      <dl className="border-hairline bg-hairline mt-12 grid grid-cols-2 gap-px border sm:grid-cols-4">
+        {SUMMARY.map((item) => (
+          <div key={item.label} className="bg-canvas px-4 py-6">
+            <dt className="label-mono text-ink-muted">{item.label}</dt>
+            <dd className="text-ink font-display mt-0.5 text-2xl font-semibold tracking-tight">
+              {item.value}
+            </dd>
           </div>
-        </motion.div>
-      </div>
+        ))}
+      </dl>
     </div>
   )
 }

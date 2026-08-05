@@ -12,7 +12,7 @@ export const ScrollProgress = () => {
 
   return (
     <motion.div
-      className="bg-primary fixed left-0 right-0 top-0 z-50 h-1"
+      className="bg-navy fixed inset-x-0 top-0 z-[60] h-0.5 origin-left"
       style={{ scaleX }}
     />
   )
