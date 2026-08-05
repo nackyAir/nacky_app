@@ -6,8 +6,8 @@ import { AiWorkflow } from '~/features/Home/AiWorkflow'
 import { ContactForm } from '~/features/Home/ContactForm'
 import { Hero } from '~/features/Home/Hero'
 import { Now } from '~/features/Home/Now'
-import { Section } from '~/features/Home/primitives'
 import { Principles } from '~/features/Home/Principles'
+import { Section } from '~/features/Home/primitives'
 import { SkillList } from '~/features/Home/SkillList'
 import { SocialLinks } from '~/features/Home/SocialLinks'
 import { LoadingScreen } from '~/features/Layout'
@@ -74,8 +74,8 @@ export function HomeWrapper() {
             id="ai"
             index="04"
             label="AI-assisted"
-            title="生成AIを、品質を安定させる仕組みとして使う"
-            lead="実装をAIに任せて終わりにはしません。判断の順番とルールを固定して、誰が書いても同じ品質になる状態を作ることに使っています。"
+            title="AI と品質を、両立させる。"
+            lead="要件から検証までをひとつの工程として設計し、AIの速度を活かしながら、人が品質の判断を担います。"
           >
             <AiWorkflow />
           </Section>
@@ -87,7 +87,7 @@ export function HomeWrapper() {
           <Section
             id="works"
             index="06"
-            label="Works"
+            label="Flight Log"
             title="これまでに作ってきたもの"
             lead="正社員として関わった3件は、課題と担当範囲を詳細ページにまとめています。企業名は伏せています。"
           >

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-import { featuredWorks } from '~/features/Works'
+import { featuredWorks, freelanceTimeline } from '~/features/Works'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://nacky.me'
@@ -26,6 +26,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/works`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ]
 
   // TODO: データベースからブログ記事等の動的コンテンツを取得
@@ -37,7 +43,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   //   priority: 0.7,
   // }))
 
-  const workRoutes: MetadataRoute.Sitemap = featuredWorks.map((work) => ({
+  const workRoutes: MetadataRoute.Sitemap = [
+    ...featuredWorks,
+    ...freelanceTimeline,
+  ].map((work) => ({
     url: `${baseUrl}/works/${work.slug}`,
     lastModified,
     changeFrequency: 'monthly',

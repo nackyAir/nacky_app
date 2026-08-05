@@ -1,9 +1,10 @@
-import type { TimelineItem, WorkItem } from './type'
+import type { PersonalWorkItem, TimelineItem, WorkItem } from './type'
 
 export const featuredWorks: Array<WorkItem> = [
   {
     slug: 'resme',
     title: 'Resme',
+    destination: { code: 'CAR', label: 'キャリア' },
     summary:
       'Gmail・カレンダー連携型の法人向け AI SaaS。フロントからインフラまで一人で縦断し、開発責任者として機能を届けた。',
     period: '2025.08 - 2026.04',
@@ -33,6 +34,7 @@ export const featuredWorks: Array<WorkItem> = [
   {
     slug: 'legal-debt-workflow',
     title: '弁護士事務所向け 債務整理業務改善サービス',
+    destination: { code: 'LAW', label: '法律' },
     summary:
       '相談者向けと事務所向けの両方の画面をフロントエンド一人称で担当し、5ヶ月でリリースまで持っていった受託開発。',
     period: '2025.08 - 2025.12',
@@ -63,6 +65,7 @@ export const featuredWorks: Array<WorkItem> = [
   {
     slug: 'accounting-ai-saas',
     title: '会計事務所向け AI SaaS',
+    destination: { code: 'ACC', label: '会計' },
     summary:
       '13ヶ月の継続参画。指示待ちではなく UI/UX の改善提案を起点にした開発で、ユーザーの入力負荷を下げた。',
     period: '2024.06 - 2025.06',
@@ -94,13 +97,16 @@ export const featuredWorks: Array<WorkItem> = [
 
 export const freelanceTimeline: Array<TimelineItem> = [
   {
+    slug: 'consumer-live-streaming',
     period: '2023.12 - 2024.03',
     title: 'toC ライブ配信サービス',
+    destination: { code: 'LIV', label: '配信' },
     role: 'フロントエンド',
     stack: ['TypeScript', 'Next.js', 'WebRTC', 'Firebase', 'Express'],
     note: 'WebRTC を用いたリアルタイム配信画面を実装。UI/UX の改善も継続して担当した。',
   },
   {
+    slug: 'consumer-fortune-chatbot',
     period: '2023.12 - 2024.02',
     title: 'toC 占いチャットボット',
     role: 'フロントエンド',
@@ -108,6 +114,7 @@ export const freelanceTimeline: Array<TimelineItem> = [
     note: '当時まだ知見の少なかった生成 AI API での対話機能を、実装からテストまで一人称で担当。',
   },
   {
+    slug: 'internal-attendance-tool',
     period: '2023.09 - 2023.12',
     title: '社内勤怠管理ツール',
     role: 'フロントエンド',
@@ -115,6 +122,7 @@ export const freelanceTimeline: Array<TimelineItem> = [
     note: '画面仕様もタスクも未整備の初期フェーズから参画し、3名体制で立ち上げた。',
   },
   {
+    slug: 'pos-management-service',
     period: '2023.03 - 2024.03',
     title: 'POS アプリケーション管理サービス',
     role: 'フロントエンド',
@@ -123,11 +131,12 @@ export const freelanceTimeline: Array<TimelineItem> = [
   },
 ]
 
-export const personalWorks = [
+export const personalWorks: Array<PersonalWorkItem> = [
   {
     title: 'madoguchi',
     period: '2026.05 - 現在',
     url: 'https://madoguchi.co',
+    destination: { code: 'EST', label: '住宅' },
     description:
       '住宅系事業者向けの、問い合わせ一次対応とリード獲得を担う AI チャットボット。',
     stack: [
@@ -158,6 +167,11 @@ export const personalWorks = [
   },
 ]
 
-export function findWorkBySlug(slug: string): WorkItem | undefined {
-  return featuredWorks.find((work) => work.slug === slug)
+export function findWorkBySlug(
+  slug: string
+): WorkItem | TimelineItem | undefined {
+  return (
+    featuredWorks.find((work) => work.slug === slug) ??
+    freelanceTimeline.find((work) => work.slug === slug)
+  )
 }

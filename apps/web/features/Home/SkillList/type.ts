@@ -1,5 +1,5 @@
-export type SkillTier = {
+export type SkillCategory = {
+  index: string
   label: string
-  caption: string
   items: Array<{ name: string; note?: string }>
 }

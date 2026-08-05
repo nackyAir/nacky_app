@@ -1,16 +1,21 @@
+import { ArrowUpRight } from '@repo/ui/icons/lucide'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-
-import { ArrowUpRight } from '@repo/ui/icons/lucide'
-import { featuredWorks, findWorkBySlug } from '~/features/Works'
+import {
+  featuredWorks,
+  findWorkBySlug,
+  freelanceTimeline,
+} from '~/features/Works'
 
 type PageProps = {
   params: Promise<{ slug: string }>
 }
 
 export function generateStaticParams() {
-  return featuredWorks.map((work) => ({ slug: work.slug }))
+  return [...featuredWorks, ...freelanceTimeline].map((work) => ({
+    slug: work.slug,
+  }))
 }
 
 export async function generateMetadata({
@@ -21,24 +26,25 @@ export async function generateMetadata({
 
   if (!work) return {}
 
+  const description = 'summary' in work ? work.summary : work.note
   const ogImage = `/api/og?title=${encodeURIComponent(
-    work.title,
-  )}&description=${encodeURIComponent(work.summary)}&label=WORKS`
+    work.title
+  )}&description=${encodeURIComponent(description)}&label=WORKS`
 
   return {
     title: work.title,
-    description: work.summary,
+    description,
     alternates: { canonical: `/works/${work.slug}` },
     openGraph: {
       title: work.title,
-      description: work.summary,
+      description,
       type: 'article',
       images: [{ url: ogImage, width: 1200, height: 630, alt: work.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: work.title,
-      description: work.summary,
+      description,
       images: [ogImage],
     },
   }
@@ -61,6 +67,10 @@ export default async function WorkDetailPage({ params }: PageProps) {
 
   if (!work) notFound()
 
+  const isFeatured = 'summary' in work
+  const description = isFeatured ? work.summary : work.note
+  const allWorks = [...featuredWorks, ...freelanceTimeline]
+
   return (
     <div className="grain relative min-h-screen bg-paper text-ink">
       <article className="relative z-[1] mx-auto w-full max-w-4xl px-6 pt-28 pb-24 md:px-10 md:pt-36">
@@ -73,16 +83,16 @@ export default async function WorkDetailPage({ params }: PageProps) {
 
         <header className="mt-10">
           <p className="font-mono text-xs uppercase tracking-[0.24em] text-ink-faint">
-            {work.engagement} / {work.period}
+            {isFeatured ? work.engagement : '業務委託'} / {work.period}
           </p>
           <h1 className="mt-5 font-display text-[clamp(2.25rem,7vw,4rem)] leading-[1.2] tracking-tight text-balance-jp">
             {work.title}
           </h1>
           <p className="mt-7 max-w-[42rem] text-[1rem] leading-[2] text-ink-muted">
-            {work.summary}
+            {description}
           </p>
 
-          {work.url && (
+          {isFeatured && work.url && (
             <a
               href={work.url}
               target="_blank"
@@ -98,58 +108,71 @@ export default async function WorkDetailPage({ params }: PageProps) {
         </header>
 
         <dl className="mt-14">
-          <MetaRow label="期間" value={`${work.period}（${work.duration}）`} />
+          <MetaRow
+            label="期間"
+            value={
+              isFeatured ? `${work.period}（${work.duration}）` : work.period
+            }
+          />
           <MetaRow label="役割" value={work.role} />
-          <MetaRow label="参画形態" value={work.engagement} />
-          <MetaRow label="体制" value={work.team} />
+          {isFeatured && (
+            <>
+              <MetaRow label="参画形態" value={work.engagement} />
+              <MetaRow label="体制" value={work.team} />
+            </>
+          )}
           <MetaRow label="技術" value={work.stack.join(' · ')} />
         </dl>
 
-        <section className="mt-20">
-          <h2 className="font-mono text-xs uppercase tracking-[0.28em] text-ink-muted">
-            課題
-          </h2>
-          <p className="mt-6 max-w-[42rem] text-[1rem] leading-[2] text-ink-muted">
-            {work.challenge}
-          </p>
-        </section>
+        {isFeatured && (
+          <>
+            <section className="mt-20">
+              <h2 className="font-mono text-xs uppercase tracking-[0.28em] text-ink-muted">
+                課題
+              </h2>
+              <p className="mt-6 max-w-[42rem] text-[1rem] leading-[2] text-ink-muted">
+                {work.challenge}
+              </p>
+            </section>
 
-        <section className="mt-16">
-          <h2 className="font-mono text-xs uppercase tracking-[0.28em] text-ink-muted">
-            取り組み
-          </h2>
-          <ol className="mt-6">
-            {work.actions.map((action, i) => (
-              <li
-                key={action}
-                className="grid gap-2 border-t border-rule py-5 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-6"
-              >
-                <span className="font-mono text-xs text-ink-faint sm:pt-1.5">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <p className="max-w-[40rem] text-[0.95rem] leading-[2] text-ink-muted">
-                  {action}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </section>
+            <section className="mt-16">
+              <h2 className="font-mono text-xs uppercase tracking-[0.28em] text-ink-muted">
+                取り組み
+              </h2>
+              <ol className="mt-6">
+                {work.actions.map((action, i) => (
+                  <li
+                    key={action}
+                    className="grid gap-2 border-t border-rule py-5 sm:grid-cols-[3rem_minmax(0,1fr)] sm:gap-6"
+                  >
+                    <span className="font-mono text-xs text-ink-faint sm:pt-1.5">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <p className="max-w-[40rem] text-[0.95rem] leading-[2] text-ink-muted">
+                      {action}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </section>
 
-        <section className="mt-16">
-          <h2 className="font-mono text-xs uppercase tracking-[0.28em] text-ink-muted">
-            成果
-          </h2>
-          <p className="mt-6 max-w-[42rem] font-display text-lg leading-[1.9] text-balance-jp md:text-xl">
-            {work.outcome}
-          </p>
-        </section>
+            <section className="mt-16">
+              <h2 className="font-mono text-xs uppercase tracking-[0.28em] text-ink-muted">
+                成果
+              </h2>
+              <p className="mt-6 max-w-[42rem] font-display text-lg leading-[1.9] text-balance-jp md:text-xl">
+                {work.outcome}
+              </p>
+            </section>
+          </>
+        )}
 
         <footer className="mt-24 border-t border-rule pt-10">
           <p className="font-mono text-xs uppercase tracking-[0.24em] text-ink-faint">
             他の実績
           </p>
           <ul className="mt-6 space-y-px">
-            {featuredWorks
+            {allWorks
               .filter((other) => other.slug !== work.slug)
               .map((other) => (
                 <li key={other.slug} className="border-t border-rule">
@@ -167,10 +190,10 @@ export default async function WorkDetailPage({ params }: PageProps) {
           </ul>
 
           <Link
-            href="/home#contact"
-            className="mt-12 inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-sm font-medium text-paper transition-transform duration-300 hover:-translate-y-0.5"
+            href="/works"
+            className="mt-12 inline-flex min-h-12 items-center rounded-sm bg-accent-navy px-7 text-sm font-medium text-paper transition-transform duration-300 hover:-translate-y-0.5"
           >
-            お問い合わせ
+            Flight Log に戻る
           </Link>
         </footer>
       </article>

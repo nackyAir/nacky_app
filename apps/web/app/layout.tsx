@@ -1,15 +1,17 @@
 import type { Metadata, Viewport } from 'next'
-import { IBM_Plex_Mono, Shippori_Mincho_B1, Zen_Kaku_Gothic_New } from 'next/font/google'
+import { IBM_Plex_Mono, Zen_Kaku_Gothic_New } from 'next/font/google'
+import localFont from 'next/font/local'
 
 import '@repo/ui/globals.css'
 import { Toaster } from 'sonner'
-import { ThemeProvider } from '~/lib/components/theme-provider'
 import { GoogleAnalytics, MicrosoftClarity } from '~/lib/components/analytics'
+import { ThemeProvider } from '~/lib/components/theme-provider'
 
-const displaySerif = Shippori_Mincho_B1({
-  subsets: ['latin'],
-  weight: ['400', '600', '800'],
-  variable: '--font-shippori',
+const displaySans = localFont({
+  src: './fonts/Satoshi-Variable.woff2',
+  weight: '300 900',
+  style: 'normal',
+  variable: '--font-satoshi',
   display: 'swap',
   preload: true,
 })
@@ -114,8 +116,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: '(prefers-color-scheme: light)', color: '#fafaf8' },
+    { media: '(prefers-color-scheme: dark)', color: '#0e1420' },
   ],
 }
 
@@ -130,7 +132,7 @@ export default function RootLayout({
   return (
     <html lang="ja" suppressHydrationWarning>
       <body
-        className={`${bodySans.variable} ${displaySerif.variable} ${labelMono.variable} font-sans antialiased`}
+        className={`${bodySans.variable} ${displaySans.variable} ${labelMono.variable} font-sans antialiased`}
       >
         <ThemeProvider>
           <Toaster position="bottom-right" />

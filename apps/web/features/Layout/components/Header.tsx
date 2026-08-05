@@ -10,7 +10,7 @@ import { ThemeToggle } from './ThemeToggle'
 const NAV_ITEMS = [
   { label: 'Now', href: '/home#now' },
   { label: 'About', href: '/home#about' },
-  { label: 'Works', href: '/home#works' },
+  { label: 'Works', href: '/works' },
   { label: '経歴書', href: '/resume' },
 ]
 
@@ -72,7 +72,7 @@ export const Header = () => {
 
             <Link
               href="/home#contact"
-              className="hidden min-h-11 items-center rounded-full bg-ink px-5 text-xs font-medium text-paper transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex"
+              className="hidden min-h-11 items-center rounded-sm bg-accent-navy px-5 text-xs font-medium text-paper transition-transform duration-300 hover:-translate-y-0.5 sm:inline-flex"
             >
               お問い合わせ
             </Link>
@@ -136,7 +136,7 @@ export const Header = () => {
                 <Link
                   href="/home#contact"
                   onClick={() => setMenuOpen(false)}
-                  className="inline-flex min-h-12 items-center rounded-full bg-ink px-7 text-sm font-medium text-paper"
+                  className="inline-flex min-h-12 items-center rounded-sm bg-accent-navy px-7 text-sm font-medium text-paper"
                 >
                   お問い合わせ
                 </Link>

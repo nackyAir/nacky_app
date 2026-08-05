@@ -1,40 +1,40 @@
 import { Reveal } from '~/features/Home/primitives'
-import type { SkillTier } from '../type'
+import type { SkillCategory } from '../type'
 
-const SKILL_TIERS: Array<SkillTier> = [
+const SKILL_CATEGORIES: Array<SkillCategory> = [
   {
-    label: '主戦場',
-    caption: '業務で継続的に使っている',
+    index: '01',
+    label: 'Frontend',
     items: [
-      { name: 'TypeScript', note: '3-5年' },
-      { name: 'JavaScript', note: '3-5年' },
-      { name: 'Next.js', note: '3-5年' },
+      { name: 'TypeScript', note: '3–5y' },
+      { name: 'JavaScript', note: '3–5y' },
+      { name: 'Next.js', note: '3–5y' },
       { name: 'React' },
       { name: 'Tailwind CSS' },
       { name: 'React Hook Form + Zod' },
     ],
   },
   {
-    label: '並走できる',
-    caption: '必要になった時に自分で通せる',
+    index: '02',
+    label: 'Backend',
     items: [
-      { name: 'Google Cloud', note: '2-3年' },
-      { name: 'PostgreSQL', note: '2-3年' },
-      { name: 'Terraform' },
       { name: 'Hono' },
+      { name: 'PostgreSQL', note: '2–3y' },
       { name: 'Drizzle ORM' },
       { name: 'Supabase' },
       { name: 'Firebase' },
+      { name: 'GraphQL / Hasura' },
       { name: 'Auth0 / Clerk' },
     ],
   },
   {
-    label: '扱える',
-    caption: '案件で触れてきた',
+    index: '03',
+    label: 'Product Engineering',
     items: [
-      { name: 'Figma', note: '2-3年' },
-      { name: 'GraphQL / Hasura', note: '〜1年' },
+      { name: 'Google Cloud', note: '2–3y' },
       { name: 'AWS' },
+      { name: 'Terraform' },
+      { name: 'Figma', note: '2–3y' },
       { name: 'WebRTC' },
       { name: 'Playwright / Vitest' },
     ],
@@ -43,44 +43,34 @@ const SKILL_TIERS: Array<SkillTier> = [
 
 export function SkillList() {
   return (
-    <div className="space-y-px">
-      {SKILL_TIERS.map((tier, i) => (
-        <Reveal key={tier.label} delay={i * 0.06}>
-          <div className="grid gap-4 border-t border-rule py-7 first:border-t-0 first:pt-0 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-8">
-            <div>
-              <h3 className="text-[0.95rem] font-medium">{tier.label}</h3>
-              <p className="mt-1 font-mono text-xs leading-relaxed text-ink-faint">
-                {tier.caption}
-              </p>
-            </div>
-
-            <ul className="flex flex-wrap gap-x-5 gap-y-3">
-              {tier.items.map((item) => (
-                <li
-                  key={item.name}
-                  className="flex items-baseline gap-1.5 text-[0.95rem] text-ink-muted"
-                >
-                  <span className="text-ink">{item.name}</span>
-                  {item.note && (
-                    <span className="font-mono text-xs text-ink-faint">
-                      {item.note}
+    <div className="border-b border-rule">
+      {SKILL_CATEGORIES.map((category, index) => (
+        <Reveal key={category.index} delay={index * 0.05}>
+          <section className="grid gap-5 border-t border-rule py-7 md:grid-cols-[3rem_13rem_minmax(0,1fr)] md:items-baseline md:gap-6 md:py-8">
+            <span className="font-mono text-[0.6875rem] tracking-[0.16em] text-ink-faint">
+              {category.index}
+            </span>
+            <h3 className="font-display text-xl tracking-tight md:text-2xl">
+              {category.label}
+            </h3>
+            <p className="font-mono text-[0.6875rem] leading-[2] tracking-[0.04em] text-ink-muted">
+              {category.items.map((item, itemIndex) => (
+                <span key={item.name}>
+                  {itemIndex > 0 && (
+                    <span className="px-2 text-rule-strong" aria-hidden>
+                      /
                     </span>
                   )}
-                </li>
+                  <span className="text-ink">{item.name}</span>
+                  {item.note && (
+                    <span className="ml-1 text-ink-faint">{item.note}</span>
+                  )}
+                </span>
               ))}
-            </ul>
-          </div>
+            </p>
+          </section>
         </Reveal>
       ))}
-
-      <Reveal delay={0.2}>
-        <p className="border-t border-rule pt-7 text-[0.9rem] leading-[1.9] text-ink-faint">
-          バックエンドは TypeScript の範囲で書いています。Ruby・Python・Go
-          も触ったことはありますが、主戦力ではありません。
-          要件を一人で切るところは、PM
-          やシニアエンジニアと並走しながら詰めていく形が現状の得意な進め方です。
-        </p>
-      </Reveal>
     </div>
   )
 }
