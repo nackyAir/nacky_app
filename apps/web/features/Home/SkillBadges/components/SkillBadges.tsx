@@ -2,40 +2,51 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 
+import {
+  clientProjects,
+  personalProjects,
+} from '~/features/Home/ProjectTimeLIne/config'
+
 type SkillType = {
   name: string
   category: string
-  level: number
+  minYears: number | null
+  maxYears: number
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
 const SKILLS: ReadonlyArray<SkillType> = [
-  { name: 'React', category: 'Frontend', level: 95 },
-  { name: 'TypeScript', category: 'Language', level: 90 },
-  { name: 'Next.js', category: 'Framework', level: 88 },
-  { name: 'Tailwind CSS', category: 'Styling', level: 92 },
-  { name: 'Node.js', category: 'Backend', level: 80 },
-  { name: 'Supabase', category: 'Database', level: 85 },
-  { name: 'Firebase', category: 'Backend', level: 75 },
-  { name: 'React Native', category: 'Mobile', level: 70 },
-  { name: 'Hono', category: 'Framework', level: 75 },
-  { name: 'NestJS', category: 'Backend', level: 78 },
+  { name: 'TypeScript', category: 'Language', minYears: 3, maxYears: 5 },
+  { name: 'JavaScript', category: 'Language', minYears: 3, maxYears: 5 },
+  { name: 'Next.js', category: 'Framework', minYears: 3, maxYears: 5 },
+  { name: 'Figma', category: 'Design', minYears: 2, maxYears: 3 },
+  { name: 'Google Cloud', category: 'Infra', minYears: 2, maxYears: 3 },
+  { name: 'PostgreSQL', category: 'Database', minYears: 2, maxYears: 3 },
+  { name: 'GraphQL', category: 'API', minYears: null, maxYears: 1 },
+  { name: 'Ruby', category: 'Language', minYears: null, maxYears: 1 },
 ]
 
-const AVERAGE_LEVEL = Math.round(
-  SKILLS.reduce((total, skill) => total + skill.level, 0) / SKILLS.length
-)
+const LONGEST_YEARS = Math.max(...SKILLS.map((skill) => skill.maxYears))
 
 const SUMMARY: ReadonlyArray<{ value: string; label: string }> = [
   { value: String(SKILLS.length), label: 'TECHNOLOGIES' },
-  { value: '3+', label: 'YEARS' },
-  { value: `${AVERAGE_LEVEL}%`, label: 'AVG LEVEL' },
-  { value: '10+', label: 'PROJECTS' },
+  { value: String(clientProjects.length), label: 'CLIENT PROJECTS' },
+  { value: String(personalProjects.length), label: 'PERSONAL PROJECTS' },
+  { value: '3年+', label: 'EXPERIENCE' },
 ]
+
+function toYearsLabel(skill: SkillType): string {
+  if (skill.minYears === null) {
+    return `〜${skill.maxYears}年`
+  }
+
+  return `${skill.minYears}〜${skill.maxYears}年`
+}
 
 function SkillRow({ skill, index }: { skill: SkillType; index: number }) {
   const shouldReduceMotion = useReducedMotion()
+  const ratio = skill.maxYears / LONGEST_YEARS
 
   return (
     <li className="border-hairline flex items-center gap-4 border-b py-4">
@@ -48,8 +59,8 @@ function SkillRow({ skill, index }: { skill: SkillType; index: number }) {
       <span className="bg-hairline relative h-px flex-1">
         <motion.span
           className="bg-navy absolute inset-y-0 left-0 block origin-left"
-          initial={{ scaleX: shouldReduceMotion ? skill.level / 100 : 0 }}
-          whileInView={{ scaleX: skill.level / 100 }}
+          initial={{ scaleX: shouldReduceMotion ? ratio : 0 }}
+          whileInView={{ scaleX: ratio }}
           viewport={{ once: true }}
           transition={{
             duration: shouldReduceMotion ? 0 : 0.42,
@@ -59,8 +70,8 @@ function SkillRow({ skill, index }: { skill: SkillType; index: number }) {
           style={{ width: '100%' }}
         />
       </span>
-      <span className="text-ink-muted w-[3rem] shrink-0 text-right font-mono text-xs">
-        {skill.level}
+      <span className="text-ink w-[4.5rem] shrink-0 text-right font-mono text-xs">
+        {toYearsLabel(skill)}
       </span>
     </li>
   )

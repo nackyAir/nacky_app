@@ -1,13 +1,5 @@
-export const DESTINATION_CODES = [
-  'LAW',
-  'ACC',
-  'EST',
-  'CAR',
-  'LIV',
-  'GEN',
-] as const
-
-export type DestinationCode = (typeof DESTINATION_CODES)[number]
+import type { DestinationCode } from '~/features/Home/destination'
+import type { ProjectDetail } from '~/features/Home/ProjectTimeLIne/type'
 
 export type FlightStatus = 'active' | 'completed'
 
@@ -18,5 +10,10 @@ export type FlightLogEntry = {
   destination: DestinationCode
   destinationLabel: string
   status: FlightStatus
+  period: string
+  role: string
+  description: string
+  skills: ReadonlyArray<string>
+  details?: ProjectDetail
   url?: string
 }

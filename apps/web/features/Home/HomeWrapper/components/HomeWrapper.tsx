@@ -243,19 +243,21 @@ export function HomeWrapper() {
             <p className="label-mono text-ink-muted">PROFILE</p>
             <div className="text-ink-muted max-w-[68ch] space-y-6 leading-[1.9]">
               <p>
-                私は3年間のフロントエンド開発経験を持つエンジニアです。
-                React、TypeScript、Next.jsを中心としたモダンなWeb技術を駆使して、
-                ユーザーエクスペリエンスを最優先に考えた高品質なアプリケーションの開発に取り組んでいます。
+                2023年からフロントエンドを中心に7件の案件へ参画してきました。直近は法人向け
+                AI SaaS「Resme」で開発責任者として、画面実装から Terraform と
+                Google Cloud
+                でのインフラ構築、顧客の要件定義まで縦断して担当しました。
               </p>
               <p>
-                常に最新の技術トレンドをキャッチアップし、パフォーマンス最適化から
-                アクセシビリティまで、総合的な視点でプロダクト開発に貢献します。
+                Claude Code を中心とした AI
+                駆動開発を実務のフローに組み込み、自分は要件整理・設計・レビューに集中する進め方を確立しています。TDD
+                と型安全のルールを規約として明文化し、生成されたコードの品質を一定に保っています。
               </p>
             </div>
           </div>
         </Section>
 
-        <Section id="skills" title="SKILLS" subtitle="技術スタックと習熟度">
+        <Section id="skills" title="SKILLS" subtitle="技術スタックと経験年数">
           <SkillBadges />
         </Section>
 
