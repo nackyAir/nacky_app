@@ -1,13 +1,4 @@
-export const DESTINATION_CODES = [
-  'LAW',
-  'ACC',
-  'EST',
-  'CAR',
-  'LIV',
-  'GEN',
-] as const
-
-export type DestinationCode = (typeof DESTINATION_CODES)[number]
+import type { DestinationCode } from '~/features/Home/destination'
 
 export type FlightStatus = 'active' | 'completed'
 

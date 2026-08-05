@@ -1,15 +1,10 @@
+import {
+  DESTINATION_LABELS,
+  type DestinationCode,
+} from '~/features/Home/destination'
 import type { TimeLineItem } from '~/features/Home/ProjectTimeLIne/type'
 
-import type { DestinationCode, FlightLogEntry, FlightStatus } from './type'
-
-export const DESTINATION_LABELS: Record<DestinationCode, string> = {
-  LAW: '法律',
-  ACC: '会計',
-  EST: '住宅',
-  CAR: 'キャリア',
-  LIV: '配信',
-  GEN: 'その他',
-}
+import type { FlightLogEntry, FlightStatus } from './type'
 
 export const FALLBACK_DESTINATION: DestinationCode = 'GEN'
 
@@ -29,12 +24,16 @@ const DESTINATION_KEYWORDS: ReadonlyArray<{
   { code: 'LIV', keywords: ['配信', 'ライブ', 'ストリーミング'] },
 ]
 
-function resolveDestination(title: string): DestinationCode {
+function inferDestination(title: string): DestinationCode {
   const matched = DESTINATION_KEYWORDS.find(({ keywords }) =>
     keywords.some((keyword) => title.includes(keyword))
   )
 
   return matched?.code ?? FALLBACK_DESTINATION
+}
+
+function resolveDestination(project: TimeLineItem): DestinationCode {
+  return project.destination ?? inferDestination(project.title)
 }
 
 function resolveStartKey(period: string): string {
@@ -57,7 +56,7 @@ export function toFlightLog(
   projects: ReadonlyArray<TimeLineItem>
 ): Array<FlightLogEntry> {
   return [...projects].sort(compareByStartDescending).map((project, index) => {
-    const destination = resolveDestination(project.title)
+    const destination = resolveDestination(project)
 
     return {
       flightNo: `FL-${String(index + 1).padStart(3, '0')}`,
