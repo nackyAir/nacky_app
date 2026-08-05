@@ -20,8 +20,6 @@ import {
   SelectValue,
 } from '@repo/ui/components/select'
 import { Textarea } from '@repo/ui/components/textarea'
-import { Send } from '@repo/ui/icons/lucide'
-import * as motion from 'framer-motion/client'
 import { useAction } from 'next-safe-action/hooks'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -33,7 +31,14 @@ import {
   contactFormSchema,
 } from '~/features/Home/ContactForm/schema'
 
-const RequiredBadge = () => <span className="text-red-500 ml-1">*</span>
+const FIELD_CLASS = 'border-hairline bg-surface text-ink h-12 rounded-flat'
+const LABEL_CLASS = 'text-ink text-sm font-bold'
+
+const RequiredBadge = () => (
+  <span className="text-status-error" aria-hidden="true">
+    *
+  </span>
+)
 
 export function ContactForm() {
   const [loading, setLoading] = useState(false)
@@ -89,208 +94,40 @@ export function ContactForm() {
       })
 
       if (!result?.data) {
-        // 送信処理は完了したが、想定と異なるレスポンス
         setLoading(false)
       }
-    } catch (err) {
+    } catch {
       setLoading(false)
     }
   }
 
   return (
-    <div className="max-w-4xl mx-auto relative">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden"
-      >
-        {/* Header */}
-        <div className="bg-slate-50 dark:bg-slate-900 px-8 py-6 border-b border-slate-200 dark:border-slate-800">
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
-            お問い合わせフォーム
-          </h3>
-          <p className="mt-2 text-slate-600 dark:text-slate-400">
-            お気軽にお問い合わせください。通常1-2営業日以内にご返信いたします。
-          </p>
-        </div>
+    <div className="border-hairline bg-surface rounded-panel border">
+      <div className="border-hairline border-b px-8 py-6">
+        <p className="label-mono text-ink-muted">INQUIRY</p>
+        <p className="text-ink-muted mt-0.5 text-sm">
+          お気軽にお問い合わせください。通常1-2営業日以内にご返信いたします。
+        </p>
+      </div>
 
-        {/* Form */}
-        <div className="p-8">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              {/* Personal Information Section */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="userName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          お名前
-                        </FormLabel>
-                        <RequiredBadge />
-                      </div>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
-                          placeholder="山田 太郎"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="companyName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                        会社名・組織名
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
-                          placeholder="株式会社サンプル"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Contact Information Section */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          メールアドレス
-                        </FormLabel>
-                        <RequiredBadge />
-                      </div>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
-                          placeholder="example@example.com"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="confirmEmail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          メールアドレス（確認用）
-                        </FormLabel>
-                        <RequiredBadge />
-                      </div>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
-                          placeholder="example@example.com"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="phoneNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          電話番号
-                        </FormLabel>
-                        <RequiredBadge />
-                      </div>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          type="tel"
-                          className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950"
-                          placeholder="090-1234-5678"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="inquiryType"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center gap-2">
-                        <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                          お問い合わせ種別
-                        </FormLabel>
-                        <RequiredBadge />
-                      </div>
-                      <Select
-                        value={field.value}
-                        onValueChange={field.onChange}
-                      >
-                        <FormControl>
-                          <SelectTrigger className="h-12 text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950">
-                            <SelectValue placeholder="お問い合わせ種別を選択してください" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="inquiry">お問い合わせ</SelectItem>
-                          <SelectItem value="recruit">採用について</SelectItem>
-                          <SelectItem value="other">その他</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {/* Message Section */}
+      <div className="px-8 py-8">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               <FormField
                 control={form.control}
-                name="inquiryContent"
+                name="userName"
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center gap-2">
-                      <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                        お問い合わせ内容
-                      </FormLabel>
+                      <FormLabel className={LABEL_CLASS}>お名前</FormLabel>
                       <RequiredBadge />
                     </div>
                     <FormControl>
-                      <Textarea
+                      <Input
                         {...field}
-                        className="min-h-[120px] text-base border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 resize-none"
-                        placeholder="お問い合わせ内容をできるだけ詳しくご記入ください"
+                        className={FIELD_CLASS}
+                        placeholder="山田 太郎"
                       />
                     </FormControl>
                     <FormMessage />
@@ -298,51 +135,188 @@ export function ContactForm() {
                 )}
               />
 
-              {/* Privacy Policy */}
               <FormField
                 control={form.control}
-                name="privacyPolicy"
+                name="companyName"
                 render={({ field }) => (
-                  <FormItem className="flex items-start space-x-3 space-y-0 rounded-lg border border-slate-200 dark:border-slate-800 p-6 bg-slate-50 dark:bg-slate-900">
+                  <FormItem>
+                    <FormLabel className={LABEL_CLASS}>
+                      会社名・組織名
+                    </FormLabel>
                     <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="mt-1"
+                      <Input
+                        {...field}
+                        className={FIELD_CLASS}
+                        placeholder="株式会社サンプル"
                       />
                     </FormControl>
-                    <div className="space-y-1">
-                      <FormLabel className="text-base font-medium text-slate-700 dark:text-slate-300">
-                        個人情報の取り扱いについて
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <FormLabel className={LABEL_CLASS}>
+                        メールアドレス
                       </FormLabel>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        お預かりした個人情報は、お問い合わせへの回答および関連するご連絡にのみ使用いたします。
-                        第三者への提供は行いません。
-                      </p>
-                      <FormMessage />
+                      <RequiredBadge />
                     </div>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="email"
+                        className={FIELD_CLASS}
+                        placeholder="example@example.com"
+                      />
+                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
-              {/* Submit Button */}
-              <div className="flex justify-center pt-4">
-                <Button
-                  type="submit"
-                  disabled={!form.formState.isValid || loading}
-                  size="lg"
-                  className="w-full sm:w-auto px-12 py-4 text-lg font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <span className="flex items-center gap-2">
-                    {!loading && <Send className="w-5 h-5" />}
-                    {loading ? '送信中...' : '送信する'}
-                  </span>
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </div>
-      </motion.div>
+              <FormField
+                control={form.control}
+                name="confirmEmail"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <FormLabel className={LABEL_CLASS}>
+                        メールアドレス（確認用）
+                      </FormLabel>
+                      <RequiredBadge />
+                    </div>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="email"
+                        className={FIELD_CLASS}
+                        placeholder="example@example.com"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="phoneNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <FormLabel className={LABEL_CLASS}>電話番号</FormLabel>
+                      <RequiredBadge />
+                    </div>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="tel"
+                        className={FIELD_CLASS}
+                        placeholder="090-1234-5678"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="inquiryType"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center gap-2">
+                      <FormLabel className={LABEL_CLASS}>
+                        お問い合わせ種別
+                      </FormLabel>
+                      <RequiredBadge />
+                    </div>
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger className={FIELD_CLASS}>
+                          <SelectValue placeholder="お問い合わせ種別を選択してください" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="inquiry">お問い合わせ</SelectItem>
+                        <SelectItem value="recruit">採用について</SelectItem>
+                        <SelectItem value="other">その他</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="inquiryContent"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex items-center gap-2">
+                    <FormLabel className={LABEL_CLASS}>
+                      お問い合わせ内容
+                    </FormLabel>
+                    <RequiredBadge />
+                  </div>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      className="border-hairline bg-surface text-ink min-h-[140px] resize-none rounded-flat"
+                      placeholder="お問い合わせ内容をできるだけ詳しくご記入ください"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="privacyPolicy"
+              render={({ field }) => (
+                <FormItem className="border-hairline flex items-start gap-4 space-y-0 rounded-flat border p-6">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      className="mt-1"
+                    />
+                  </FormControl>
+                  <div className="space-y-0.5">
+                    <FormLabel className={LABEL_CLASS}>
+                      個人情報の取り扱いについて
+                    </FormLabel>
+                    <p className="text-ink-muted text-sm leading-[1.9]">
+                      お預かりした個人情報は、お問い合わせへの回答および関連するご連絡にのみ使用いたします。
+                      第三者への提供は行いません。
+                    </p>
+                    <FormMessage />
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <Button
+              type="submit"
+              disabled={!form.formState.isValid || loading}
+              className="bg-navy text-surface hover:bg-ink h-12 rounded-flat px-8 text-sm font-bold transition-colors duration-[180ms] disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {loading ? '送信中...' : '送信する'}
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   )
 }

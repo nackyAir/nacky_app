@@ -1,19 +1,29 @@
 import type { Metadata, Viewport } from 'next'
-import localFont from 'next/font/local'
+import { IBM_Plex_Mono, Noto_Sans_JP, Outfit } from 'next/font/google'
 
 import '@repo/ui/globals.css'
 import { Toaster } from 'sonner'
 import { GoogleAnalytics, MicrosoftClarity } from '~/lib/components/analytics'
 
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
+const notoSansJp = Noto_Sans_JP({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-noto-sans-jp',
   display: 'swap',
   preload: true,
 })
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-outfit',
+  display: 'swap',
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-ibm-plex-mono',
   display: 'swap',
 })
 
@@ -101,10 +111,8 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
+  themeColor: '#FAFAF8',
+  colorScheme: 'light',
 }
 
 export default function RootLayout({
@@ -116,18 +124,11 @@ export default function RootLayout({
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID
 
   return (
-    <html lang="ja">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="ja"
+      className={`${notoSansJp.variable} ${outfit.variable} ${ibmPlexMono.variable}`}
+    >
+      <body className="font-sans antialiased">
         <Toaster position="bottom-right" />
         {children}
         {gaId && <GoogleAnalytics measurementId={gaId} />}
