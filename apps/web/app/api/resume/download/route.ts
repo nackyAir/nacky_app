@@ -3,7 +3,11 @@ import { zipSync } from 'fflate'
 
 import { getRequiredResumeEnv } from '~/lib/resume/env'
 import { buildBundleFilename, buildResumeFilename } from '~/lib/resume/filename'
-import { isResumeFileId, verifyResumeToken } from '~/lib/resume/token'
+import {
+  decodeResumeToken,
+  isResumeFileId,
+  verifyResumeToken,
+} from '~/lib/resume/token'
 import type { ResumeFileId } from '~/lib/resume/token.types'
 
 export const runtime = 'nodejs'
@@ -82,21 +86,38 @@ async function createZipResponse(ids: ResumeFileId[], downloadedAt: Date) {
 
 export async function GET(request: Request) {
   const searchParams = new URL(request.url).searchParams
-  const idsParameter = searchParams.get('ids')
-  const ids = idsParameter?.split(',') ?? []
-  const exp = searchParams.get('exp') ?? ''
-  const sig = searchParams.get('sig') ?? ''
+  const encodedToken = searchParams.get('t')
+  let token: { ids: string[]; exp: string; sig: string }
 
-  if (
-    ids.length === 0 ||
-    ids.some((resumeFileId) => !isResumeFileId(resumeFileId))
-  ) {
-    return jsonError('書類の指定が不正です', 400)
+  if (encodedToken !== null) {
+    const decodedToken = decodeResumeToken(encodedToken)
+
+    if (!decodedToken) {
+      return jsonError('ダウンロードURLが無効です', 403)
+    }
+
+    token = decodedToken
+  } else {
+    const idsParameter = searchParams.get('ids')
+    const ids = idsParameter?.split(',') ?? []
+
+    if (
+      ids.length === 0 ||
+      ids.some((resumeFileId) => !isResumeFileId(resumeFileId))
+    ) {
+      return jsonError('書類の指定が不正です', 400)
+    }
+
+    token = {
+      ids,
+      exp: searchParams.get('exp') ?? '',
+      sig: searchParams.get('sig') ?? '',
+    }
   }
 
   try {
     const secret = getRequiredResumeEnv('RESUME_SIGNING_SECRET')
-    const tokenResult = verifyResumeToken({ ids, exp, sig }, secret, new Date())
+    const tokenResult = verifyResumeToken(token, secret, new Date())
 
     if (!tokenResult.ok) {
       return tokenResult.reason === 'expired'
