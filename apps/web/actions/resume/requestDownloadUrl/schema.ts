@@ -8,7 +8,9 @@ export const schema = z.object({
         'rirekisho-pdf',
         'rirekisho-xlsx',
         'shokumu-keirekisho-pdf',
-        'shokumu-keirekisho-xlsx',
+        'shokumu-keirekisho-docx',
+        'skill-sheet-pdf',
+        'skill-sheet-xlsx',
       ])
     )
     .min(1),

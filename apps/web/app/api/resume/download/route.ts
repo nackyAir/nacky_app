@@ -30,8 +30,17 @@ const RESUME_FILES = {
     pathname: 'resume/shokumu-keirekisho.pdf',
     contentType: 'application/pdf',
   },
-  'shokumu-keirekisho-xlsx': {
-    pathname: 'resume/shokumu-keirekisho.xlsx',
+  'shokumu-keirekisho-docx': {
+    pathname: 'resume/shokumu-keirekisho.docx',
+    contentType:
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  },
+  'skill-sheet-pdf': {
+    pathname: 'resume/skill-sheet.pdf',
+    contentType: 'application/pdf',
+  },
+  'skill-sheet-xlsx': {
+    pathname: 'resume/skill-sheet.xlsx',
     contentType:
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   },
@@ -56,7 +65,7 @@ async function createZipResponse(ids: ResumeFileId[], downloadedAt: Date) {
       const arrayBuffer = await new Response(blobResult.stream).arrayBuffer()
 
       return {
-        filename: buildResumeFilename(id, downloadedAt),
+        filename: buildResumeFilename(id),
         data: new Uint8Array(arrayBuffer),
       }
     })
@@ -72,7 +81,7 @@ async function createZipResponse(ids: ResumeFileId[], downloadedAt: Date) {
   }
 
   const zip = zipSync(entries, { level: 0 })
-  const filename = buildBundleFilename(downloadedAt)
+  const filename = buildBundleFilename(ids, downloadedAt)
 
   return new Response(zip, {
     headers: {
@@ -141,7 +150,7 @@ export async function GET(request: Request) {
       return jsonError('ファイルの取得に失敗しました', 502)
     }
 
-    const filename = buildResumeFilename(id, downloadedAt)
+    const filename = buildResumeFilename(id)
 
     return new Response(blobResult.stream, {
       headers: {

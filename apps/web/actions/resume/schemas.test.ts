@@ -21,4 +21,18 @@ describe('resume download schemas', () => {
       }).success
     ).toBe(false)
   })
+
+  it('allows the public action to request skill sheets and Word career history', () => {
+    expect(
+      requestDownloadUrlSchema.safeParse({
+        password: 'shared-password',
+        ids: [
+          'skill-sheet-pdf',
+          'skill-sheet-xlsx',
+          'shokumu-keirekisho-pdf',
+          'shokumu-keirekisho-docx',
+        ],
+      }).success
+    ).toBe(true)
+  })
 })

@@ -226,6 +226,16 @@ describe('resume token', () => {
     expect(isResumeFileId('mynumber-pdf')).toBe(true)
   })
 
+  it('recognizes skill sheet and Word career history file IDs', () => {
+    expect(isResumeFileId('skill-sheet-pdf')).toBe(true)
+    expect(isResumeFileId('skill-sheet-xlsx')).toBe(true)
+    expect(isResumeFileId('shokumu-keirekisho-docx')).toBe(true)
+  })
+
+  it('rejects the retired Excel career history file ID', () => {
+    expect(isResumeFileId('shokumu-keirekisho-xlsx')).toBe(false)
+  })
+
   it('rejects an empty file list', () => {
     const token = createResumeToken(
       { ids: ['rirekisho-pdf'], expiresAt: EXPIRES_AT },
