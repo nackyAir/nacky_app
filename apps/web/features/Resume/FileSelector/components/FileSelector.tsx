@@ -13,7 +13,9 @@ export const PUBLIC_FILE_OPTIONS: ResumeFileOption[] = [
   { id: 'rirekisho-pdf', label: '履歴書 PDF' },
   { id: 'rirekisho-xlsx', label: '履歴書 Excel' },
   { id: 'shokumu-keirekisho-pdf', label: '職務経歴書 PDF' },
-  { id: 'shokumu-keirekisho-xlsx', label: '職務経歴書 Excel' },
+  { id: 'shokumu-keirekisho-docx', label: '職務経歴書 Word' },
+  { id: 'skill-sheet-pdf', label: 'スキルシート PDF' },
+  { id: 'skill-sheet-xlsx', label: 'スキルシート Excel' },
 ]
 
 export const ADMIN_FILE_OPTIONS: ResumeFileOption[] = [

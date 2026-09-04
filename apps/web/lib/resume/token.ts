@@ -23,7 +23,9 @@ export function isResumeFileId(value: string): value is ResumeFileId {
     value === 'rirekisho-pdf' ||
     value === 'rirekisho-xlsx' ||
     value === 'shokumu-keirekisho-pdf' ||
-    value === 'shokumu-keirekisho-xlsx'
+    value === 'shokumu-keirekisho-docx' ||
+    value === 'skill-sheet-pdf' ||
+    value === 'skill-sheet-xlsx'
   )
 }
 
