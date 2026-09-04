@@ -1,12 +1,11 @@
-export type ResumeDoc = 'rirekisho' | 'shokumu-keirekisho'
-export type ResumeFormat = 'pdf' | 'xlsx'
-
-export type ResumeFile = {
-  doc: ResumeDoc
-  format: ResumeFormat
-}
-
-export type ResumeFileId = `${ResumeDoc}-${ResumeFormat}` | 'mynumber-pdf'
+export type ResumeFileId =
+  | 'rirekisho-pdf'
+  | 'rirekisho-xlsx'
+  | 'shokumu-keirekisho-pdf'
+  | 'shokumu-keirekisho-docx'
+  | 'skill-sheet-pdf'
+  | 'skill-sheet-xlsx'
+  | 'mynumber-pdf'
 
 export type ResumeToken = {
   ids: ResumeFileId[]
