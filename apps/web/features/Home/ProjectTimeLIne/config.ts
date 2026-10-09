@@ -29,6 +29,35 @@ export const personalProjects: Array<TimeLineItem> = [
 
 export const clientProjects: Array<TimeLineItem> = [
   {
+    title: '社内コミュニケーション基盤 新規開発',
+    period: '2026.09 - 現在',
+    role: 'フルスタックエンジニア',
+    skills: [
+      'TypeScript',
+      'Next.js(App Router)',
+      'NestJS',
+      'Prisma',
+      'PostgreSQL',
+      'Google Cloud',
+      'AWS SES',
+    ],
+    description:
+      'BtoB マッチング企業の社内 CRM とつながるコミュニケーション基盤を 0→1 で開発。 UI 基盤の実装とAPI設計と実装を担当。',
+    destination: 'GEN',
+    details: {
+      structure: '10人未満 / リモートメイン',
+      challenge:
+        '営業担当と取引先のやり取りがメール・Slack・Chatwork などに散らばり、組織として誰が誰とどう話しているかを追えていなかった。マーケ配信も外部ツール頼みで、結果が社内 CRM から見えなかった。',
+      actions: [
+        '競合 SaaS の UI を分析し、配信管理画面のユーザーフローと状態遷移を設計',
+        'Nx モノレポ上で MUI・react-hook-form・Storybook・Swagger の土台を導入',
+        'ユースケースを考察し、画面設計を考え実装まで担当',
+      ],
+      outcome:
+        '参画 2 週間で主要方式の方針を固め、実装の土台を整備。10 月中旬のメール配信機能リリースに向けて開発中。',
+    },
+  },
+  {
     title: 'Resme(レスミー)プロダクト開発',
     period: '2025.08 - 2026.04',
     role: 'フルスタックエンジニア(開発責任者)',
