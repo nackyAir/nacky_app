@@ -28,7 +28,7 @@ describe('toFlightLog', () => {
   it('orders flights from the most recent start period', () => {
     const entries = toFlightLog(realProjects)
 
-    expect(entries[0]?.project).toBe('Resme(レスミー)プロダクト開発')
+    expect(entries[0]?.project).toBe('社内コミュニケーション基盤 新規開発')
     expect(entries.at(-1)?.project).toBe('POS アプリケーション管理サービス開発')
   })
 

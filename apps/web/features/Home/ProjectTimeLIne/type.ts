@@ -19,6 +19,7 @@ export const timeLineSchema = z.object({
   role: z.enum([
     '個人開発',
     'フロントエンドエンジニア',
+    'フルスタックエンジニア',
     'フルスタックエンジニア(開発責任者)',
   ]),
   skills: z.array(z.string()),
