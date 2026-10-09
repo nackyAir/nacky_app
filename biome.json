@@ -7,7 +7,15 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json"]
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.json",
+      "!**/worker-configuration.d.ts",
+      "!**/emdash-env.d.ts"
+    ]
   },
   "formatter": {
     "enabled": true,
